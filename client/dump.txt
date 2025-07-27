@@ -1,0 +1,12 @@
+| Role              | Color     | Tailwind Class (Custom if needed) | Use For                                      |
+| ----------------- | --------- | --------------------------------- | -------------------------------------------- |
+| **Primary**       | `#3B82F6` | `bg-blue-500`                     | Buttons, highlights, links                   |
+| **Primary Light** | `#E0ECFF` | `bg-blue-100`                     | Button hover backgrounds, light accents      |
+| **Secondary**     | `#10B981` | `bg-emerald-500`                  | Apply Now, success labels                    |
+| **Background**    | `#F9FAFB` | `bg-gray-50`                      | Page background                              |
+| **Card BG**       | `#FFFFFF` | `bg-white`                        | Job listing cards, form sections             |
+| **Border**        | `#E5E7EB` | `border-gray-200`                 | Card and section borders                     |
+| **Text Primary**  | `#111827` | `text-gray-900`                   | Main content and headings                    |
+| **Text Muted**    | `#6B7280` | `text-gray-500`                   | Subtext, job metadata (location, time, etc.) |
+| **Accent**        | `#F59E0B` | `bg-amber-500`                    | Featured badges, important callouts          |
+| **Error**         | `#EF4444` | `bg-red-500`                      | Form validation, error messages              |
