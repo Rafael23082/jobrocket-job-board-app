@@ -2,7 +2,7 @@ import { FaArrowDown } from "react-icons/fa6";
 
 function HeroSection(){
     return(
-      <div className="w-[100%] overflow-hidden bg-cover bg-center text-center relative py-[11em] px-[1em]" style={{backgroundImage: "url(work.jpg)", fontFamily: "'Roboto', sans-serif"}}>
+      <div className="w-[100%] overflow-hidden bg-cover bg-center text-center relative py-[11em] px-10 padding-x" style={{backgroundImage: "url(work.jpg)", fontFamily: "'Roboto', sans-serif"}}>
         <div className="absolute inset-0 z-0" style={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}></div>
         <p className="text-white relative z-10 text-[2rem] lg:text-[3rem] font-bold" style={{fontFamily: "'Raleway', sans-serif"}}>Work with purpose, from anywhere</p>
         <p className="text-white relative z-10 mt-[1em] font-medium text-[1.2rem] lg:text-[1.5rem]">Find your next remote opportunity in tech, design, marketing, and more.</p>
