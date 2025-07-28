@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+@media (max-width: 480px){
+    .number{
+        font-size: 3.3rem;
+    }
+    .leading{
+        line-height: 3em;
+    }
+}
