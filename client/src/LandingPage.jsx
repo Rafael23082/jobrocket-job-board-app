@@ -36,7 +36,7 @@ function LandingPage(){
         <div className="w-[100%] px-10 lg:w-[45%] lg:px-0 lg:pl-10 flex justify-center items-center padding-x">
           <img src="opportunity.png" className="w-[80%]" />
         </div>
-        <div className="w-[100%] px-10 lg:w-[45%] lg:px-0 lg:pr-10 mt-[4em] lg:mt-0">
+        <div className="w-[100%] px-10 lg:w-[45%] lg:px-0 lg:pr-10 mt-[4em] lg:mt-0 padding-x">
           <p className="font-bold text-[1.5rem] lg:text-[2.5rem]" style={{fontFamily: "'Raleway', sans-serif"}}>Opportunities will come your way</p>
           <p className="text-[1.2rem] lg:text-[1.3rem] mt-[1em] subheading" style={{fontFamily: "'Roboto', sans-serif"}}>Create your profile, stand out, and apply instantly.</p>
           <div className="flex mt-[1.5em]">

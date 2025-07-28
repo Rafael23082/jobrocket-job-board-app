@@ -8,10 +8,22 @@ function Navbar({current}){
         <>
             <div className="flex w-[100%] box-border font-medium justify-between items-center py-[1em] relative" style={{fontFamily: "'Roboto', sans-serif"}}>
                 <p className="text-[2rem] font-bold text-[#3B82F6] pl-10 select-none padding-left" style={{fontFamily: "'Raleway', sans-serif"}}>JobRocket</p>
-                <div className="text-[0.9rem] hidden lg:flex">
-                    <p className={`cursor-pointer ${current == "Overview" ? "text-[#2563EB]": "text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease"}`}>Overview</p>
-                    <p className={`cursor-pointer pl-[2em] ${current == "Jobs" ? "text-[#2563EB]": "text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease"}`}>Jobs</p>
-                    <p className={`cursor-pointer pl-[2em] ${current == "Pricing" ? "text-[#2563EB]": "text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease"}`}>Pricing</p>
+                <div className="text-[0.9rem] hidden lg:flex text-[#1F2937]">
+                    <p className="cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease">Home  </p>
+                    <div className="relative group ml-[2em]">
+                        <p className="cursor-pointer">For Candidates ▼</p>
+                        <div className="absolute max-w-[0px] overflow-hidden top-[100%] bg-white z-10 group-hover:max-w-[500px] left-1/2 -translate-x-1/2">
+                            <p className="px-[3em] pt-[3em] text-center cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease">Overview</p>
+                            <p className="px-[3em] py-[1.5em] text-center cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease">Jobs</p>
+                        </div>
+                    </div>
+                    <div className="relative group ml-[2em]">
+                        <p className="cursor-pointer">For Recruiters ▼</p>
+                        <div className="absolute max-w-[0px] overflow-hidden top-[100%] bg-white z-10 group-hover:max-w-[500px] left-1/2 -translate-x-1/2">
+                            <p className="px-[3em] pt-[3em] text-center cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease">Overview</p>
+                            <p className="px-[3em] py-[1.5em] text-center cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease">Pricing</p>
+                        </div>
+                    </div>
                 </div>
                 <div className="hidden lg:block pr-10">
                     <button className="border border-[#3B82F6] text-[#3B82F6] px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold mr-[1em] cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition ease duration-[0.3s]">Log In</button>
