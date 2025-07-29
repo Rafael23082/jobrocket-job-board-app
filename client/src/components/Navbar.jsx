@@ -37,9 +37,9 @@ function Navbar({current}){
                     <IoMdMenu size={30} className="block lg:hidden cursor-pointer mr-10 margin-right" color="#3B82F6" onClick={() => {setMenuOpen(!menuOpen)}} />
                 )}
                 <div className={`${menuOpen ? "max-h-[500px]": "max-h-0"} transition-height duration-300 ease absolute w-[100%] bg-white top-[100%] z-20 lg:hidden select-none overflow-hidden`}>
-                    <div className="py-[0.5em] pt-[1em] pl-10 padding-left cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease">Home</div>
+                    <div className="py-[0.5em] pt-[1em] pl-10 padding-left cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease" onClick={() => {navigate("/"), window.scrollTo(0,0)}}>Home</div>
                     <div className="py-[0.5em] pl-10 padding-left cursor-pointer text-[1.2rem]">For Candidates</div>
-                    <div className="py-[0.5em] pl-20 padding-left-v2 cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease">Overview</div>
+                    <div className="py-[0.5em] pl-20 padding-left-v2 cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease" onClick={() => {navigate("/candidateOverviewPage", window.scrollTo(0,0))}}>Overview</div>
                     <div className="py-[0.5em] pl-20 padding-left-v2 cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease">Jobs</div>
                     <div className="py-[0.5em] pl-10 padding-left cursor-pointer text-[1.2rem]">For Recruiters</div>
                     <div className="py-[0.5em] pl-20 padding-left-v2 cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease">Overview</div>
