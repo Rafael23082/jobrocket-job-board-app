@@ -1,19 +1,21 @@
 import { useState } from "react";
 import { IoMdMenu } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 function Navbar({current}){
     const [menuOpen, setMenuOpen] = useState(false);
+    const navigate = useNavigate();
     return(
         <>
             <div className="flex w-[100%] box-border font-medium justify-between items-center py-[1em] relative" style={{fontFamily: "'Roboto', sans-serif"}}>
                 <p className="text-[2rem] font-bold text-[#3B82F6] pl-10 select-none padding-left" style={{fontFamily: "'Raleway', sans-serif"}}>JobRocket</p>
                 <div className="text-[0.9rem] hidden lg:flex text-[#1F2937]">
-                    <p className={`cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease`}>Home</p>
+                    <p className={`cursor-pointer ${current == "Home" ? "text-[#3B82F6]": "text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease"}`} onClick={() => {navigate("/"), window.scrollTo(0,0)}}>Home</p>
                     <div className="relative group ml-[2em]">
                         <p className="cursor-pointer">For Candidates ▼</p>
                         <div className="absolute max-w-[0px] overflow-hidden top-[100%] bg-white z-10 group-hover:max-w-[500px] left-1/2 -translate-x-1/2">
-                            <p className="px-[3em] pt-[3em] text-center cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease">Overview</p>
+                            <p className="px-[3em] pt-[3em] text-center cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease" onClick={() => {navigate("/candidateOverviewPage", window.scrollTo(0,0))}}>Overview</p>
                             <p className="px-[3em] py-[1.5em] text-center cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease">Jobs</p>
                         </div>
                     </div>

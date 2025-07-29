@@ -1,8 +1,8 @@
-import Navbar from "./components/Navbar.jsx";
-import HeroSection from "./components/HeroSection.jsx";
-import Footer from "./components/Footer.jsx";
+import Navbar from "../components/Navbar.jsx";
+import HeroSection from "../components/HeroSection.jsx";
+import Footer from "../components/Footer.jsx";
 
-function LandingPage(){
+function CandidateOverviewPage(){
   return(
     <> 
       <header className="sticky top-0 z-100 bg-white">
@@ -67,4 +67,4 @@ function LandingPage(){
   );
 }
 
-export default LandingPage;
+export default CandidateOverviewPage;

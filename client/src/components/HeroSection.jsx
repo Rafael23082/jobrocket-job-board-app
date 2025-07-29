@@ -11,9 +11,6 @@ function HeroSection(){
           <p className="text-white font-medium text-[1.2rem]">Are you hiring remote talent?</p>
           <button className="ml-[1em] border border-white border-[2px] text-white px-[1.4em] py-[0.6em] rounded-[10px] text-[1rem] font-semibold mr-[1em] cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition ease duration-[0.3s]">POST A JOB</button>
         </div>
-        <div className="absolute bottom-0 rounded-full w-[70px] h-[70px] bg-[#3B82F6] left-1/2 -translate-x-1/2 translate-y-1/2 flex justify-center pt-[0.65em]">
-            <FaArrowDown color="white" size={20}  />
-        </div>
       </div>
     )
 }
