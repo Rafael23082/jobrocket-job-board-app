@@ -3,6 +3,7 @@ import OverviewHeroSection from "../components/OverviewHeroSection.jsx";
 import Footer from "../components/Footer.jsx";
 import CallToAction from "../components/CallToAction.jsx";
 import TimelineSection from "../components/TimelineSection.jsx";
+import FeatureHighlightSection from "../components/FeatureHighlightSection.jsx";
 
 function CandidateOverviewPage(){
   return(
@@ -20,36 +21,11 @@ function CandidateOverviewPage(){
       </section>
 
       <section className="border-y-[0.7px] border-gray-100">
-        <div className="flex max-w-[1300px] mx-auto justify-between py-[5em] md:py-[7em] items-center flex-col lg:flex-row">
-          <div className="w-[100%] px-10 lg:w-[50%] lg:px-0 lg:pl-10 flex justify-center items-center padding-x">
-            <img src="opportunity.png" className="w-[70%]" />
-          </div>
-          <div className="w-[100%] px-10 lg:w-[50%] lg:px-0 lg:pr-10 mt-[4em] lg:mt-0 padding-x">
-            <p className="font-bold text-[1.5rem] lg:text-[2.5rem]" style={{fontFamily: "'Raleway', sans-serif"}}>Opportunities will come your way</p>
-            <div className="flex mt-[1.5em]">
-              <div className="p-[1em] rounded-full bg-blue-200 h-fit shrink-0">
-                <img src="tap.png" className="w-[30px] h-[30px]" />
-              </div>
-              <div className="pl-[1.5em]">
-                <p className="font-medium text-[1.1rem]" style={{fontFamily: "'Roboto', sans-serif"}}>Apply easily</p>
-                <p style={{fontFamily: "'Roboto', sans-serif"}}>Submit job applications with just one click—no lengthy forms or repetitive info.</p>
-              </div>
-            </div>
-            <div className="flex mt-[1.5em]">
-              <div className="p-[1em] rounded-full bg-blue-200 h-fit shrink-0">
-                <img src="lightbulb.png" className="w-[30px] h-[30px]" />
-              </div>
-              <div className="pl-[1.5em]">
-                <p className="font-medium text-[1.1rem]" style={{fontFamily: "'Roboto', sans-serif"}}>Get matched instantly</p>
-                <p style={{fontFamily: "'Roboto', sans-serif"}}>Receive personalized job matches based on your profile, skills, and preferences—no endless scrolling needed.</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <FeatureHighlightSection title={"Opportunities will come your way"} img={"opportunity.png"} feature1={"Apply easily"} description1={"Submit job applications with just one click—no lengthy forms or repetitive info."} icon1={"tap.png"} feature2={"Get matched instantly"} description2={"Receive personalized job matches based on your profile, skills, and preferences—no endless scrolling needed."} icon2={"lightbulb.png"} />
       </section>
 
       <section className="border-t-[0.7px] border-gray-100">
-        <TimelineSection />
+        <TimelineSection img={"tips.png"} step1={"Polish Your Resume"} description1={"Craft a resume that highlights your achievements, not just your duties. Use clear formatting and tailor it for each job."} step2={"Build a Standout Profile"} description2={"Set up a compelling candidate profile on our platform. Upload your resume, list your skills, and let employers find you."} step3={"Start Smart Job Searching"} description3={"Use filters to focus your search, and set up alerts for roles that match your interests and experience."} step4={"Prepare to Impress"} description4={"Research the company, practice interview questions, and prepare thoughtful answers that show your value."} step5={"Follow Up Like a Pro"} description5={"Send a brief thank-you message after interviews. It reinforces your interest and helps you stand out."} />
       </section>
 
       <section>
