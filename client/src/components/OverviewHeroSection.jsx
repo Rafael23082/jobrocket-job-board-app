@@ -2,7 +2,7 @@ import { FaArrowDown } from "react-icons/fa6";
 
 function OverviewHeroSection({heading, subheading, button1, button2}){
     return(
-        <div style={{fontFamily: "'Roboto', sans-serif"}} className="py-[7em] md:py-[9em] flex flex-col items-center relative padding-x px-10 border-b-[0.7px] border-gray-100">
+        <div style={{fontFamily: "'Roboto', sans-serif"}} className="py-[7em] md:py-[9em] flex flex-col items-center relative padding-x px-10">
             <p className="text-black relative z-10 text-[2.5rem] md:text-[3rem] lg:text-[4rem] font-bold text-center heading" style={{fontFamily: "'Raleway', sans-serif"}}>{heading}</p>
             <p className="text-center text-[1.3rem] lg:w-[60%] pt-[0.5em] subheading">{subheading}</p>
             <div className="flex mt-[2em] button-container w-[100%] justify-center">
