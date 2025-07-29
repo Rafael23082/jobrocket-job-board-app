@@ -1,7 +1,7 @@
 import Navbar from "../components/Navbar.jsx";
 import OverviewHeroSection from "../components/OverviewHeroSection.jsx";
 import Footer from "../components/Footer.jsx";
-import Statistics from "../components/Statistics.jsx";
+import CallToAction from "../components/CallToAction.jsx";
 
 function CandidateOverviewPage(){
   return(
@@ -16,11 +16,7 @@ function CandidateOverviewPage(){
         <OverviewHeroSection heading={"Find Your Next Opportunity With Confidence"} subheading={"Discover jobs tailored to your skills, connect with top employers, and take the next step in your career journey."} button1={"Create your profile"} button2={"Browse jobs"} />
       </section>
 
-      <section className="bg-[#3B82F6]">
-        <Statistics />
-      </section>
-
-      <section className="flex max-w-[1300px] mx-auto justify-between py-[5em] md:py-[7em] items-center flex-col lg:flex-row">
+      <section className="flex max-w-[1300px] mx-auto justify-between py-[5em] md:py-[7em] items-center flex-col lg:flex-row border-t-[0.7px] border-gray-100">
         <div className="w-[100%] px-10 lg:w-[45%] lg:px-0 lg:pl-10 flex justify-center items-center padding-x">
           <img src="opportunity.png" className="w-[80%]" />
         </div>
@@ -45,6 +41,10 @@ function CandidateOverviewPage(){
             </div>
           </div>
         </div>
+      </section>
+
+      <section>
+        <CallToAction />
       </section>
 
         <footer className="bg-[#1F2937]">
