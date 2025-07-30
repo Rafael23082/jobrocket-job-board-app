@@ -10,7 +10,7 @@ function RecruiterOverviewPage(){
         <>
             <header className="sticky top-0 z-100 bg-white">
                 <div className="mx-auto max-w-[1300px]">
-                <Navbar current={"Overview"} />  
+                <Navbar current={"Recruiter Overview"} />  
                 </div>
             </header>
 
@@ -25,11 +25,11 @@ function RecruiterOverviewPage(){
             </section>
 
             <section className="border-t-[0.7px] border-gray-100">
-                <TimelineSection title={"Build a Seamless Hiring Process"} img={"resume.png"} step1={"Polish Your Resume"} description1={"Craft a resume that highlights your achievements, not just your duties. Use clear formatting and tailor it for each job."} step2={"Build a Standout Profile"} description2={"Set up a compelling candidate profile on our platform. Upload your resume, list your skills, and let employers find you."} step3={"Start Smart Job Searching"} description3={"Use filters to focus your search, and set up alerts for roles that match your interests and experience."} step4={"Prepare to Impress"} description4={"Research the company, practice interview questions, and prepare thoughtful answers that show your value."} step5={"Follow Up Like a Pro"} description5={"Send a brief thank-you message after interviews. It reinforces your interest and helps you stand out."} />
+                <TimelineSection title={"Build a Seamless Hiring Process"} img={"resume.png"} step1={"Create Your Company Profile"} description1={"Showcase your mission, values, and open roles to attract the right candidates."} step2={"Post a Targeted Job Ad"} description2={"Write clear, engaging listings that outline expectations, benefits, and opportunities."} step3={"Review Smart Matches"} description3={"Let our system highlight top candidates based on skills, experience, and fit."} step4={"Streamline Your Interviews"} description4={"Coordinate interview times, track notes, and move qualified candidates through your pipeline."} step5={"Hire with Confidence"} description5={"Make informed decisions with complete candidate profiles and hiring insights."} />
             </section>
 
             <section>
-                <CallToAction heading={"Ready to land your dream job?"} subheading={"Join thousands of candidates already advancing their careers."} />
+                <CallToAction heading={"Ready to hire your next great team member?"} subheading={"Join thousands of recruiters building high-performing teams with us."} />
             </section>
 
             <footer className="bg-[#1F2937]">

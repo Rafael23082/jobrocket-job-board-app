@@ -10,7 +10,7 @@ function CandidateOverviewPage(){
     <> 
       <header className="sticky top-0 z-100 bg-white">
         <div className="mx-auto max-w-[1300px]">
-          <Navbar current={"Overview"} />  
+          <Navbar current={"Candidate Overview"} />  
         </div>
       </header>
 

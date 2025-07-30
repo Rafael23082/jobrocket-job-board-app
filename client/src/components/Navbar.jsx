@@ -13,16 +13,16 @@ function Navbar({current}){
                 <div className="text-[0.9rem] hidden lg:flex text-[#1F2937]">
                     <p className={`cursor-pointer ${current == "Home" ? "text-[#3B82F6]": "text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease"}`} onClick={() => {navigate("/"), window.scrollTo(0,0)}}>Home</p>
                     <div className="relative group ml-[2em]">
-                        <p className="cursor-pointer">For Candidates ▼</p>
+                        <p className={`cursor-pointer ${current == "Candidate Overview" ? "text-[#3B82F6]": "text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease"}`}>For Candidates ▼</p>
                         <div className="absolute max-w-[0px] overflow-hidden top-[100%] bg-white z-10 group-hover:max-w-[500px] left-1/2 -translate-x-1/2">
-                            <p className="px-[3em] pt-[3em] text-center cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease" onClick={() => {navigate("/candidateOverviewPage", window.scrollTo(0,0))}}>Overview</p>
+                            <p className={`px-[3em] pt-[3em] text-center cursor-pointer ${current == "Candidate Overview" ? "text-[#3B82F6]": "text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease"}`} onClick={() => {navigate("/candidateOverviewPage", window.scrollTo(0,0))}}>Overview</p>
                             <p className="px-[3em] py-[1.5em] text-center cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease">Jobs</p>
                         </div>
                     </div>
                     <div className="relative group ml-[2em]">
-                        <p className="cursor-pointer">For Recruiters ▼</p>
+                        <p className={`cursor-pointer ${current == "Recruiter Overview" ? "text-[#3B82F6]": "text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease"}`}>For Recruiters ▼</p>
                         <div className="absolute max-w-[0px] overflow-hidden top-[100%] bg-white z-10 group-hover:max-w-[500px] left-1/2 -translate-x-1/2">
-                            <p className="px-[3em] pt-[3em] text-center cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease" onClick={() => {navigate("/recruiterOverviewPage", window.scrollTo(0,0))}}>Overview</p>
+                            <p className={`px-[3em] pt-[3em] text-center cursor-pointer ${current == "Recruiter Overview" ? "text-[#3B82F6]": "text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease"}`} onClick={() => {navigate("/recruiterOverviewPage", window.scrollTo(0,0))}}>Overview</p>
                             <p className="px-[3em] py-[1.5em] text-center cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease">Pricing</p>
                         </div>
                     </div>
