@@ -1,6 +1,7 @@
 import Job from "../components/Job.jsx";
 import Navbar from "../components/Navbar.jsx";
 import JobSection from "../components/JobSection.jsx";
+import Footer from "../components/Footer.jsx";
 
 function JobsPage(){
     return(
@@ -23,6 +24,10 @@ function JobsPage(){
                     <JobSection category={"Marketing"} />
                 </div>
             </section>
+
+            <footer className="bg-[#1F2937]">
+                <Footer />
+            </footer>
         </>
     )
 }
