@@ -13,23 +13,23 @@ function Navbar({current}){
                 <div className="text-[0.9rem] hidden lg:flex text-[#1F2937]">
                     <p className={`cursor-pointer ${current == "Home" ? "text-[#3B82F6]": "text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease"}`} onClick={() => {navigate("/"), window.scrollTo(0,0)}}>Home</p>
                     <div className="relative group ml-[2em]">
-                        <p className={`cursor-pointer ${current == "Candidate Overview" ? "text-[#3B82F6]": "text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease"}`}>For Candidates ▼</p>
+                        <p className={`cursor-pointer ${current == "Candidate Overview" || current == "Jobs" ? "text-[#3B82F6]": "text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease"}`}>For Candidates ▼</p>
                         <div className="absolute max-w-[0px] overflow-hidden top-[100%] bg-white z-10 group-hover:max-w-[500px] left-1/2 -translate-x-1/2">
                             <p className={`px-[3em] pt-[3em] text-center cursor-pointer ${current == "Candidate Overview" ? "text-[#3B82F6]": "text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease"}`} onClick={() => {navigate("/candidateOverviewPage", window.scrollTo(0,0))}}>Overview</p>
-                            <p className="px-[3em] py-[1.5em] text-center cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease">Jobs</p>
+                            <p className={`px-[3em] py-[1.5em] text-center cursor-pointer ${current == "Jobs" ? "text-[#3B82F6]": "text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease"}`} onClick={() => {navigate("/jobsPage")}}>Jobs</p>
                         </div>
                     </div>
                     <div className="relative group ml-[2em]">
-                        <p className={`cursor-pointer ${current == "Recruiter Overview" ? "text-[#3B82F6]": "text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease"}`}>For Recruiters ▼</p>
+                        <p className={`cursor-pointer ${current == "Recruiter Overview" || current == "Pricing" ? "text-[#3B82F6]": "text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease"}`}>For Recruiters ▼</p>
                         <div className="absolute max-w-[0px] overflow-hidden top-[100%] bg-white z-10 group-hover:max-w-[500px] left-1/2 -translate-x-1/2">
                             <p className={`px-[3em] pt-[3em] text-center cursor-pointer ${current == "Recruiter Overview" ? "text-[#3B82F6]": "text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease"}`} onClick={() => {navigate("/recruiterOverviewPage", window.scrollTo(0,0))}}>Overview</p>
-                            <p className="px-[3em] py-[1.5em] text-center cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease">Pricing</p>
+                            <p className={`px-[3em] py-[1.5em] text-center cursor-pointer ${current == "Pricing" ? "text-[#3B82F6]": "text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease"}`} onClick={() => {navigate("/pricingPage", window.scrollTo(0,0))}}>Pricing</p>
                         </div>
                     </div>
                 </div>
                 <div className="hidden lg:block pr-10">
                     <button className="border border-[#3B82F6] text-[#3B82F6] px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold mr-[1em] cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition ease duration-[0.3s]">Log In</button>
-                    <button className="bg-[#3B82F6] text-white px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]">Sign In</button>
+                    <button className="bg-[#3B82F6] text-white px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]">Sign Up</button>
                 </div>
                 {menuOpen ? (
                     <IoClose size={30} className="block lg:hidden cursor-pointer mr-10 margin-right" color="#3B82F6" onClick={() => {setMenuOpen(!menuOpen)}} />
@@ -43,10 +43,10 @@ function Navbar({current}){
                     <div className="py-[0.5em] pl-20 padding-left-v2 cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease">Jobs</div>
                     <div className="py-[0.5em] pl-10 padding-left cursor-pointer text-[1.2rem]">For Recruiters</div>
                     <div className="py-[0.5em] pl-20 padding-left-v2 cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease" onClick={() => {navigate("/recruiterOverviewPage", window.scrollTo(0,0))}}>Overview</div>
-                    <div className="py-[0.5em] pl-20 padding-left-v2 cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease">Pricing</div>
+                    <div className="py-[0.5em] pl-20 padding-left-v2 cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease" onClick={() => {navigate("/pricingPage", window.scrollTo(0,0))}}>Pricing</div>
                     <div className="flex px-10 padding-x py-[0.5em] pb-[2em]">
                         <button className="border border-[#3B82F6] text-[#3B82F6] w-[50%] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition ease duration-[0.3s]">Log In</button>
-                        <button className="ml-[1em] bg-[#3B82F6] text-white w-[50%] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]">Sign In</button>
+                        <button className="ml-[1em] bg-[#3B82F6] text-white w-[50%] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]">Sign Up</button>
                     </div>
                 </div>
             </div>
