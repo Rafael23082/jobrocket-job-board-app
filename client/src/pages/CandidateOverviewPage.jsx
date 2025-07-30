@@ -21,19 +21,19 @@ function CandidateOverviewPage(){
       </section>
 
       <section className="border-y-[0.7px] border-gray-100">
-        <FeatureHighlightSection title={"Opportunities will come your way"} img={"opportunity.png"} feature1={"Apply easily"} description1={"Submit job applications with just one click—no lengthy forms or repetitive info."} icon1={"tap.png"} feature2={"Get matched instantly"} description2={"Receive personalized job matches based on your profile, skills, and preferences—no endless scrolling needed."} icon2={"lightbulb.png"} />
+        <FeatureHighlightSection title={"Opportunities will come your way"} img={"opportunity.jpg"} feature1={"Apply easily"} description1={"Submit job applications with just one click—no lengthy forms or repetitive info."} icon1={"tap.png"} feature2={"Get matched instantly"} description2={"Receive personalized job matches based on your profile, skills, and preferences—no endless scrolling needed."} icon2={"lightbulb.png"} />
       </section>
 
       <section className="border-t-[0.7px] border-gray-100">
-        <TimelineSection img={"tips.png"} step1={"Polish Your Resume"} description1={"Craft a resume that highlights your achievements, not just your duties. Use clear formatting and tailor it for each job."} step2={"Build a Standout Profile"} description2={"Set up a compelling candidate profile on our platform. Upload your resume, list your skills, and let employers find you."} step3={"Start Smart Job Searching"} description3={"Use filters to focus your search, and set up alerts for roles that match your interests and experience."} step4={"Prepare to Impress"} description4={"Research the company, practice interview questions, and prepare thoughtful answers that show your value."} step5={"Follow Up Like a Pro"} description5={"Send a brief thank-you message after interviews. It reinforces your interest and helps you stand out."} />
+        <TimelineSection title={"Career Tips"} img={"tips.png"} step1={"Polish Your Resume"} description1={"Craft a resume that highlights your achievements, not just your duties. Use clear formatting and tailor it for each job."} step2={"Build a Standout Profile"} description2={"Set up a compelling candidate profile on our platform. Upload your resume, list your skills, and let employers find you."} step3={"Start Smart Job Searching"} description3={"Use filters to focus your search, and set up alerts for roles that match your interests and experience."} step4={"Prepare to Impress"} description4={"Research the company, practice interview questions, and prepare thoughtful answers that show your value."} step5={"Follow Up Like a Pro"} description5={"Send a brief thank-you message after interviews. It reinforces your interest and helps you stand out."} />
       </section>
 
       <section>
-        <CallToAction />
+        <CallToAction heading={"Ready to land your dream job?"} subheading={"Join thousands of candidates already advancing their careers."} />
       </section>
 
-        <footer className="bg-[#1F2937]">
-          <Footer />
+      <footer className="bg-[#1F2937]">
+        <Footer />
       </footer>
     </>
   );
