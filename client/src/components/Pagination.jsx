@@ -1,10 +1,12 @@
 import { useState } from "react";
 import JobData from "./JobData.jsx";
 import Job from "./Job.jsx";
+import { MdKeyboardArrowLeft } from "react-icons/md";
+import { MdKeyboardArrowRight } from "react-icons/md";
 
-function Pagination(){
+function Pagination({category}){
     const [page, setPage] = useState(1);
-    const maxDisplayed = 3;
+    const maxDisplayed = 5;
     const filteredJobs = JobData.filter((job) => job.field == category);
     const maxPages = Math.ceil(filteredJobs.length/maxDisplayed);
 
@@ -28,10 +30,9 @@ function Pagination(){
         <div className="mt-[2em]">
             <div className="flex items-center">
                 <p className="text-[1.5rem] lg:w-[60%] pt-[0.5em] py-[1em] subheading font-bold grow">{category} Jobs</p>
-                <p className="text-[0.9rem] text-gray-800 cursor-pointer hover:underline">See More</p>
             </div>
             {displayedJobs.map((job) => (
-                <div className="py-[1em] border-b border-gray-200">
+                <div className="py-[1.5em] border-b border-gray-200">
                     <Job img={job.img} role={job.role} company={job.company} where={job.where} salary={job.salary} />
                 </div> 
             ))}

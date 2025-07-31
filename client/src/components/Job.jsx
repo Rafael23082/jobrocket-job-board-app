@@ -2,7 +2,7 @@ function Job({img, role, company, where, salary}){
     return(
         <div className="flex items-center" style={{fontFamily: "'Roboto', sans-serif"}}>
             <div className="w-[50px] h-[50px] border border-gray-200 rounded-[10px]">
-                <img src={`${img}`} className="w-full h-full object-cover object-center" />
+                <img src={`/${img}`} className="w-full h-full object-cover object-center" />
             </div>
             <div className="flex items-start md:items-center flex-col md:flex-row w-full">
                 <div className="pl-[2em] flex flex-col w-full grow">

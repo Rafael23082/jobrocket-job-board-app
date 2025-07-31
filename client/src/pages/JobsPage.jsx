@@ -1,9 +1,8 @@
-import Job from "../components/Job.jsx";
-import Navbar from "../components/Navbar.jsx";
 import JobSection from "../components/JobSection.jsx";
-import Footer from "../components/Footer.jsx";
+import { useParams } from "react-router-dom";
 
 function JobsPage(){
+    const { field } = useParams();
     return(
         <>
             <section className="py-[5em] md:py-[7em] padding-x px-10">
