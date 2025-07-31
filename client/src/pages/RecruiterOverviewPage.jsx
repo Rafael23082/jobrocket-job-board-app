@@ -8,12 +8,6 @@ import Footer from "../components/Footer.jsx";
 function RecruiterOverviewPage(){
     return(
         <>
-            <header className="sticky top-0 z-100 bg-white">
-                <div className="mx-auto max-w-[1300px]">
-                <Navbar current={"Recruiter Overview"} />  
-                </div>
-            </header>
-
             <section className="border-b-[0.7px] border-gray-100">
                 <div className="max-w-[1300px] mx-auto">
                 <OverviewHeroSection heading={"Find the Right Talent, Faster"} subheading={"Post jobs, connect with qualified candidates, and build your team with confidence."} button1={"Post a job"} button2={"Browse candidates"} />
@@ -31,10 +25,6 @@ function RecruiterOverviewPage(){
             <section>
                 <CallToAction heading={"Ready to hire your next great team member?"} subheading={"Join thousands of recruiters building high-performing teams with us."} />
             </section>
-
-            <footer className="bg-[#1F2937]">
-                <Footer />
-            </footer>
         </>
     )
 }

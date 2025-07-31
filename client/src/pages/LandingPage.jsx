@@ -10,12 +10,6 @@ import Footer from "../components/Footer.jsx";
 function LandingPage(){
     return(
         <>
-            <header className="sticky top-0 z-100 bg-white">
-                <div className="mx-auto max-w-[1300px]">
-                <Navbar current={"Home"} />  
-                </div>
-            </header>
-
             <section>
                 <HeroSection />
             </section>
@@ -66,10 +60,6 @@ function LandingPage(){
                     </div>
                 </div>
             </section>
-
-            <footer className="bg-[#1F2937]">
-                <Footer />
-            </footer>
         </>
     )
 }

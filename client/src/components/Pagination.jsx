@@ -1,9 +1,6 @@
 import { useState } from "react";
-import Job from "./Job.jsx";
-import { MdKeyboardArrowLeft } from "react-icons/md";
-import { MdKeyboardArrowRight } from "react-icons/md";
 
-function JobSection({category}){
+function Pagination(){
     const jobs = [
     {
         field: "Tech",
@@ -104,9 +101,27 @@ function JobSection({category}){
     }
     ];
 
+    const [page, setPage] = useState(1);
+    const maxDisplayed = 3;
     const filteredJobs = jobs.filter((job) => job.field == category);
-    const displayedJobs = filteredJobs.slice(0, 6);
+    const maxPages = Math.ceil(filteredJobs.length/maxDisplayed);
 
+    const startIndex = (page - 1) * maxDisplayed;
+    const endIndex = startIndex + maxDisplayed;
+
+    const displayedJobs = filteredJobs.slice(startIndex, endIndex);
+
+    const handleNext = () => {
+        if (page < maxPages){
+            setPage(prev => prev + 1);
+        }
+    }
+
+    const handleBack = () => {
+        if (page > 1){
+            setPage(prev => prev - 1);
+        }
+    }
     return(
         <div className="mt-[2em]">
             <div className="flex items-center">
@@ -118,8 +133,13 @@ function JobSection({category}){
                     <Job img={job.img} role={job.role} company={job.company} where={job.where} salary={job.salary} />
                 </div> 
             ))}
+            <div className="flex items-center justify-center mt-[2em]">
+                <span className="flex text-[#3B82F6] cursor-pointer" onClick={handleBack}><MdKeyboardArrowLeft size={25} color="#3B82F6" />Back</span>
+                <div className="px-[1em] py-[0.5em] border border-[#3B82F6] rounded-[10px] mx-[1em]">{page}</div>
+                <span className="flex text-[#3B82F6] cursor-pointer" onClick={handleNext}>Next <MdKeyboardArrowRight size={25} color="#3B82F6" /></span>
+            </div>
         </div>
     )
 }
 
-export default JobSection;
+export default Pagination;

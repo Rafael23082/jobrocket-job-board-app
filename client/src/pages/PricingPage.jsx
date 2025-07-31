@@ -5,12 +5,6 @@ import { FaCircleCheck } from "react-icons/fa6";
 function PricingPage(){
     return(
         <>
-            <header className="sticky top-0 z-100 bg-white">
-                <div className="mx-auto max-w-[1300px]">
-                <Navbar current={"Pricing"} />  
-                </div>
-            </header>
-
             <section className="max-w-[1300px] mx-auto justify-between py-[5em] md:py-[7em] padding-x px-10" style={{fontFamily: "'Roboto', sans-serif"}}>
                 <p className="text-[1.5rem] font-bold text-blue-500 subheading">Attract Talents</p>
                 <p className="font-bold text-[1.5rem] lg:text-[2.5rem]" style={{fontFamily: "'Raleway', sans-serif"}}>Choose Your Plan</p>
@@ -59,10 +53,6 @@ function PricingPage(){
                         </div>
                     </div>
             </section>
-
-            <footer className="bg-[#1F2937]">
-                <Footer />
-            </footer>
         </>
     )
 }

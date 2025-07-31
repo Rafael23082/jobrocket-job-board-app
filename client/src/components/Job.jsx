@@ -10,7 +10,7 @@ function Job({img, role, company, where, salary}){
                     <p className="text-[0.9rem] text-gray-800">{company} | {where} | {salary}</p>
                 </div>
                 <div className="flex pl-[2em] mt-[1em] md:mt-0">
-                    <button className="border border-[#3B82F6] text-[#3B82F6] px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold mr-[1em] cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition ease duration-[0.3s]">Description</button>
+                    <button className="border border-[#3B82F6] text-[#3B82F6] px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold mr-[1em] cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition ease duration-[0.3s]">Details</button>
                     <button className="bg-[#3B82F6] text-white px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]">Apply</button>
                 </div>
             </div>

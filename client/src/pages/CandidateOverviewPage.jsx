@@ -8,12 +8,6 @@ import FeatureHighlightSection from "../components/FeatureHighlightSection.jsx";
 function CandidateOverviewPage(){
   return(
     <> 
-      <header className="sticky top-0 z-100 bg-white">
-        <div className="mx-auto max-w-[1300px]">
-          <Navbar current={"Candidate Overview"} />  
-        </div>
-      </header>
-
       <section className="border-b-[0.7px] border-gray-100">
         <div className="max-w-[1300px] mx-auto">
           <OverviewHeroSection heading={"Find Your Next Opportunity With Confidence"} subheading={"Discover jobs tailored to your skills, connect with top employers, and take the next step in your career journey."} button1={"Create your profile"} button2={"Browse jobs"} />
@@ -31,10 +25,6 @@ function CandidateOverviewPage(){
       <section>
         <CallToAction heading={"Ready to land your dream job?"} subheading={"Join thousands of candidates already advancing their careers."} />
       </section>
-
-      <footer className="bg-[#1F2937]">
-        <Footer />
-      </footer>
     </>
   );
 }

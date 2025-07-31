@@ -15,13 +15,13 @@ function Footer(){
                 </div>
                 <div className="w-[100%] md:w-[20%] text-white" style={{fontFamily: "'Roboto', sans-serif"}}>
                     <p className="mt-[1.5em] md:mt-0 text-[0.9rem] md:text-[1.3rem] font-bold" style={{fontFamily: "'Raleway', sans-serif"}}>For Candidates</p>
-                    <p className="pt-[0.3em] md:pt-[0.75em] text-[0.9rem] cursor-pointer hover:underline w-fit" onClick={() => {navigate("/candidateOverviewPage"); window.scrollTo({top: 0, behavior: "instant"})}}>Overview</p>
-                    <p className="pt-[0.3em] md:pt-[0.75em] text-[0.9rem] cursor-pointer hover:underline w-fit" onClick={() => {navigate("/jobsPage"); window.scrollTo({top: 0, behavior: "instant"})}}>Jobs</p>
+                    <p className="pt-[0.3em] md:pt-[0.75em] text-[0.9rem] cursor-pointer hover:underline w-fit" onClick={() => {navigate("/candidateOverview"); window.scrollTo({top: 0, behavior: "instant"})}}>Overview</p>
+                    <p className="pt-[0.3em] md:pt-[0.75em] text-[0.9rem] cursor-pointer hover:underline w-fit" onClick={() => {navigate("/jobs"); window.scrollTo({top: 0, behavior: "instant"})}}>Jobs</p>
                 </div>
                 <div className="w-[100%] md:w-[20%] text-white" style={{fontFamily: "'Roboto', sans-serif"}}>
                     <p className="mt-[1.5em] md:mt-0 text-[0.9rem] md:text-[1.3rem] font-bold" style={{fontFamily: "'Raleway', sans-serif"}}>For Recruiters</p>
-                    <p className="pt-[0.3em] md:pt-[0.75em] text-[0.9rem] cursor-pointer hover:underline w-fit" onClick={() => {navigate("/recruiterOverviewPage"); window.scrollTo({top: 0, behavior: "instant"})}}>Overview</p>
-                    <p className="pt-[0.3em] md:pt-[0.75em] text-[0.9rem] cursor-pointer hover:underline w-fit" onClick={() => {navigate("/pricingPage"); window.scrollTo({top: 0, behavior: "instant"})}}>Pricing</p>
+                    <p className="pt-[0.3em] md:pt-[0.75em] text-[0.9rem] cursor-pointer hover:underline w-fit" onClick={() => {navigate("/recruiterOverview"); window.scrollTo({top: 0, behavior: "instant"})}}>Overview</p>
+                    <p className="pt-[0.3em] md:pt-[0.75em] text-[0.9rem] cursor-pointer hover:underline w-fit" onClick={() => {navigate("/pricing"); window.scrollTo({top: 0, behavior: "instant"})}}>Pricing</p>
                 </div>
             </div>
             <div className="flex mt-[8em] ">
