@@ -12,7 +12,7 @@ function Layout(){
             </header>
 
             <Outlet />
-/
+
             <footer className="bg-[#1F2937]">
                 <Footer />
             </footer>
