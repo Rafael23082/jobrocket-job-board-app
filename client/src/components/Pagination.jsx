@@ -33,13 +33,13 @@ function Pagination({category}){
             </div>
             {displayedJobs.map((job) => (
                 <div className="py-[1.5em] border-b border-gray-200">
-                    <Job img={job.img} role={job.role} company={job.company} where={job.where} salary={job.salary} />
+                    <Job img={job.img} role={job.role} company={job.company} where={job.where} salary={job.salary} tags={job.tags} description={job.description} experience={job.experience} employmentType={job.employmentType} posted={job.posted} seeMore={true} />
                 </div> 
             ))}
             <div className="flex items-center justify-center mt-[2em]">
-                <span className="flex text-[#3B82F6] cursor-pointer" onClick={handleBack}><MdKeyboardArrowLeft size={25} color="#3B82F6" />Back</span>
+                <span className="flex text-[#3B82F6] cursor-pointer" onClick={() => {handleBack(); window.scrollTo({top: 0, behavior: "smooth"})}}><MdKeyboardArrowLeft size={25} color="#3B82F6" />Back</span>
                 <div className="px-[1em] py-[0.5em] border border-[#3B82F6] rounded-[10px] mx-[1em]">{page}</div>
-                <span className="flex text-[#3B82F6] cursor-pointer" onClick={handleNext}>Next <MdKeyboardArrowRight size={25} color="#3B82F6" /></span>
+                <span className="flex text-[#3B82F6] cursor-pointer" onClick={() => {handleNext(); window.scrollTo({top: 0, behavior: "smooth"})}}>Next <MdKeyboardArrowRight size={25} color="#3B82F6" /></span>
             </div>
         </div>
     )

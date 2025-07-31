@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function JobSection({category}){
     const filteredJobs = JobData.filter((job) => job.field == category);
-    const displayedJobs = filteredJobs.slice(0, 5);
+    const displayedJobs = filteredJobs.slice(0, 3);
     const navigate = useNavigate();
 
     return(
@@ -15,7 +15,7 @@ function JobSection({category}){
             </div>
             {displayedJobs.map((job) => (
                 <div className="py-[1.5em] border-b border-gray-200">
-                    <Job img={job.img} role={job.role} company={job.company} where={job.where} salary={job.salary} />
+                    <Job img={job.img} role={job.role} company={job.company} where={job.where} salary={job.salary} tags={job.tags} seeMore={false} />
                 </div> 
             ))}
         </div>
