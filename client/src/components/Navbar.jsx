@@ -31,7 +31,7 @@ function Navbar(){
                     </div>
                 </div>
                 <div className="hidden lg:flex pr-10">
-                    <button className="border border-[#3B82F6] text-[#3B82F6] px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold mr-[1em] cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition ease duration-[0.3s]">Log In</button>
+                    <button className="border border-[#3B82F6] text-[#3B82F6] px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold mr-[1em] cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition ease duration-[0.3s]" onClick={() => {navigate("login")}}>Log In</button>
                     <div className="relative">
                         <button className="bg-[#3B82F6] text-white px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]" onClick={() => {setDropDownOpen(!dropDownOpen)}}>Sign Up</button>
                         <div className={`${dropDownOpen ? "block": "hidden"} absolute z-50 top-[100%] mt-[1em] bg-white font-normal text-[0.9rem] min-w-[170px] py-[1em] px-[2em] rounded-[20px] right-0`} style={{ boxShadow: '0 0 8px rgba(0,0,0,0.2)' }}>

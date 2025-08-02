@@ -11,6 +11,7 @@ import Layout from './components/Layout.jsx';
 import JobsCategoryPage from './pages/JobsCategoryPage.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 import SignUpPage from './pages/SignUpPage.jsx';
+import LoginPage from './pages/LoginPage.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -26,6 +27,7 @@ createRoot(document.getElementById('root')).render(
           <Route path='/jobs/:field' element={<JobsCategoryPage />}></Route>
         </Route>
         <Route path='/signup/:role' element={<SignUpPage />}></Route>
+        <Route path='/login' element={<LoginPage />}></Route>
       </Routes>
     </BrowserRouter>
   </StrictMode>,

@@ -14,7 +14,7 @@ function SignUpPage(){
     }, []);
     
     return(
-        <SignupLogin heading={"Sign Up"} subheading={"Continue to JobRocket"} button={"Sign Up"} alternative={"Already have an account?"} alternative2={"Log in"} text={"By proceeding, you agree to the Terms and Conditions and Privacy Policy."}
+        <SignupLogin heading={"Sign Up"} subheading={"Continue to JobRocket"} button={"Sign Up"} alternative={"Already have an account?"} alternative2={"Log in"} text={"By proceeding, you agree to the Terms and Conditions and Privacy Policy."} minheight={"650px"} signup={true}
             fields={[{
                 name:"Full Name",
                 placeholder: "Enter text",
