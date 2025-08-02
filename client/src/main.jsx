@@ -26,7 +26,7 @@ createRoot(document.getElementById('root')).render(
           <Route path='/jobs' element={<JobsPage />}></Route>
           <Route path='/jobs/:field' element={<JobsCategoryPage />}></Route>
         </Route>
-        <Route path='/signup/:role' element={<SignUpPage />}></Route>
+        <Route path='/signup' element={<SignUpPage />}></Route>
         <Route path='/login' element={<LoginPage />}></Route>
       </Routes>
     </BrowserRouter>

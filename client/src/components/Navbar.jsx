@@ -8,7 +8,6 @@ function Navbar(){
     const navigate = useNavigate();
     const location = useLocation();
     const current = location.pathname;
-    const [dropDownOpen, setDropDownOpen] = useState(false);
     return(
         <>
             <div className="flex w-[100%] box-border font-medium justify-between items-center py-[1em] relative" style={{fontFamily: "'Roboto', sans-serif"}}>
@@ -33,11 +32,7 @@ function Navbar(){
                 <div className="hidden lg:flex pr-10">
                     <button className="border border-[#3B82F6] text-[#3B82F6] px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold mr-[1em] cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition ease duration-[0.3s]" onClick={() => {navigate("login")}}>Log In</button>
                     <div className="relative">
-                        <button className="bg-[#3B82F6] text-white px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]" onClick={() => {setDropDownOpen(!dropDownOpen)}}>Sign Up</button>
-                        <div className={`${dropDownOpen ? "block": "hidden"} absolute z-50 top-[100%] mt-[1em] bg-white font-normal text-[0.9rem] min-w-[170px] py-[1em] px-[2em] rounded-[20px] right-0`} style={{ boxShadow: '0 0 8px rgba(0,0,0,0.2)' }}>
-                            <p className="cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease" onClick={() => {navigate("/signup/candidate")}}>I'm a Candidate</p>
-                            <p className="pt-[0.5em] cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease" onClick={() => {navigate("/signup/recruiter")}}>I'm a Recruiter</p>
-                        </div>
+                        <button className="bg-[#3B82F6] text-white px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]" onClick={() => {navigate("/signup")}}>Sign Up</button>
                     </div>
                 </div>
                 {menuOpen ? (
