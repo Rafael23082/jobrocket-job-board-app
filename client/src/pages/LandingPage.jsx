@@ -18,24 +18,24 @@ function LandingPage(){
                 <Statistics />
             </section>
 
-            <section className="border-b-[0.7px] border-gray-100">
+            <section className="bg-gray-100">
                 <div className="px-10 padding-x py-[5em] md:py-[7em] w-[100%] max-w-[1300px] mx-auto">
                     <p className="font-bold text-[2rem] lg:text-[2.5rem]" style={{fontFamily: "'Raleway', sans-serif"}}>Why Choose <span className="text-[#3B82F6]">Us</span></p>
                     <div className="flex justify-between mt-[1.5em] flex-col md:flex-row">
-                        <div className="w-[100%] md:w-[30%] mt-[1.5em] bg-blue-100 p-[2em] rounded-[20px]">
+                        <div className="w-[100%] md:w-[30%] mt-[1.5em] shadow p-[2em] rounded-[20px] bg-white">
                             <WhyChooseUsBox Icon={IoSearchOutline} title="Smart Matching" text="We pair you with jobs or candidates that truly match your profile." />
                         </div>
-                        <div className="w-[100%] md:w-[30%] mt-[1.5em] bg-blue-100 p-[2em] rounded-[20px]">
+                        <div className="w-[100%] md:w-[30%] mt-[1.5em] shadow p-[2em] rounded-[20px] bg-white">
                             <WhyChooseUsBox Icon={FaBolt} title="Fast & Easy" text="Apply or shortlist in just a few clicks — no hassle." />
                         </div>
-                        <div className="w-[100%] md:w-[30%] mt-[1.5em] bg-blue-100 p-[2em] rounded-[20px]">
+                        <div className="w-[100%] md:w-[30%] mt-[1.5em] shadow p-[2em] rounded-[20px] bg-white">
                             <WhyChooseUsBox Icon={IoIosNotifications} title="Real-Time Updates" text="Never miss an opportunity with instant alerts." />
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section className="border-t-[0.7px] border-gray-100">
+            <section>
                 <div className="px-10 padding-x py-[5em] md:py-[7em] w-[100%] max-w-[1300px] mx-auto" style={{fontFamily: "'Roboto', sans-serif"}}>
                     <p className="font-bold text-[2rem] lg:text-[2.5rem]" style={{fontFamily: "'Raleway', sans-serif"}}>From Our Users</p>
                     <div className="flex justify-between mt-[1.5em] flex-col md:flex-row">

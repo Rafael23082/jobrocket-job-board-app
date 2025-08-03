@@ -40,6 +40,9 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
             }
         })
         setErrors(newErrors);
+        if (Object.keys(newErrors).length == 0){
+            navigate(`/dashboard/${dropdownText}`)
+        }
     }
 
     return(
