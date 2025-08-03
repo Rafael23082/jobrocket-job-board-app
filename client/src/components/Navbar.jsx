@@ -10,7 +10,7 @@ function Navbar(){
     const current = location.pathname;
     return(
         <>
-            <div className="flex w-[100%] box-border font-medium justify-between items-center py-[1em] relative" style={{fontFamily: "'Roboto', sans-serif"}}>
+            <div className="flex w-[100%] box-border font-medium justify-between items-center py-[1em] relative z-10" style={{fontFamily: "'Roboto', sans-serif"}}>
                 <p className="text-[2rem] font-bold text-[#3B82F6] pl-10 select-none padding-left" style={{fontFamily: "'Raleway', sans-serif"}}>JobRocket</p>
                 <div className="text-[0.9rem] hidden lg:flex text-[#1F2937]">
                     <p className={`cursor-pointer ${current == "/" ? "text-[#3B82F6]": "text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease"}`} onClick={() => {navigate("/")}}>Home</p>
