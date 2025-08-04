@@ -1,4 +1,4 @@
-function Job({img, role, company, where, salary, tags, description, experience, employmentType, posted, seeMore}){
+function Job({img, role, company, where, minSalary, maxSalary, tags, description, experience, employmentType, posted, openings, seeMore}){
     return(
         seeMore ? (
             <div className="flex items-start md:items-center flex-col md:flex-row" style={{fontFamily: "'Roboto', sans-serif"}}>
@@ -12,13 +12,16 @@ function Job({img, role, company, where, salary, tags, description, experience, 
                                 <p className="font-bold text-[1.1rem]">{role}</p>
                             </div>
                             <p className="text-[0.9rem] text-gray-800">{description}</p>
-                            <p className="text-[0.9rem] text-gray-800 mt-[0.5em]">🏢 {company} | 🌐 {where} | 💵 {salary} | 📊 {experience} | 🕒 {employmentType}</p>
+                            <p className="text-[0.9rem] text-gray-800 mt-[0.5em]">🏢 {company} | 🌐 {where} | 💵 ${minSalary} - ${maxSalary} | 📊 {experience} | 🕒 {employmentType}</p>
                             <div className="flex mt-[0.8em] md:mt-[0.6em] flex-wrap gap-x-[0.7em] gap-y-[0.5em]">
                                 {tags.map((tag) => (
                                     <div className={`text-white bg-[#3B82F6] px-[0.5em] py-[0.3em] text-[0.7rem] rounded-[5px]`}>
                                         <p>{tag}</p>
                                     </div>
                                 ))}
+                                <div className={`text-white bg-[#10B981] px-[0.5em] py-[0.3em] text-[0.7rem] rounded-[5px]`}>
+                                    <p>{openings} Openings</p>
+                                </div>
                             </div>
                             <p className="text-gray-800 pt-[1em] text-[0.8rem]">{posted}</p>
                         </div>
@@ -37,7 +40,7 @@ function Job({img, role, company, where, salary, tags, description, experience, 
                 <div className="flex items-start md:items-center flex-col md:flex-row w-full">
                     <div className="pl-[2em] flex flex-col w-full grow">
                         <p className="font-bold text-[1.1rem]">{role}</p>
-                        <p className="text-[0.9rem] text-gray-800">🏢 {company} | 🌐 {where} | 💵 {salary}</p>
+                        <p className="text-[0.9rem] text-gray-800">🏢 {company} | 🌐 {where} | 💵 ${minSalary} - ${maxSalary}</p>
                         <div className="flex mt-[0.8em] md:mt-[0.6em] flex-wrap gap-x-[0.7em] gap-y-[0.5em]">
                             {tags.map((tag) => (
                                 <div className={`text-white bg-[#3B82F6] px-[0.5em] py-[0.3em] text-[0.7rem] rounded-[5px]`}>

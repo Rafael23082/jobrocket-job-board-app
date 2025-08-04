@@ -62,7 +62,7 @@
                 ): (
                     displayedJobs.map((job) => (
                         <div className="py-[1.5em] border-b border-gray-200">
-                            <Job img={"innova.png"} role={job.role} company={job.company} where={job.location} salary={job.min} tags={job.tags} description={job.description} experience={job.experience} employmentType={job.employmentType} posted={job.postedAt} seeMore={true} />
+                            <Job img={"innova.png"} role={job.role} company={job.company} where={job.location} minSalary={job.salary.min} maxSalary={job.salary.max} tags={job.tags} description={job.description} experience={job.experience} employmentType={job.employmentType} posted={job.postedAt} openings={job.openings} seeMore={true} />
                         </div> 
                     ))
                 )}

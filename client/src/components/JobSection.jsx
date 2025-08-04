@@ -10,7 +10,9 @@ function JobSection({category}){
     useEffect(() => {
         const getJobs = async() => {
             const res = await axios.get("http://localhost:4000/api/jobs/getAllJobs");
+            console.log("Full job list:", res.data);
             const filteredJobs = res.data.filter((job) => job.field == category);
+            console.log("Filtered jobs:", filteredJobs);
             setDisplayedJobs(filteredJobs.slice(0, 3));
         }
         getJobs();
@@ -24,7 +26,7 @@ function JobSection({category}){
             </div>
             {displayedJobs.map((job) => (
                 <div className="py-[1.5em] border-b border-gray-200">
-                    <Job img={"innova.png"} role={job.role} company={job.company} where={job.location} salary={job.min} tags={job.tags} seeMore={false} />
+                    <Job img={"innova.png"} role={job.role} company={job.company} where={job.location} minSalary={job.salary.min} maxSalary={job.salary.max} tags={job.tags} seeMore={false} />
                 </div> 
             ))}
         </div>

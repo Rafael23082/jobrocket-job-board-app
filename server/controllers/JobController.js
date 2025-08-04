@@ -44,4 +44,13 @@ const deleteJob = async(req, res) => {
     }
 }
 
-export default {getAllJobs, addJob, deleteJob}
+const deleteAllJobs = async(req, res) => {
+    try{
+        await jobModel.deleteMany({});
+        return res.status(200).json({message: "Jobs deleted"});
+    }catch(err){
+        return res.status(500).json({message: err.message});
+    }
+}
+
+export default {getAllJobs, addJob, deleteJob, deleteAllJobs}

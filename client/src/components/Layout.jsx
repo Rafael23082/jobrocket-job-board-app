@@ -13,7 +13,7 @@ function Layout(){
 
             <Outlet />
 
-            <footer className="bg-[#1F2937]">
+            <footer className="bg-slate-700">
                 <Footer />
             </footer>
         </>
