@@ -51,7 +51,11 @@ const jobSchema = mongoose.Schema({
     openings: {
         type: Number,
         required: true
-    }
+    },
+    requirements: [{
+        type: String,
+        required: true
+    }]
 })
 
 const jobModel = mongoose.model("job", jobSchema);

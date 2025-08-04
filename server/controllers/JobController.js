@@ -11,7 +11,7 @@ const getAllJobs = async(req, res) => {
 
 const addJob = async(req, res) => {
     try{
-        const {role, company, location, field, minSalary, maxSalary, description, tags, openings, experience, employmentType} = req.body;
+        const {role, company, location, field, minSalary, maxSalary, description, tags, openings, experience, employmentType, requirements} = req.body;
         const newJob = await jobModel.create({
             role,
             company,
@@ -26,7 +26,8 @@ const addJob = async(req, res) => {
             openings,
             experience, 
             employmentType,
-            postedAt: Date.now()
+            postedAt: Date.now(),
+            requirements
         })
         res.status(200).json({message: "Job Added!"});
     }catch(err){

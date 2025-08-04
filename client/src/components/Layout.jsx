@@ -5,9 +5,9 @@ import { Outlet } from "react-router-dom"
 function Layout(){
     return(
         <>
-            <header>
+            <header className="sticky top-0 shadow z-50">
                 <div className="mx-auto max-w-[1300px]">
-                <Navbar current={"Jobs"} />  
+                    <Navbar current={"Jobs"} />  
                 </div>
             </header>
 

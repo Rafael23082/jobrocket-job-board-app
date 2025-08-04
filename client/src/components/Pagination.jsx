@@ -1,5 +1,4 @@
     import { useState } from "react";
-    import JobData from "./JobData.jsx";
     import Job from "./Job.jsx";
     import { MdKeyboardArrowLeft } from "react-icons/md";
     import { MdKeyboardArrowRight } from "react-icons/md";
@@ -7,7 +6,7 @@
     import axios from "axios";
     import { BarLoader } from "react-spinners";
 
-    function Pagination({category}){
+    function Pagination({category, jobOpened, setJobOpened}){
         const [page, setPage] = useState(1);
         const maxDisplayed = 5;
         const [maxPages, setMaxPages] = useState(0);
@@ -15,8 +14,10 @@
         const [loading, setLoading] = useState(true);
 
         useEffect(() => {
+            console.log(loading);
             const getJobs = async() => {
                 try{
+                    setLoading(true);
                     const startIndex = (page - 1) * maxDisplayed;
                     const endIndex = startIndex + maxDisplayed;
                     const res = await axios.get("http://localhost:4000/api/jobs/getAllJobs");
@@ -24,7 +25,6 @@
                     setMaxPages(Math.ceil(filteredJobs.length/maxDisplayed));
                     setDisplayedJobs(filteredJobs.slice(startIndex, endIndex));
                 }catch(err){
-                    console.log(err);
                 }finally{
                     setTimeout(() => {
                         setLoading(false);
@@ -48,10 +48,10 @@
         return(
             <div className="mt-[2em]">
                 <div className="flex items-center">
-                    <p className="text-[1.5rem] lg:w-[60%] pt-[0.5em] py-[1em] subheading font-bold grow">{category} Jobs</p>
+                    <p className="text-[1.4rem] sm:text-[1.5rem] lg:w-[60%] pt-[0.5em] py-[1em] font-bold grow">{category} Jobs</p>
                 </div>
                 {loading ? (
-                    <div className="flex w-[100%] h-[100vh] absolute top-0 bg-white left-0 justify-center items-center z-0">
+                    <div className="w-[100%] h-[100vh] flex absolute top-0 bg-white left-0 justify-center items-center z-0">
                         <BarLoader
                             color={"#3B82F6"}
                             loading={loading}
@@ -62,7 +62,7 @@
                 ): (
                     displayedJobs.map((job) => (
                         <div className="py-[1.5em] border-b border-gray-200">
-                            <Job img={"innova.png"} role={job.role} company={job.company} where={job.location} minSalary={job.salary.min} maxSalary={job.salary.max} tags={job.tags} description={job.description} experience={job.experience} employmentType={job.employmentType} posted={job.postedAt} openings={job.openings} seeMore={true} />
+                            <Job job={job} seeMore={true} jobOpened={jobOpened} setJobOpened={setJobOpened} />
                         </div> 
                     ))
                 )}
