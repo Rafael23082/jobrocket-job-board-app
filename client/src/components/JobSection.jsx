@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-function JobSection({category, jobOpened, setJobOpened}){
+function JobSection({category, jobOpened, setJobOpened, isOpen, setIsOpen}){
     const [displayedJobs, setDisplayedJobs] = useState([]);
     const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ function JobSection({category, jobOpened, setJobOpened}){
             </div>
             {displayedJobs.map((job) => (
                 <div className="py-[1.5em] border-b border-gray-200">
-                    <Job job={job} seeMore={false} jobOpened={jobOpened} setJobOpened={setJobOpened} />
+                    <Job job={job} seeMore={false} jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} />
                 </div> 
             ))}
         </div>

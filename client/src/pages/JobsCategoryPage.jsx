@@ -6,14 +6,15 @@ import DescriptionSlideOverPanel from "../components/DescriptionSlideOverPanel.j
 function JobsCategoryPage(){
     const {field} = useParams();
     const [jobOpened, setJobOpened] = useState({});
+    const [isOpen, setIsOpen] = useState(false);
     return(
         <>
         <section className="py-[3em]">
             <div className="max-w-[1300px] mx-auto flex overflow-hidden">
-                <div className={`${Object.keys(jobOpened).length == 0 ? "w-[100%]" : "w-[100%] lg:w-[60%]"} padding-x px-10 transition-all duration-1WD00 ease duration-[0.3s]`}>
-                    <Pagination category={field} jobOpened={jobOpened} setJobOpened={setJobOpened} />
+                <div className={`${isOpen ? "w-[100%] lg:w-[60%] " : "w-[100%]"} padding-x px-10 transition-all duration-1WD00 ease duration-[0.3s]`}>
+                    <Pagination category={field} jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} />
                 </div>
-                <DescriptionSlideOverPanel jobOpened={jobOpened} setJobOpened={setJobOpened} />
+                <DescriptionSlideOverPanel jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} />
             </div>
         </section>
         </>
