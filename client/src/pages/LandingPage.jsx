@@ -5,7 +5,6 @@ import WhyChooseUsBox from "../components/WhyChooseUsBox.jsx";
 import { IoSearchOutline } from "react-icons/io5";
 import { FaBolt } from "react-icons/fa";
 import { IoIosNotifications } from "react-icons/io";
-import Footer from "../components/Footer.jsx";
 
 function LandingPage(){
     return(

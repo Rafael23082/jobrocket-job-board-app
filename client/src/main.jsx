@@ -14,26 +14,29 @@ import SignUpPage from './pages/SignUpPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import JobsLayoutPage from './components/JobsLayoutPage.jsx';
+import UserProvider from './context/UserContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
-      <ScrollToTop />
-      <Routes>
-        <Route path='/' element={<Layout />}>
-          <Route index element={<LandingPage />} />
-          <Route path='/candidateOverview' element={<CandidateOverviewPage />}></Route>
-          <Route path='/recruiterOverview' element={<RecruiterOverviewPage />}></Route>
-          <Route path='/pricing' element={<PricingPage />}></Route>
-        </Route>
-        <Route path='/jobs' element={<JobsLayoutPage />}>
-          <Route index element={<JobsPage />}></Route>
-          <Route path=':field' element={<JobsCategoryPage />}></Route>
-        </Route>
-        <Route path='/signup' element={<SignUpPage />}></Route>
-        <Route path='/login' element={<LoginPage />}></Route>
-        <Route path='/dashboard/:role' element={<DashboardPage />}></Route>
-      </Routes>
-    </BrowserRouter>
-  </StrictMode>,
+    <UserProvider>
+      <BrowserRouter>
+        <ScrollToTop />
+        <Routes>
+          <Route path='/' element={<Layout />}>
+            <Route index element={<LandingPage />} />
+            <Route path='/candidateOverview' element={<CandidateOverviewPage />}></Route>
+            <Route path='/recruiterOverview' element={<RecruiterOverviewPage />}></Route>
+            <Route path='/pricing' element={<PricingPage />}></Route>
+          </Route>
+          <Route path='/jobs' element={<JobsLayoutPage />}>
+            <Route index element={<JobsPage />}></Route>
+            <Route path=':field' element={<JobsCategoryPage />}></Route>
+          </Route>
+          <Route path='/signup' element={<SignUpPage />}></Route>
+          <Route path='/login' element={<LoginPage />}></Route>
+          <Route path='/dashboard/:role' element={<DashboardPage />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
+  </StrictMode>
 )
