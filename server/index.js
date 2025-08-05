@@ -3,6 +3,7 @@ import jobRoutes from "./routes/JobRoutes.js";
 import { connectDB } from "./config/connectDB.js";
 import cors from "cors";
 import dotenv from "dotenv";
+import userRoutes from "./routes/UserRoutes.js";
 
 const app = express();
 
@@ -12,7 +13,8 @@ dotenv.config();
 
 connectDB();
 
-app.use("/api/jobs", jobRoutes);
+app.use("/api/job", jobRoutes);
+app.use("/api/user", userRoutes);
 
 app.listen(4000, () => {
     console.log("Server is running on port 4000.")
