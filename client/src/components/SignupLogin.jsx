@@ -16,7 +16,7 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
     const navigate = useNavigate();
     const [errors, setErrors] = useState({}); 
 
-    const handleSubmit = () => {
+    const handleSubmit = async() => {
         let newErrors = {}
         fields.map((field) => {
             if (field.name == "Role"){
@@ -42,6 +42,18 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
         })
         setErrors(newErrors);
         if (Object.keys(newErrors).length == 0){
+            if (signup){
+                try{
+                    const res = await axios.post("http://localhost:4000/api/user/signup", {
+                        name: formValues["Full Name"],
+                        email: formValues["Email"],
+                        password: formValues["Password"],
+                        role: dropdownText
+                    })
+                }catch(err){
+                    console.log(err);
+                }
+            }
             navigate(`/dashboard/${dropdownText}`)
         }
     }
