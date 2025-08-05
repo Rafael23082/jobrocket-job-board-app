@@ -41,4 +41,23 @@ const signup = async(req, res) => {
     }
 }
 
-export default {getAllUsers, deleteAllUsers, signup};
+const login = async(req, res) => {
+    try{
+        const {email, password} = req.body;
+        const user = await userModel.findOne({
+            email
+        })
+        if (!user){
+            return res.status(404).json({message: "User not found!"});
+        }
+        const correctPassword = await bcrypt.compare(password, user.password);
+        if (!correctPassword){
+            return res.status(401).json({message: "Invalid credentials"});
+        }
+        return res.status(200).json(user);
+    }catch(err){
+        return res.status(500).json({message: err.message});
+    }
+}
+
+export default {getAllUsers, deleteAllUsers, signup, login};

@@ -50,11 +50,22 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                         password: formValues["Password"],
                         role: dropdownText
                     })
+                    navigate(`/dashboard/${dropdownText}`)
                 }catch(err){
                     console.log(err);
                 }
             }
-            navigate(`/dashboard/${dropdownText}`)
+            else if(!signup){
+                try{
+                    const res = await axios.post("http://localhost:4000/api/user/login", {
+                        email: formValues["Email"],
+                        password: formValues["Password"]
+                    })
+                    navigate(`/dashboard/${res.data.role}`)
+                }catch(err){
+                    console.log(err);
+                }
+            }
         }
     }
 
