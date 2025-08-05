@@ -4,7 +4,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
 import { useState } from "react";
 import { IoIosWarning } from "react-icons/io";
-import axios from "axios";
+import axios from "axios"
 
 function SignupLogin({heading, subheading, fields, button, alternative, alternative2, text, minheight, signup}){
     const [dropdownOpen, setDropdownOpen] = useState(false);

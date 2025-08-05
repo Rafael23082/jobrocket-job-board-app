@@ -25,6 +25,7 @@
                     setMaxPages(Math.ceil(filteredJobs.length/maxDisplayed));
                     setDisplayedJobs(filteredJobs.slice(startIndex, endIndex));
                 }catch(err){
+                    console.log(err);
                 }finally{
                     setTimeout(() => {
                         setLoading(false);

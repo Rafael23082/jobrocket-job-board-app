@@ -21,9 +21,16 @@ const deleteAllUsers = async(req, res) => {
 
 const signup = async(req, res) => {
     try{
-        const {name, email, password} = req.body;
+        const {name, email, password, role} = req.body;
+        const user = await userModel.findOne({
+            email: email
+        })
+        if (user){
+            return res.status(409).json({message: "Email is already in use."})
+        }
         const hashedPassword = await bcrypt.hash(password, 10);
         await userModel.create({
+            role,
             name,
             email,
             password: hashedPassword
