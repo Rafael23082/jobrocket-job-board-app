@@ -1,13 +1,11 @@
 import Navbar from "./Navbar.jsx"
 import Footer from "./Footer.jsx"
 import { Outlet } from "react-router-dom"
-import { useLocation } from "react-router-dom"
 
-function Layout(){
-    const {pathname} = useLocation();
+function JobsLayoutPage(){
     return(
         <>
-            <header className="sticky top-0 shadow z-50">
+            <header className="block top-0 shadow z-50">
                 <div className="mx-auto max-w-[1300px]">
                     <Navbar current={"Jobs"} />  
                 </div>
@@ -22,4 +20,4 @@ function Layout(){
     )
 }
 
-export default Layout;
+export default JobsLayoutPage;
