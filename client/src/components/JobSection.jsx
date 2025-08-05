@@ -23,7 +23,7 @@ function JobSection({category, jobOpened, setJobOpened, isOpen, setIsOpen}){
                 <p className="text-[0.9rem] text-gray-800 cursor-pointer hover:underline" onClick={() => {navigate(`/jobs/${category}`)}}>See More</p>
             </div>
             {displayedJobs.map((job) => (
-                <div className="py-[1.5em] border-b border-gray-200">
+                <div className="py-[1.5em] border-b border-gray-300">
                     <Job job={job} seeMore={false} jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} />
                 </div> 
             ))}
