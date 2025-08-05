@@ -62,7 +62,7 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
         <div className="relative min-h-[100vh] w-[100%] flex justify-center items-center">
             <div className="absolute hidden sm:block top-0 w-[100%] inset-0 bg-cover bg-center" style={{backgroundImage: "url(/blue_bg.jpg)"}}></div>
             <div className="absolute hidden sm:block w-[100%] top-0 inset-0" style={{backgroundColor: "rgba(0,0,0,0.5)"}}></div>
-            <div className={`bg-white flex flex-col justify-between relative z-10 px-10 padding-x h-[100vh] min-h-[${minheight}] sm:h-fit py-[3em] w-[100%] sm:w-[500px] rounded-0 sm:rounded-[5px] my-0 sm:my-[3em]`}>
+            <div className={`overflow-auto bg-white flex flex-col justify-between relative z-10 px-10 padding-x h-screen sm:h-fit py-[3em] w-[100%] sm:w-[500px] rounded-0 sm:rounded-[5px] my-0 sm:my-[3em]`}>
                 <div>
                     <p className="text-[1.5rem] font-bold text-blue-500">{heading}</p>
                     <p className="text-gray-600 text-[0.9rem]">{subheading}</p>
@@ -102,7 +102,7 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                         signup ? (navigate("/login")): (navigate("/signup"))
                     }}>{alternative}<span className="text-blue-500 cursor-pointer hover:text-blue-700 duration-[0.3s] ease flex items-center pl-[0.5em] group">{alternative2} <FaArrowRightLong className="ml-[0.3em] group-hover:translate-x-[5px] transition-transform duration-[0.3s] ease" /></span></p>
                 </div>
-                 <p className="text-[0.85rem] pr-5 sm:pr-0s sm:bottom-0 sm:relative text-gray-500 pt-[2em] md:pt-[3em]">{text}</p>
+                <p className="text-[0.85rem] pr-5 sm:pr-0 sm:bottom-0 sm:relative text-gray-500 pt-[2em] md:pt-[3em]">{text}</p>
             </div>
         </div>
     )
