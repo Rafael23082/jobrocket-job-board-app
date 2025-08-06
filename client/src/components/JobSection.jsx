@@ -10,7 +10,7 @@ function JobSection({category, jobOpened, setJobOpened, isOpen, setIsOpen}){
     useEffect(() => {
         const getJobs = async() => {
             try{
-                const res = await axios.get("http://localhost:4000/api/job/getAllJobs");
+                const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getAllJobs`);
                 const filteredJobs = res.data.filter((job) => job.field == category);
                 setDisplayedJobs(filteredJobs.slice(0, 3));
             }catch(err){

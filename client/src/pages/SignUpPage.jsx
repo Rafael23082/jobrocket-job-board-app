@@ -1,10 +1,7 @@
-import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import SignupLogin from "../components/SignupLogin.jsx";
 
 function SignUpPage(){
-    const {role} = useParams();
-
     useEffect(() => {
         document.body.style.backgroundColor = "black";
 

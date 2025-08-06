@@ -20,7 +20,7 @@
                     setLoading(true);
                     const startIndex = (page - 1) * maxDisplayed;
                     const endIndex = startIndex + maxDisplayed;
-                    const res = await axios.get("http://localhost:4000/api/job/getAllJobs");
+                    const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getAllJobs`);
                     const filteredJobs = res.data.filter((job) => job.field == category);
                     setMaxPages(Math.ceil(filteredJobs.length/maxDisplayed));
                     setDisplayedJobs(filteredJobs.slice(startIndex, endIndex));

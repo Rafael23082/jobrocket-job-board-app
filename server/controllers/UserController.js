@@ -29,13 +29,13 @@ const signup = async(req, res) => {
             return res.status(409).json({message: "Email is already in use."})
         }
         const hashedPassword = await bcrypt.hash(password, 10);
-        await userModel.create({
+        const userCreated = await userModel.create({
             role,
             name,
             email,
             password: hashedPassword
         })
-        return res.status(200).json({message: "User created!"});
+        return res.status(200).json(userCreated);
     }catch(err){
         return res.status(500).json({message: err.message});
     }

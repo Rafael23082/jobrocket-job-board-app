@@ -5,6 +5,8 @@ import { IoIosArrowUp } from "react-icons/io";
 import { useState } from "react";
 import { IoIosWarning } from "react-icons/io";
 import axios from "axios"
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext.jsx";
 
 function SignupLogin({heading, subheading, fields, button, alternative, alternative2, text, minheight, signup}){
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -15,6 +17,7 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
     }, {}))
     const navigate = useNavigate();
     const [errors, setErrors] = useState({}); 
+    const {user, setUser} = useContext(UserContext);
 
     const handleSubmit = async() => {
         let newErrors = {}
@@ -50,6 +53,7 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                         password: formValues["Password"],
                         role: dropdownText
                     })
+                    setUser(res.data);
                     navigate(`/dashboard/${dropdownText}`)
                 }catch(err){
                     console.log(err);
@@ -61,6 +65,7 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                         email: formValues["Email"],
                         password: formValues["Password"]
                     })
+                    setUser(res.data);
                     navigate(`/dashboard/${res.data.role}`)
                 }catch(err){
                     console.log(err);
