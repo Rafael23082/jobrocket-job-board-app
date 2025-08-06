@@ -4,6 +4,8 @@ import Footer from "../components/Footer.jsx";
 import CallToAction from "../components/CallToAction.jsx";
 import TimelineSection from "../components/TimelineSection.jsx";
 import FeatureHighlightSection from "../components/FeatureHighlightSection.jsx";
+import { MdTouchApp } from "react-icons/md";
+import { FaLightbulb } from "react-icons/fa";
 
 function CandidateOverviewPage(){
   return(
@@ -15,7 +17,7 @@ function CandidateOverviewPage(){
       </section>
 
       <section className="border-y-[0.7px] border-gray-100">
-        <FeatureHighlightSection title={"Opportunities will come your way"} img={"opportunity.jpg"} feature1={"Apply easily"} description1={"Submit job applications with just one click—no lengthy forms or repetitive info."} icon1={"tap.png"} feature2={"Get matched instantly"} description2={"Receive personalized job matches based on your profile, skills, and preferences—no endless scrolling needed."} icon2={"lightbulb.png"} />
+        <FeatureHighlightSection title={"Opportunities will come your way"} img={"opportunity.jpg"} feature1={"Apply easily"} description1={"Submit job applications with just one click—no lengthy forms or repetitive info."} Icon1={MdTouchApp} feature2={"Get matched instantly"} description2={"Receive personalized job matches based on your profile, skills, and preferences—no endless scrolling needed."} Icon2={FaLightbulb} />
       </section>
 
       <section className="border-t-[0.7px] border-gray-100">

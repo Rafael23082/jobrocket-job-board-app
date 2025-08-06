@@ -3,7 +3,8 @@ import OverviewHeroSection from "../components/OverviewHeroSection.jsx";
 import FeatureHighlightSection from "../components/FeatureHighlightSection.jsx";
 import TimelineSection from "../components/TimelineSection.jsx";
 import CallToAction from "../components/CallToAction.jsx";
-import Footer from "../components/Footer.jsx";
+import { FaRegClipboard } from "react-icons/fa";
+import { FaPuzzlePiece } from "react-icons/fa";
 
 function RecruiterOverviewPage(){
     return(
@@ -15,7 +16,7 @@ function RecruiterOverviewPage(){
             </section>
 
             <section className="border-y-[0.7px] border-gray-100">
-                <FeatureHighlightSection title={"Great Candidates Are Within Reach"} img={"interview.jpg"} feature1={"Post Jobs in Minutes"} description1={"Create job listings effortlessly—no clutter, no friction. Reach thousands of job seekers instantly."} icon1={"clipboard.png"} feature2={"Get Matched with Top Talent"} description2={"Receive candidate suggestions tailored to your job requirements, saving you time and effort."} icon2={"puzzle2.png"} />
+                <FeatureHighlightSection title={"Great Candidates Are Within Reach"} img={"interview.jpg"} feature1={"Post Jobs in Minutes"} description1={"Create job listings effortlessly—no clutter, no friction. Reach thousands of job seekers instantly."} Icon1={FaRegClipboard} feature2={"Get Matched with Top Talent"} description2={"Receive candidate suggestions tailored to your job requirements, saving you time and effort."} Icon2={FaPuzzlePiece} />
             </section>
 
             <section className="border-t-[0.7px] border-gray-100">
