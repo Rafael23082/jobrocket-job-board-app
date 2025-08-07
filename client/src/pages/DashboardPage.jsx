@@ -84,7 +84,7 @@ function DashboardPage(){
                         <ResponsiveContainer width="100%" height={350}>
                             <BarChart data={productSales}>
                                 <Bar dataKey="product1" stroke="#8884d8" fill="#8884d8" />
-                                <Bar type="monotone" dataKey="product2" stroke="#82ca9d" fill="#82ca9d" />
+                                <Bar dataKey="product2" stroke="#82ca9d" fill="#82ca9d" />
                                 <YAxis tick={{fontSize: 12}} width={24} />
                                 <XAxis dataKey="name" tick={{fontSize: 12}} height={24} />
                                 <Tooltip />
