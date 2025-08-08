@@ -6,7 +6,7 @@
     import axios from "axios";
     import { BarLoader } from "react-spinners";
 
-    function Pagination({category, jobOpened, setJobOpened, isOpen, setIsOpen}){
+    function Pagination({category, jobOpened, setJobOpened, isOpen, setIsOpen, dashboard}){
         const [page, setPage] = useState(1);
         const maxDisplayed = 5;
         const [maxPages, setMaxPages] = useState(0);
@@ -18,10 +18,15 @@
             const getJobs = async() => {
                 try{
                     setLoading(true);
+                    let filteredJobs;
                     const startIndex = (page - 1) * maxDisplayed;
                     const endIndex = startIndex + maxDisplayed;
                     const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getAllJobs`);
-                    const filteredJobs = res.data.filter((job) => job.field == category);
+                    if (category == "All"){
+                        filteredJobs = res.data;
+                    } else {
+                        filteredJobs = res.data.filter((job) => job.field == category);
+                    }
                     setMaxPages(Math.ceil(filteredJobs.length/maxDisplayed));
                     setDisplayedJobs(filteredJobs.slice(startIndex, endIndex));
                 }catch(err){
@@ -47,12 +52,12 @@
             }
         }
         return(
-            <div className="mt-[2em]">
-                <div className="flex items-center">
+            <div className={`${dashboard ? "mt-0": "mt-[2em]"}`}>
+                <div className={`items-center ${dashboard ? "hidden": "flex"}`}>
                     <p className="text-[1.4rem] sm:text-[1.5rem] lg:w-[60%] pt-[0.5em] py-[1em] font-bold grow">{category} Jobs</p>
                 </div>
                 {loading ? (
-                    <div className="w-[100%] h-[100vh] flex absolute top-0 bg-white left-0 justify-center items-center z-0">
+                    <div className={`w-[100%] h-[100vh] flex absolute top-0 bg-white left-0 justify-center items-center z-0`}>
                         <BarLoader
                             color={"#3B82F6"}
                             loading={loading}

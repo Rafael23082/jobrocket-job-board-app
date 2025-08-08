@@ -4,10 +4,19 @@ import DescriptionSlideOverPanel from "../components/DescriptionSlideOverPanel.j
 import { useState } from "react";
 import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
+import { useEffect } from "react";
 
 function JobsPage(){
     const [jobOpened, setJobOpened] = useState({});
     const [isOpen, setIsOpen] = useState(false);
+    useEffect(() => {
+        if (isOpen){
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+    }, [isOpen])
+    
     return(
         <>
             <header className="block top-0 shadow z-50">
@@ -17,7 +26,7 @@ function JobsPage(){
             </header>
         
             <section className="flex max-w-[1300px] mx-auto">
-                <div className={`max-h-[calc(100vh-80px)] overflow-auto ${isOpen ? "hidden lg:block lg:w-[60%]": "w-[100%]"} `}>
+                <div className={`w-[100%]`}>
                     <div className={`w-[100%] padding-x px-10 py-[5em] md:py-[7em]`}>
                         <p className="font-bold text-[1.5rem] lg:text-[2.5rem] w-[70%]">Find the Right Job, Right Here.</p>
                         <p className="text-[1.2rem] lg:w-[60%] pt-[0.5em] subheading">Explore thousands of opportunities tailored to your skills, goals, and ambition.</p>
@@ -32,14 +41,12 @@ function JobsPage(){
                         </div>
                     </div>
                 </div>
-                {
-                    isOpen && (
-                        <div className="w-[100%] lg:w-[40%]">
-                            <DescriptionSlideOverPanel jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} />
-                        </div>
-                    )
-                }
             </section>
+            {
+                isOpen && (
+                    <DescriptionSlideOverPanel jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} />
+                )
+            }
         </>
     )
 }

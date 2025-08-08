@@ -3,11 +3,20 @@ import Pagination from "../components/Pagination.jsx";
 import { useState } from "react";
 import DescriptionSlideOverPanel from "../components/DescriptionSlideOverPanel.jsx";
 import Navbar from "../components/Navbar.jsx";
+import { useEffect } from "react";
 
 function JobsCategoryPage(){
     const {field} = useParams();
     const [jobOpened, setJobOpened] = useState({});
     const [isOpen, setIsOpen] = useState(false);
+
+    useEffect(() => {
+        if (isOpen){
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+    }, [isOpen])
     return(
         <>
         <header className="block top-0 shadow z-50">
@@ -17,17 +26,15 @@ function JobsCategoryPage(){
         </header>
         
         <section className="flex max-w-[1300px] mx-auto">
-            <div className={`max-h-[calc(100vh-80px)] overflow-y-auto overflow-x-hidden ${isOpen ? "hidden lg:block lg:w-[60%]": "w-[100%]"} padding-x px-10 py-[5em]`}>
+            <div className={`overflow-x-hidden w-[100%] padding-x px-10 py-[5em]`}>
                 <Pagination category={field} jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} />
             </div>
-            {
-                isOpen && (
-                    <div className="w-[100%] lg:w-[40%]">
-                        <DescriptionSlideOverPanel jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} />
-                    </div>
-                )
-            }
         </section>
+        {
+            isOpen && (
+                <DescriptionSlideOverPanel jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} />
+            )
+        }
         </>
     )
 }

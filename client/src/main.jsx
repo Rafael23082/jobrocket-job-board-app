@@ -14,6 +14,7 @@ import SignUpPage from './pages/SignUpPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import UserProvider from './context/UserContext.jsx';
+import CandidateJobsPage from './pages/CandidateJobsPage.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -32,6 +33,7 @@ createRoot(document.getElementById('root')).render(
           <Route path='/signup' element={<SignUpPage />}></Route>
           <Route path='/login' element={<LoginPage />}></Route>
           <Route path='/dashboard/:role' element={<DashboardPage />}></Route>
+          <Route path='/dashboard/Candidate/jobs' element={<CandidateJobsPage />}></Route>
         </Routes>
       </BrowserRouter>
     </UserProvider>
