@@ -8,14 +8,14 @@ import { useEffect } from "react";
 
 function JobsPage(){
     const [jobOpened, setJobOpened] = useState({});
-    const [isOpen, setIsOpen] = useState(false);
+    const [detailsIsOpen, setDetailsIsOpen] = useState(false);
     useEffect(() => {
-        if (isOpen){
+        if (detailsIsOpen){
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "auto";
         }
-    }, [isOpen])
+    }, [detailsIsOpen])
     
     return(
         <>
@@ -32,19 +32,19 @@ function JobsPage(){
                         <p className="text-[1.2rem] lg:w-[60%] pt-[0.5em] subheading">Explore thousands of opportunities tailored to your skills, goals, and ambition.</p>
                         <div className="flex">
                             <div className="flex-1">
-                                <JobSection category={"Tech"} jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} />
-                                <JobSection category={"Design"} jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} />
-                                <JobSection category={"Data"} jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} />
-                                <JobSection category={"Business"} jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} />
-                                <JobSection category={"Marketing"} jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} />
+                                <JobSection category={"Tech"} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
+                                <JobSection category={"Design"} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
+                                <JobSection category={"Data"} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
+                                <JobSection category={"Business"} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
+                                <JobSection category={"Marketing"} jobOpened={jobOpened} setJobOpened={setJobOpened} isdetailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
             {
-                isOpen && (
-                    <DescriptionSlideOverPanel jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} />
+                detailsIsOpen && (
+                    <DescriptionSlideOverPanel jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
                 )
             }
         </>

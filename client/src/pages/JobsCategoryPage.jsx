@@ -8,15 +8,15 @@ import { useEffect } from "react";
 function JobsCategoryPage(){
     const {field} = useParams();
     const [jobOpened, setJobOpened] = useState({});
-    const [isOpen, setIsOpen] = useState(false);
+    const [detailsIsOpen, setDetailsIsOpen] = useState(false);
 
     useEffect(() => {
-        if (isOpen){
+        if (detailsIsOpen){
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "auto";
         }
-    }, [isOpen])
+    }, [detailsIsOpen])
     return(
         <>
         <header className="block top-0 shadow z-50">
@@ -27,12 +27,12 @@ function JobsCategoryPage(){
         
         <section className="flex max-w-[1300px] mx-auto">
             <div className={`overflow-x-hidden w-[100%] padding-x px-10 py-[5em]`}>
-                <Pagination category={field} jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} />
+                <Pagination category={field} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
             </div>
         </section>
         {
-            isOpen && (
-                <DescriptionSlideOverPanel jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} />
+            detailsIsOpen && (
+                <DescriptionSlideOverPanel jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
             )
         }
         </>

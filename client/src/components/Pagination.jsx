@@ -6,7 +6,7 @@
     import axios from "axios";
     import { BarLoader } from "react-spinners";
 
-    function Pagination({category, jobOpened, setJobOpened, isOpen, setIsOpen, dashboard}){
+    function Pagination({category, jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen, dashboard}){
         const [page, setPage] = useState(1);
         const maxDisplayed = 5;
         const [maxPages, setMaxPages] = useState(0);
@@ -34,11 +34,11 @@
                 }finally{
                     setTimeout(() => {
                         setLoading(false);
-                    }, 300)
+                    }, 100)
                 }
             }
             getJobs();
-        }, [category, page])
+        }, [category])
 
         const handleNext = () => {
             if (page < maxPages){
@@ -66,9 +66,9 @@
                         />
                     </div>
                 ): (
-                    displayedJobs.map((job) => (
-                        <div className="py-[1.5em] border-b border-gray-200">
-                            <Job job={job} seeMore={true} jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} />
+                    displayedJobs.map((job, index) => (
+                        <div className="py-[1.5em] border-b border-gray-200" key={index}>
+                            <Job job={job} seeMore={true} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
                         </div> 
                     ))
                 )}

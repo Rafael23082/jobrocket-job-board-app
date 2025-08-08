@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-function JobSection({category, jobOpened, setJobOpened, isOpen, setIsOpen}){
+function JobSection({category, jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen}){
     const [displayedJobs, setDisplayedJobs] = useState([]);
     const navigate = useNavigate();
 
@@ -26,9 +26,9 @@ function JobSection({category, jobOpened, setJobOpened, isOpen, setIsOpen}){
                 <p className="text-[1.4rem] sm:text-[1.5rem] lg:w-[60%] pt-[0.5em] py-[1em] font-bold grow">{category} Jobs</p>
                 <p className="text-[0.9rem] text-gray-800 cursor-pointer hover:underline" onClick={() => {navigate(`/jobs/${category}`)}}>See More</p>
             </div>
-            {displayedJobs.map((job) => (
-                <div className="py-[1.5em] border-b border-gray-300">
-                    <Job job={job} seeMore={false} jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} />
+            {displayedJobs.map((job, index) => (
+                <div key={index} className="py-[1.5em] border-b border-gray-300">
+                    <Job job={job} seeMore={false} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
                 </div> 
             ))}
         </div>

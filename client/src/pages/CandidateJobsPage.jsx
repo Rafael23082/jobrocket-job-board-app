@@ -13,7 +13,7 @@ function CandidateJobsPage(){
     const [menuOpen, setMenuOpen] = useState(false);
     const {user} = useContext(UserContext);
     const [current, setCurrent] = useState("All");
-    const [isOpen, setIsOpen] = useState(false);
+    const [detailsIsOpen, setDetailsIsOpen] = useState(false);
     const [jobOpened, setJobOpened] = useState({});
 
     const navigate = useNavigate();
@@ -22,12 +22,12 @@ function CandidateJobsPage(){
             navigate("/login");
         }
 
-        if (isOpen){
+        if (detailsIsOpen){
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "auto";
         }
-    }, [user, isOpen])
+    }, [user, detailsIsOpen])
     
     return(
         <>
@@ -35,7 +35,7 @@ function CandidateJobsPage(){
             <div className="flex bg-[#fffcfc] overflow-hidden" style={{fontFamily: "'Roboto', sans-serif"}}>
                 <DashboardSideNavbar placeholder={true} />
                 <div className="flex-1 h-fit flex flex-col">
-                    <div className="bg-blue-500 py-[1.2em] flex items-center justify-between px-5">
+                    <div className="bg-blue-500 py-[1.2em] flex items-center justify-between px-5 z-10">
                         <div className="flex-1">
                             <IoMdMenu size={30} className="block lg:hidden cursor-pointer mr-10 margin-right" color="white" onClick={() => {setMenuOpen(!menuOpen)}} />
                         </div>
@@ -46,23 +46,23 @@ function CandidateJobsPage(){
                         </div>
                     </div>
                     <div className="mt-[2em]">
-                        <div className="text-[0.9rem] mx-10 relative pb-[1em]">
+                        <div className="text-[0.9rem] mx-10 relative pb-[1em] relative z-10">
                             <p className="inline-block w-20 text-center cursor-pointer" onClick={() => setCurrent("All")}>All</p>
                             <p className="inline-block w-20 text-center cursor-pointer" onClick={() => setCurrent("Saved")}>Saved</p>
-                            <p className="inline-block w-20 text-center cursor-pointer" onClick={() => setCurrent("Applied")}>Applied</p>
-                            <div className={`absolute top-5 h-[3px] w-20 bg-blue-500 mt-[0.7em] ${current == "All" && "translate-x-0"} ${current == "Saved" && "translate-x-full"} ${current == "Applied" && "translate-x-[200%]"} transition-all duration-300`}></div>
+                            <p className="inline-block w-20 text-center cursor-pointer" onClick={() => setCurrent("Applications")}>Applied</p>
+                            <div className={`absolute top-5 h-[3px] w-20 bg-blue-500 mt-[0.7em] ${current == "All" && "translate-x-0"} ${current == "Saved" && "translate-x-full"} ${current == "Applications" && "translate-x-[200%]"} transition-all duration-300`}></div>
                         </div>
-                        <div className="flex max-w-[1300px] mx-auto">
+                        <div className="flex">
                             <div className={`border-box overflow-x-hidden w-[100%] padding-x px-10 pt-[0.5em] pb-[2em]`}>
-                                <Pagination category={"All"} jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} dashboard={true} />
+                                <Pagination category={"All"} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} dashboard={true} />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             {
-                isOpen && (
-                    <DescriptionSlideOverPanel jobOpened={jobOpened} setJobOpened={setJobOpened} isOpen={isOpen} setIsOpen={setIsOpen} />
+                detailsIsOpen && (
+                    <DescriptionSlideOverPanel jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
                 )
             }
         </>

@@ -15,6 +15,9 @@ import LoginPage from './pages/LoginPage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import UserProvider from './context/UserContext.jsx';
 import CandidateJobsPage from './pages/CandidateJobsPage.jsx';
+import Modal from 'react-modal';
+
+Modal.setAppElement('#root');
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
