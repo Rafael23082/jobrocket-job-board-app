@@ -1,4 +1,4 @@
-function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen}){
+function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen, applyIsOpen, setApplyIsOpen}){
     return(
             <div className="flex items-start md:items-center flex-col md:flex-row" style={{fontFamily: "'Roboto', sans-serif"}}>
                 <div className="grow">
@@ -32,7 +32,7 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
                 </div>
                 <div className="flex pl-0 md:pl-[2em] mt-[1.2em] md:mt-0">
                     <button className="border border-[#3B82F6] text-[#3B82F6] px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold mr-[1em] cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition ease duration-[0.3s]" onClick={() => {setJobOpened(job); setDetailsIsOpen(true)}}>Details</button>
-                    <button className="bg-[#3B82F6] text-white px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]">Apply</button>
+                    <button className="bg-[#3B82F6] text-white px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]" onClick={() => {setJobOpened(job); setApplyIsOpen(true)}}>Apply</button>
                 </div>
             </div>
     )

@@ -5,10 +5,12 @@ import { useState } from "react";
 import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
 import { useEffect } from "react";
+import ApplicationFormModal from "../components/ApplicationFormModal.jsx";
 
 function JobsPage(){
     const [jobOpened, setJobOpened] = useState({});
     const [detailsIsOpen, setDetailsIsOpen] = useState(false);
+    const [applyIsOpen, setApplyIsOpen] = useState(false);
     useEffect(() => {
         if (detailsIsOpen){
             document.body.style.overflow = "hidden";
@@ -32,11 +34,11 @@ function JobsPage(){
                         <p className="text-[1.2rem] lg:w-[60%] pt-[0.5em] subheading">Explore thousands of opportunities tailored to your skills, goals, and ambition.</p>
                         <div className="flex">
                             <div className="flex-1">
-                                <JobSection category={"Tech"} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
-                                <JobSection category={"Design"} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
-                                <JobSection category={"Data"} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
-                                <JobSection category={"Business"} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
-                                <JobSection category={"Marketing"} jobOpened={jobOpened} setJobOpened={setJobOpened} isdetailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
+                                <JobSection category={"Tech"} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} />
+                                <JobSection category={"Design"} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} />
+                                <JobSection category={"Data"} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} />
+                                <JobSection category={"Business"} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} />
+                                <JobSection category={"Marketing"} jobOpened={jobOpened} setJobOpened={setJobOpened} isdetailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} />
                             </div>
                         </div>
                     </div>
@@ -45,6 +47,11 @@ function JobsPage(){
             {
                 detailsIsOpen && (
                     <DescriptionSlideOverPanel jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
+                )
+            }
+            {
+                applyIsOpen && (
+                    <ApplicationFormModal jobOpened={jobOpened} setJobOpened={setJobOpened} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} />
                 )
             }
         </>

@@ -4,11 +4,13 @@ import { useState } from "react";
 import DescriptionSlideOverPanel from "../components/DescriptionSlideOverPanel.jsx";
 import Navbar from "../components/Navbar.jsx";
 import { useEffect } from "react";
+import ApplicationFormModal from "../components/ApplicationFormModal.jsx";
 
 function JobsCategoryPage(){
     const {field} = useParams();
     const [jobOpened, setJobOpened] = useState({});
     const [detailsIsOpen, setDetailsIsOpen] = useState(false);
+    const [applyIsOpen, setApplyIsOpen] = useState(false);
 
     useEffect(() => {
         if (detailsIsOpen){
@@ -27,12 +29,17 @@ function JobsCategoryPage(){
         
         <section className="flex max-w-[1300px] mx-auto">
             <div className={`overflow-x-hidden w-[100%] padding-x px-10 py-[5em]`}>
-                <Pagination category={field} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
+                <Pagination category={field} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} />
             </div>
         </section>
         {
             detailsIsOpen && (
                 <DescriptionSlideOverPanel jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
+            )
+        }
+        {
+            applyIsOpen && (
+                <ApplicationFormModal jobOpened={jobOpened} setJobOpened={setJobOpened} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} />
             )
         }
         </>

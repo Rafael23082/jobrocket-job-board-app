@@ -8,12 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Pagination from "../components/Pagination.jsx";
 import DescriptionSlideOverPanel from "../components/DescriptionSlideOverPanel.jsx";
+import ApplicationFormModal from "../components/ApplicationFormModal.jsx";
 
 function CandidateJobsPage(){
     const [menuOpen, setMenuOpen] = useState(false);
     const {user} = useContext(UserContext);
     const [current, setCurrent] = useState("All");
     const [detailsIsOpen, setDetailsIsOpen] = useState(false);
+    const [applyIsOpen, setApplyIsOpen] = useState(false);
     const [jobOpened, setJobOpened] = useState({});
 
     const navigate = useNavigate();
@@ -54,7 +56,7 @@ function CandidateJobsPage(){
                         </div>
                         <div className="flex">
                             <div className={`border-box overflow-x-hidden w-[100%] padding-x px-10 pt-[0.5em] pb-[2em]`}>
-                                <Pagination category={"All"} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} dashboard={true} />
+                                <Pagination category={"All"} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} dashboard={true} />
                             </div>
                         </div>
                     </div>
@@ -63,6 +65,11 @@ function CandidateJobsPage(){
             {
                 detailsIsOpen && (
                     <DescriptionSlideOverPanel jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
+                )
+            }
+            {
+                applyIsOpen && (
+                    <ApplicationFormModal jobOpened={jobOpened} setJobOpened={setJobOpened} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} />
                 )
             }
         </>
