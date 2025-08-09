@@ -1,4 +1,5 @@
 import jobModel from "../models/Job.js";
+import userModel from "../models/User.js";
 
 const getAllJobs = async(req, res) => {
     try{
@@ -54,4 +55,32 @@ const deleteAllJobs = async(req, res) => {
     }
 }
 
-export default {getAllJobs, addJob, deleteJob, deleteAllJobs}
+const saveJob = async(req, res) => {
+    try{
+        const {jobID, userID} = req.body;
+        const result = await userModel.findByIdAndUpdate(userID, {
+            $push: {
+                savedJobs: jobID
+            }
+        })
+        return res.status(200).json(result);
+    }catch(err){
+        return res.status(500).json({message: err.message});
+    }
+}
+
+const removeSavedJob = async(req, res) => {
+    try{
+        const {jobID, userID} = req.body;
+        const result = await userModel.findByIdAndUpdate(userID, {
+            $pull: {
+                savedJobs: jobID
+            }
+        })
+        return res.status(200).json(result);
+    }catch(err){
+        return res.status(500).json({message: err.message});
+    }
+}
+
+export default {getAllJobs, addJob, deleteJob, deleteAllJobs, saveJob, removeSavedJob}

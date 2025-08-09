@@ -13,12 +13,12 @@ function JobsCategoryPage(){
     const [applyIsOpen, setApplyIsOpen] = useState(false);
 
     useEffect(() => {
-        if (detailsIsOpen){
+        if (detailsIsOpen || applyIsOpen){
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "auto";
         }
-    }, [detailsIsOpen])
+    }, [detailsIsOpen, applyIsOpen])
     return(
         <>
         <header className="block top-0 shadow z-50">

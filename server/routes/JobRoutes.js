@@ -7,5 +7,7 @@ jobRoutes.get("/getAllJobs", JobController.getAllJobs);
 jobRoutes.post("/addJob", JobController.addJob);
 jobRoutes.delete("/deleteJob/:jobID", JobController.deleteJob);
 jobRoutes.delete("/deleteAllJobs", JobController.deleteAllJobs);
+jobRoutes.post("/saveJob", JobController.saveJob);
+jobRoutes.post("/removeSavedJob", JobController.removeSavedJob);
 
 export default jobRoutes;

@@ -12,12 +12,12 @@ function JobsPage(){
     const [detailsIsOpen, setDetailsIsOpen] = useState(false);
     const [applyIsOpen, setApplyIsOpen] = useState(false);
     useEffect(() => {
-        if (detailsIsOpen){
+        if (detailsIsOpen || applyIsOpen){
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "auto";
         }
-    }, [detailsIsOpen])
+    }, [detailsIsOpen, applyIsOpen])
     
     return(
         <>

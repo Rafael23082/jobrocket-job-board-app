@@ -24,12 +24,12 @@ function CandidateJobsPage(){
             navigate("/login");
         }
 
-        if (detailsIsOpen){
+        if (detailsIsOpen || applyIsOpen){
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "auto";
         }
-    }, [user, detailsIsOpen])
+    }, [user, detailsIsOpen, applyIsOpen])
     
     return(
         <>

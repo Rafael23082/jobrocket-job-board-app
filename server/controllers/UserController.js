@@ -33,7 +33,8 @@ const signup = async(req, res) => {
             role,
             name,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            savedJobs: []
         })
         return res.status(200).json(userCreated);
     }catch(err){
