@@ -83,4 +83,17 @@ const removeSavedJob = async(req, res) => {
     }
 }
 
-export default {getAllJobs, addJob, deleteJob, deleteAllJobs, saveJob, removeSavedJob}
+const getSavedJobs = async(req, res) => {
+    const {userID} = req.params;
+    const user = await userModel.findById(userID);
+    const jobIDs = user?.savedJobs;
+
+    let savedJobs = [];
+    for (const jobID of jobIDs){
+        let job = await jobModel.findById(jobID);
+        savedJobs.push(job);
+    }
+    return res.status(200).json(savedJobs);
+}
+
+export default {getAllJobs, addJob, deleteJob, deleteAllJobs, saveJob, removeSavedJob, getSavedJobs}

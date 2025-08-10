@@ -3,18 +3,31 @@ import { FaBookmark } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa";
 import { UserContext } from "../context/UserContext.jsx";
 import { useEffect } from "react";
+import axios from "axios";
 
 function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen, applyIsOpen, setApplyIsOpen, dashboard}){
-    const [bookmarked, setBookmarked] = useState(false);
-    const {user} = useContext(UserContext);
+    const {user, setUser} = useContext(UserContext);
+    const bookmarked = dashboard && user?.savedJobs?.includes(job._id);
 
-    useEffect(() => {
-        if (dashboard && user?.savedJobs?.includes(job._id)) {
-            setBookmarked(true);
-        } else {
-            setBookmarked(false);
-        }
-    }, [dashboard, user, job._id]);
+    const handleSaveJob = async() => {
+        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/job/saveJob`, {
+            userID: user._id,
+            jobID: job._id
+        })
+        setUser((prev) => ({
+            ...prev, savedJobs: [...prev.savedJobs, job._id]
+        }))
+    }
+
+    const handleRemoveSavedJob = async() => {
+        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/job/removeSavedJob`, {
+            userID: user._id,
+            jobID: job._id
+        })
+        setUser((prev) => ({
+            ...prev, savedJobs: prev.savedJobs.filter((jobID) => jobID != job._id)
+        }))
+    }
 
     return(
             <div className="flex items-start md:items-center flex-col md:flex-row relative" style={{fontFamily: "'Roboto', sans-serif"}}>
@@ -25,7 +38,7 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
                         </div>
                         <div className="grow md:pl-[2em] pl-0">
                             <div className="flex items-center md:mt-0 mt-[1em]">
-                                <span className="font-bold text-[1.1rem] flex items-center gap-x-[1em]">{job.role} {bookmarked && dashboard && <FaBookmark size={18} className="md:hidden cursor-pointer" color="#3B82F6" onClick={() => setBookmarked(false)} />} {!bookmarked && <FaRegBookmark size={18} className="md:hidden cursor-pointer" color="#3B82F6" onClick={() => setBookmarked(true)} />}</span>
+                                <span className="font-bold text-[1.1rem] flex items-center gap-x-[1em]">{job.role} {bookmarked && dashboard && <FaBookmark size={18} className="md:hidden cursor-pointer" color="#3B82F6" onClick={handleRemoveSavedJob} />} {!bookmarked && <FaRegBookmark size={18} className="md:hidden cursor-pointer" color="#3B82F6" onClick={handleSaveJob} />}</span>
                             </div>
                             {seeMore && <p className="text-[0.9rem] text-gray-800 pt-[0.5em] md:pt-0">{job.description}</p>}
                             <span className="text-[0.9rem] text-gray-800 mt-[0.5em] flex gap-x-[0.3em] flex-wrap">
@@ -51,7 +64,7 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
                     <button className="border border-[#3B82F6] text-[#3B82F6] px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold mr-[1em] cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition ease duration-[0.3s]" onClick={() => {setJobOpened(job); setDetailsIsOpen(true)}}>Details</button>
                     <button className="bg-[#3B82F6] text-white px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]" onClick={() => {setJobOpened(job); setApplyIsOpen(true)}}>Apply</button>
                 </div>
-                {bookmarked && <FaBookmark size={18} className="hidden md:block cursor-pointer absolute top-0 right-0" color="#3B82F6" onClick={() => setBookmarked(false)} />} {!bookmarked && dashboard && <FaRegBookmark size={18} className="hidden md:block cursor-pointer absolute top-0 right-0" color="#3B82F6" onClick={() => setBookmarked(true)} />}
+                {bookmarked && <FaBookmark size={18} className="hidden md:block cursor-pointer absolute top-0 right-0" color="#3B82F6" onClick={handleRemoveSavedJob} />} {!bookmarked && dashboard && <FaRegBookmark size={18} className="hidden md:block cursor-pointer absolute top-0 right-0" color="#3B82F6" onClick={handleSaveJob} />}
             </div>
     )
 }

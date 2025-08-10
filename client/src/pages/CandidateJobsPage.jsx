@@ -13,7 +13,7 @@ import ApplicationFormModal from "../components/ApplicationFormModal.jsx";
 function CandidateJobsPage(){
     const [menuOpen, setMenuOpen] = useState(false);
     const {user} = useContext(UserContext);
-    const [current, setCurrent] = useState("All");
+    const [category, setCategory] = useState("All");
     const [detailsIsOpen, setDetailsIsOpen] = useState(false);
     const [applyIsOpen, setApplyIsOpen] = useState(false);
     const [jobOpened, setJobOpened] = useState({});
@@ -49,14 +49,14 @@ function CandidateJobsPage(){
                     </div>
                     <div className="mt-[2em]">
                         <div className="text-[0.9rem] mx-10 relative pb-[1em] relative z-10">
-                            <p className="inline-block w-20 text-center cursor-pointer" onClick={() => setCurrent("All")}>All</p>
-                            <p className="inline-block w-20 text-center cursor-pointer" onClick={() => setCurrent("Saved")}>Saved</p>
-                            <p className="inline-block w-20 text-center cursor-pointer" onClick={() => setCurrent("Applications")}>Applied</p>
-                            <div className={`absolute top-5 h-[3px] w-20 bg-blue-500 mt-[0.7em] ${current == "All" && "translate-x-0"} ${current == "Saved" && "translate-x-full"} ${current == "Applications" && "translate-x-[200%]"} transition-all duration-300`}></div>
+                            <p className="inline-block w-20 text-center cursor-pointer" onClick={() => setCategory("All")}>All</p>
+                            <p className="inline-block w-20 text-center cursor-pointer" onClick={() => setCategory("Saved")}>Saved</p>
+                            <p className="inline-block w-20 text-center cursor-pointer" onClick={() => setCategory("Applications")}>Applied</p>
+                            <div className={`absolute top-5 h-[3px] w-20 bg-blue-500 mt-[0.7em] ${category == "All" && "translate-x-0"} ${category == "Saved" && "translate-x-full"} ${category == "Applications" && "translate-x-[200%]"} transition-all duration-300`}></div>
                         </div>
                         <div className="flex">
                             <div className={`border-box overflow-x-hidden w-[100%] padding-x px-10 pt-[0.5em] pb-[2em]`}>
-                                <Pagination category={"All"} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} dashboard={true} />
+                                <Pagination category={category} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} dashboard={true} />
                             </div>
                         </div>
                     </div>
