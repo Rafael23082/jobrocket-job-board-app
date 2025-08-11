@@ -54,7 +54,7 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                         role: dropdownText
                     })
                     setUser(res.data);
-                    navigate(`/dashboard/${dropdownText}`)
+                    navigate(`/${dropdownText.toLowerCase()}/dashboard`)
                 }catch(err){
                     console.log(err);
                 }
@@ -66,7 +66,7 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                         password: formValues["Password"]
                     })
                     setUser(res.data);
-                    navigate(`/dashboard/${res.data.role}`)
+                    navigate(`/${res.data.role.toLowerCase()}/dashboard`)
                 }catch(err){
                     console.log(err);
                 }

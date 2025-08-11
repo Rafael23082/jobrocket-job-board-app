@@ -1,9 +1,10 @@
-import userModel from "../models/User.js";
 import bcrypt from "bcrypt";
+import { User } from "../models/User.js";
+import { Candidate } from "../models/User.js";
 
 const getAllUsers = async(req, res) => {
     try{
-        const users = await userModel.find({});
+        const users = await User.find({});
         return res.status(200).json(users);
     }catch(err){
         return res.status(500).json({message: err.message});
@@ -12,7 +13,7 @@ const getAllUsers = async(req, res) => {
 
 const deleteAllUsers = async(req, res) => {
     try{
-        await userModel.deleteMany({});
+        await User.deleteMany({});
         return res.status(200).json({message: "Users deleted!"});
     }catch(err){
         return res.status(500).json({message: err.message});
@@ -22,20 +23,24 @@ const deleteAllUsers = async(req, res) => {
 const signup = async(req, res) => {
     try{
         const {name, email, password, role} = req.body;
-        const user = await userModel.findOne({
+        const user = await User.findOne({
             email: email
         })
         if (user){
             return res.status(409).json({message: "Email is already in use."})
         }
         const hashedPassword = await bcrypt.hash(password, 10);
-        const userCreated = await userModel.create({
-            role,
-            name,
-            email,
-            password: hashedPassword,
-            savedJobs: []
-        })
+
+        let userCreated;
+        if (role.toLowerCase() == "candidate"){
+            userCreated = await Candidate.create({
+                role,
+                name,
+                email,
+                password: hashedPassword,
+                savedJobs: []
+            })
+        }
         return res.status(200).json(userCreated);
     }catch(err){
         return res.status(500).json({message: err.message});
@@ -45,7 +50,7 @@ const signup = async(req, res) => {
 const login = async(req, res) => {
     try{
         const {email, password} = req.body;
-        const user = await userModel.findOne({
+        const user = await User.findOne({
             email
         })
         if (!user){

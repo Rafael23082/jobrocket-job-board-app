@@ -14,10 +14,6 @@ function ApplicationFormModal({jobOpened, setJobOpened, applyIsOpen, setApplyIsO
         type: "text",
         placeholder: "mail@gmail.com"
     }, {
-        name: "Years of experience",
-        type: "number",
-        placeholder: "5"
-    }, {
         name: "Location",
         type: "text",
         placeholder: "e.g. Jakarta"

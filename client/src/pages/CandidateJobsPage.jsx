@@ -47,7 +47,7 @@ function CandidateJobsPage(){
                             <p className="text-white font-medium pl-[0.8em] text-[0.9rem]">{user?.name}</p>
                         </div>
                     </div>
-                    <div className="mt-[2em]">
+                    <div className="my-[2em]">
                         <div className="text-[0.9rem] mx-10 relative pb-[1em] relative z-10">
                             <p className="inline-block w-20 text-center cursor-pointer" onClick={() => setCategory("All")}>All</p>
                             <p className="inline-block w-20 text-center cursor-pointer" onClick={() => setCategory("Saved")}>Saved</p>
@@ -55,7 +55,7 @@ function CandidateJobsPage(){
                             <div className={`absolute top-5 h-[3px] w-20 bg-blue-500 mt-[0.7em] ${category == "All" && "translate-x-0"} ${category == "Saved" && "translate-x-full"} ${category == "Applications" && "translate-x-[200%]"} transition-all duration-300`}></div>
                         </div>
                         <div className="flex">
-                            <div className={`border-box overflow-x-hidden w-[100%] padding-x px-10 pt-[0.5em] pb-[2em]`}>
+                            <div className={`border-box overflow-x-hidden w-[100%] padding-x px-10 pt-[0.5em]`}>
                                 <Pagination category={category} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} dashboard={true} />
                             </div>
                         </div>

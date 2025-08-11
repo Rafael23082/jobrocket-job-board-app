@@ -1,6 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
-const userSchema = mongoose.Schema({
+const schemaOptions = {
+    discriminatorKey: "role",
+    collection: "users"
+}
+
+const userSchema = new mongoose.Schema({
     role: {
         type: String,
         enum: ["Candidate", "Recruiter", "Admin"],
@@ -17,13 +22,16 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true
-    },
+    }
+}, schemaOptions)
+
+export const User = mongoose.model("User", userSchema);
+
+const candidateSchema = new mongoose.Schema({
     savedJobs: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "job"
     }]
 })
 
-const userModel = mongoose.model("user", userSchema);
-
-export default userModel;
+export const Candidate = User.discriminator("Candidate", candidateSchema);

@@ -1,9 +1,10 @@
-import jobModel from "../models/Job.js";
-import userModel from "../models/User.js";
+import Job from "../models/Job.js";
+import { User } from "../models/User.js";
+import { Candidate } from "../models/User.js";
 
 const getAllJobs = async(req, res) => {
     try{
-        const jobs = await jobModel.find({});
+        const jobs = await Job.find({});
         return res.status(200).json(jobs);
     }catch(err){
         return res.status(500).json({message: err.message});
@@ -13,7 +14,7 @@ const getAllJobs = async(req, res) => {
 const addJob = async(req, res) => {
     try{
         const {role, company, location, field, minSalary, maxSalary, description, tags, openings, experience, employmentType, requirements} = req.body;
-        const newJob = await jobModel.create({
+        const newJob = await Job.create({
             role,
             company,
             location,
@@ -36,10 +37,20 @@ const addJob = async(req, res) => {
     }
 }
 
+const addMultipleJobs = async(req, res) => {
+    try{
+        const {jobsArray} = req.body;
+        const insertedJobs = await Job.insertMany(jobsArray, {ordered: false});
+        return res.status(200).json(insertedJobs);
+    }catch(err){
+        return res.status(500).json({message: err.message});
+    }
+}
+
 const deleteJob = async(req, res) => {
     try{
         const {jobID} = req.params;
-        await jobModel.findByIdAndDelete(jobID);
+        await Job.findByIdAndDelete(jobID);
         return res.status(200).json({message: "Job deleted!"});
     }catch(err){
         return res.status(500).json({message: err.message});
@@ -48,7 +59,7 @@ const deleteJob = async(req, res) => {
 
 const deleteAllJobs = async(req, res) => {
     try{
-        await jobModel.deleteMany({});
+        await Job.deleteMany({});
         return res.status(200).json({message: "Jobs deleted"});
     }catch(err){
         return res.status(500).json({message: err.message});
@@ -58,7 +69,7 @@ const deleteAllJobs = async(req, res) => {
 const saveJob = async(req, res) => {
     try{
         const {jobID, userID} = req.body;
-        const result = await userModel.findByIdAndUpdate(userID, {
+        const result = await Candidate.findByIdAndUpdate(userID, {
             $push: {
                 savedJobs: jobID
             }
@@ -72,7 +83,7 @@ const saveJob = async(req, res) => {
 const removeSavedJob = async(req, res) => {
     try{
         const {jobID, userID} = req.body;
-        const result = await userModel.findByIdAndUpdate(userID, {
+        const result = await Candidate.findByIdAndUpdate(userID, {
             $pull: {
                 savedJobs: jobID
             }
@@ -85,15 +96,15 @@ const removeSavedJob = async(req, res) => {
 
 const getSavedJobs = async(req, res) => {
     const {userID} = req.params;
-    const user = await userModel.findById(userID);
+    const user = await Candidate.findById(userID);
     const jobIDs = user?.savedJobs;
 
     let savedJobs = [];
     for (const jobID of jobIDs){
-        let job = await jobModel.findById(jobID);
+        let job = await Job.findById(jobID);
         savedJobs.push(job);
     }
     return res.status(200).json(savedJobs);
 }
 
-export default {getAllJobs, addJob, deleteJob, deleteAllJobs, saveJob, removeSavedJob, getSavedJobs}
+export default {getAllJobs, addJob, addMultipleJobs, deleteJob, deleteAllJobs, saveJob, removeSavedJob, getSavedJobs}
