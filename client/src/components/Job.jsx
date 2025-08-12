@@ -28,6 +28,12 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
             ...prev, savedJobs: prev.savedJobs.filter((jobID) => jobID != job._id)
         }))
     }
+    const handleApplyLoggedIn = async() => {
+        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/application/applyJob`, {
+            userID: user._id,
+            jobID: job._id
+        })
+    }
 
     return(
             <div className="flex items-start md:items-center flex-col md:flex-row relative" style={{fontFamily: "'Roboto', sans-serif"}}>
@@ -62,7 +68,14 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
                 </div>
                 <div className="flex pl-0 md:pl-[2em] mt-[1.2em] md:mt-0">
                     <button className="border border-[#3B82F6] text-[#3B82F6] px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold mr-[1em] cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition ease duration-[0.3s]" onClick={() => {setJobOpened(job); setDetailsIsOpen(true)}}>Details</button>
-                    <button className="bg-[#3B82F6] text-white px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]" onClick={() => {setJobOpened(job); setApplyIsOpen(true)}}>Apply</button>
+                    <button className="bg-[#3B82F6] text-white px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]" onClick={() => {
+                        if (!dashboard){
+                            setJobOpened(job); 
+                            setApplyIsOpen(true);
+                        }else{
+                            handleApplyLoggedIn();
+                        }
+                    }}>Apply</button>
                 </div>
                 {bookmarked && <FaBookmark size={18} className="hidden md:block cursor-pointer absolute top-0 right-0" color="#3B82F6" onClick={handleRemoveSavedJob} />} {!bookmarked && dashboard && <FaRegBookmark size={18} className="hidden md:block cursor-pointer absolute top-0 right-0" color="#3B82F6" onClick={handleSaveJob} />}
             </div>

@@ -1,3 +1,4 @@
+import Application from "../models/Application.js";
 import Job from "../models/Job.js";
 import { User } from "../models/User.js";
 import { Candidate } from "../models/User.js";
@@ -107,4 +108,29 @@ const getSavedJobs = async(req, res) => {
     return res.status(200).json(savedJobs);
 }
 
-export default {getAllJobs, addJob, addMultipleJobs, deleteJob, deleteAllJobs, saveJob, removeSavedJob, getSavedJobs}
+const getNotAppliedJobs = async(req, res) => {
+    try{
+        const {userID} = req.params;
+        const result = await Job.find({
+            _id: {$nin: await Application.distinct("jobID", {userID: userID})}
+        })
+        return res.status(200).json(result);
+    }catch(err){
+        return res.status(200).json({message: err.message});
+    }
+}
+
+const getAppliedJobs = async(req, res) => {
+    try{
+        const {userID} = req.params;
+        const jobIDList = await Application.distinct("jobID", {userID: userID});
+        const jobs = await Job.find({
+            _id: {$in: jobIDList}
+        })
+        return res.status(200).json(jobs);
+    }catch(err){
+        return res.status(500).json({message: err.message});
+    }
+}
+
+export default {getAllJobs, addJob, addMultipleJobs, deleteJob, deleteAllJobs, saveJob, removeSavedJob, getSavedJobs, getNotAppliedJobs, getAppliedJobs}

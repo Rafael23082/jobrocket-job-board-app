@@ -83,7 +83,7 @@ function ProfilePage(){
 
     return(
         <>
-        <DashboardSideNavbar current={"Profile"} />
+        <DashboardSideNavbar current={"Settings"} />
         <div className="flex bg-[#fffcfc] overflow-hidden" style={{fontFamily: "'Roboto', sans-serif"}}>
             <DashboardSideNavbar placeholder={true} />
             <div className="flex-1 h-fit flex flex-col">
