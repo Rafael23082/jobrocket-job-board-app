@@ -31,7 +31,16 @@ const candidateSchema = new mongoose.Schema({
     savedJobs: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "job"
-    }]
+    }],
+    location: {
+        type: String
+    },
+    additionalInformation: {
+        type: String
+    },
+    resume: {
+        type: String
+    }
 })
 
 export const Candidate = User.discriminator("Candidate", candidateSchema);

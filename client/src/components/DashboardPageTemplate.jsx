@@ -99,8 +99,8 @@ function DashboardPageTemplate({box1, Box1Icon, box2, Box2Icon, box3, Box3Icon, 
                     <div className="w-[100%] lg:w-[60%] bg-white rounded-[5px] shadow p-[1.4em]">
                         <p className=" font-medium text-[1.1rem]">{pieChartInfo.title}</p>
                         <ResponsiveContainer width="100%" height={350}>
-                            <PieChart data={pieChartInfo.dataset}>
-                                <Pie dataKey={pieChartInfo.dataKey}>
+                            <PieChart>
+                                <Pie data={pieChartInfo.dataset} dataKey={pieChartInfo.dataKey}>
                                     {applicationStatus.map((entry, index) => (
                                         <Cell key={index} fill={COLORS[index % COLORS.length]} />
                                     ))}

@@ -4,21 +4,60 @@ import { UserContext } from "../context/UserContext.jsx";
 import { IoIosNotifications } from "react-icons/io";
 import { IoMdMenu } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { IoIosWarning } from "react-icons/io";
 
 function ProfilePage(){
-    const {user} = useContext(UserContext);
+    const {user, setUser} = useContext(UserContext);
     const navigate = useNavigate();
+
+    const [formValues, setFormValues] = useState({});
+    const [initialValues, setInitialValues] = useState({});
+    const [errors, setErrors] = useState({}); 
+
     useEffect(() => {
         if (!user){
             navigate("/login");
         }
         setFormValues(({
-            ["Full Name"]: user?.name ?? "Your full name",
-            ["Email"]: user?.email ?? "Email"
+            ["Full Name"]: user?.name ?? "",
+            ["Email"]: user?.email ?? "",
+            ["Location"]: user?.location ?? "",
+            ["Additional Information"]: user?.additionalInformation ?? "",
+            ["Upload your resume"]: user?.resume ?? ""
+        }))
+
+        setInitialValues(({
+            ["Full Name"]: user?.name ?? "",
+            ["Email"]: user?.email ?? "",
+            ["Location"]: user?.location ?? "",
+            ["Additional Information"]: user?.additionalInformation ?? "",
+            ["Upload your resume"]: user?.resume ?? ""
         }))
     }, [user])
 
-    const [formValues, setFormValues] = useState({});
+    const buttonsDisplayed = JSON.stringify(formValues) != JSON.stringify(initialValues);
+
+    const handleSubmit = async() => {
+        let errors = {};
+        const valid = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(formValues["Email"]);
+        if (!valid){
+            errors["Email"] = "Invalid email format."
+        }
+
+        if (Object.keys(errors).length == 0){
+            const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/user/updateUserDetails/${user._id}`, {
+                name: formValues["Full Name"],
+                email: formValues["Email"],
+                location: formValues["Location"],
+                additionalInformation: formValues["Additional Information"],
+                resume: formValues["Upload your resume"]
+            })
+            setInitialValues(formValues);
+            setUser(res.data);
+        }
+        setErrors(errors);
+    }
 
     const fields = [{
         name: "Full Name",
@@ -58,7 +97,7 @@ function ProfilePage(){
                         <p className="text-white font-medium pl-[0.8em] text-[0.9rem]">{user?.name}</p>
                     </div>
                 </div>
-                <div className="px-5 my-[2em]">
+                <div className="px-10 padding-x my-[2em]">
                     <p className="text-[1.25rem] font-medium">Account Information</p>
                     <div className="flex items-center mt-[2em]">
                         <div className="w-12 h-12 rounded-full border"></div>
@@ -76,6 +115,9 @@ function ProfilePage(){
                                         }))
                                     }}
                                     />
+                                    {errors[field.name] && (
+                                        <span className="text-red-500 text-[0.75rem] pt-[0.5em] flex items-center gap-x-[5px]"><IoIosWarning />{errors[field.name]}</span>
+                                    )}
                                 </div>       
                             )
                         }else if (field.type == "textarea"){
@@ -109,8 +151,8 @@ function ProfilePage(){
                         }
                     })}
                     <div className="flex mt-[2em] justify-center">
-                        <button className="block border border-[#3B82F6] text-[#3B82F6] px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold mr-[1em] cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition ease duration-[0.3s]">Cancel</button>
-                        <button className="block bg-[#3B82F6] text-white px-[1.5em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]">Save Changes</button>
+                        <button className={`${buttonsDisplayed ? "block": "invisible"} block border border-[#3B82F6] text-[#3B82F6] px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold mr-[1em] cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition-colors ease duration-[0.3s]`} onClick={() => {setFormValues(initialValues); setErrors({})}}>Cancel</button>
+                        <button className={`${buttonsDisplayed ? "block": "invisible"} bg-[#3B82F6] text-white px-[1.5em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition-colors ease duration-[0.3s]`} onClick={handleSubmit}>Save Changes</button>
                     </div>
                 </div>
             </div>

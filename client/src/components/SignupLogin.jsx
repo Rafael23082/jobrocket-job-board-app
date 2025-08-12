@@ -28,7 +28,7 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                 }
             }
             if (field.name == "Email"){
-                const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formValues[field.name]);
+                const valid = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(formValues[field.name]);
                 if (!valid){
                     newErrors[field.name] = "Invalid email format."
                 }

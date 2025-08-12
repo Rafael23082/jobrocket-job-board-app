@@ -66,4 +66,20 @@ const login = async(req, res) => {
     }
 }
 
-export default {getAllUsers, deleteAllUsers, signup, login};
+const updateUserDetails = async(req, res) => {
+    try{
+        const {userID} = req.params;
+        let result;
+
+        const user = await User.findById(userID);
+        if (user.role == "Candidate"){
+            result = await Candidate.findByIdAndUpdate(userID, req.body, {new: true});
+        }
+        
+        return res.status(200).json(result);
+    }catch(err){
+        return res.status(500).json({message: err.message});
+    }
+}
+
+export default {getAllUsers, deleteAllUsers, signup, login, updateUserDetails};
