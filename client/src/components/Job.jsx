@@ -5,9 +5,10 @@ import { UserContext } from "../context/UserContext.jsx";
 import { useEffect } from "react";
 import axios from "axios";
 
-function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen, applyIsOpen, setApplyIsOpen, dashboard}){
+function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen, applyIsOpen, setApplyIsOpen, dashboard, applications}){
     const {user, setUser} = useContext(UserContext);
     const bookmarked = dashboard && user?.savedJobs?.includes(job._id);
+    const [applicationStatus, setApplicationStatus] = useState("Loading...");
 
     const handleSaveJob = async() => {
         const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/job/saveJob`, {
@@ -34,6 +35,18 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
             jobID: job._id
         })
     }
+
+    useEffect(() => {
+        const getApplicationStatus = async() => {
+            if (applications){
+                const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/application/getApplicationByUserIDAndJobID/${user._id}/${job._id}`);
+                const application = res.data;
+                setApplicationStatus(application.status.charAt(0).toUpperCase() + application.status.slice(1));
+            }
+        }
+
+        getApplicationStatus();
+    }, [job])
 
     return(
             <div className="flex items-start md:items-center flex-col md:flex-row relative" style={{fontFamily: "'Roboto', sans-serif"}}>
@@ -68,14 +81,14 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
                 </div>
                 <div className="flex pl-0 md:pl-[2em] mt-[1.2em] md:mt-0">
                     <button className="border border-[#3B82F6] text-[#3B82F6] px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold mr-[1em] cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition ease duration-[0.3s]" onClick={() => {setJobOpened(job); setDetailsIsOpen(true)}}>Details</button>
-                    <button className="bg-[#3B82F6] text-white px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]" onClick={() => {
-                        if (!dashboard){
+                    <button className={`bg-[#3B82F6] text-white px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold ${applications ? "": "cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]"}`} onClick={() => {
+                        if (!dashboard && !applications){
                             setJobOpened(job); 
                             setApplyIsOpen(true);
-                        }else{
+                        }else if (!applications){
                             handleApplyLoggedIn();
                         }
-                    }}>Apply</button>
+                    }}>{applications ? `${applicationStatus}`: "Apply"}</button>
                 </div>
                 {bookmarked && <FaBookmark size={18} className="hidden md:block cursor-pointer absolute top-0 right-0" color="#3B82F6" onClick={handleRemoveSavedJob} />} {!bookmarked && dashboard && <FaRegBookmark size={18} className="hidden md:block cursor-pointer absolute top-0 right-0" color="#3B82F6" onClick={handleSaveJob} />}
             </div>

@@ -32,4 +32,17 @@ const getAllApplications = async(req, res) => {
     }
 }
 
-export default {applyJob, deleteApplicationByID, getAllApplications}
+const getApplicationByUserIDAndJobID = async(req, res) => {
+    try{
+        const {userID, jobID} = req.params;
+        const application = await Application.findOne({
+            userID,
+            jobID
+        })
+        return res.status(200).json(application);
+    }catch(err){
+        return res.status(200).json({message: err.message});
+    }
+}
+
+export default {applyJob, deleteApplicationByID, getAllApplications, getApplicationByUserIDAndJobID}
