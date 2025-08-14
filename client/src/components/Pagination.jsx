@@ -52,7 +52,7 @@ function Pagination({category, jobOpened, setJobOpened, detailsIsOpen, setDetail
             }
         }
         getJobs();
-    }, [category, page, user?.savedJobs])
+    }, [category, page])
 
     const navigate = useNavigate();
     useEffect(() => {
