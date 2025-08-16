@@ -65,10 +65,11 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                         email: formValues["Email"],
                         password: formValues["Password"]
                     })
+                    console.log(res.data);
                     setUser(res.data);
                     navigate(`/${res.data.role.toLowerCase()}/dashboard`)
                 }catch(err){
-                    console.log(err);
+                    console.log(err.message);
                 }
             }
         }

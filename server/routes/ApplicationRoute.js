@@ -7,5 +7,6 @@ applicationRoutes.post("/applyJob", ApplicationController.applyJob);
 applicationRoutes.delete("/deleteApplicationById/:applicationID", ApplicationController.deleteApplicationByID);
 applicationRoutes.get("/getAllApplications", ApplicationController.getAllApplications);
 applicationRoutes.get("/getApplicationByUserIDAndJobID/:userID/:jobID", ApplicationController.getApplicationByUserIDAndJobID);
+applicationRoutes.delete("/deleteAllApplications", ApplicationController.deleteAllApplications);
 
 export default applicationRoutes;

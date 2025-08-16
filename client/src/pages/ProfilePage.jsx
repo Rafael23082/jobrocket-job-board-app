@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext.jsx";
 import { IoIosNotifications } from "react-icons/io";
 import { IoMdMenu } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { IoIosWarning } from "react-icons/io";
 
@@ -14,6 +14,9 @@ function ProfilePage(){
     const [formValues, setFormValues] = useState({});
     const [initialValues, setInitialValues] = useState({});
     const [errors, setErrors] = useState({}); 
+
+    const {role} = useParams();
+    const candidate = role.toLowerCase() == "candidate";
 
     useEffect(() => {
         if (!user){
@@ -59,27 +62,41 @@ function ProfilePage(){
         setErrors(errors);
     }
 
-    const fields = [{
-        name: "Full Name",
-        type: "text",
-        placeholder: "Your full name"
-    }, {
-        name: "Email",
-        type: "text",
-        placeholder: "Email"
-    }, {
-        name: "Location",
-        type: "text",
-        placeholder: "Location"
-    }, {
-        name: "Additional Information",
-        type: "textarea",
-        placeholder: "Summary"
-    }, {
-        name: "Upload your resume",
-        type: "file",
-        placeholder: ""
-    }]
+    let fields;
+    
+    if (candidate){
+        fields = [{
+                name: "Full Name",
+                type: "text",
+                placeholder: "Your full name"
+            }, {
+                name: "Email",
+                type: "text",
+                placeholder: "Email"
+            }, {
+                name: "Location",
+                type: "text",
+                placeholder: "Location"
+            }, {
+                name: "Additional Information",
+                type: "textarea",
+                placeholder: "Summary"
+            }, {
+                name: "Upload your resume",
+                type: "file",
+                placeholder: ""
+            }]
+    }else{
+        fields = [{
+                name: "Full Name",
+                type: "text",
+                placeholder: "Your full name"
+            }, {
+                name: "Email",
+                type: "text",
+                placeholder: "Email"
+            }]   
+    }
 
     return(
         <>

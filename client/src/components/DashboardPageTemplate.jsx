@@ -1,6 +1,6 @@
 import { UserContext } from "../context/UserContext.jsx";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { IoIosNotifications } from "react-icons/io";
 import DashboardSideNavbar from "../components/DashboardSideNavbar.jsx";
 import DashboardBox from "../components/DashboardBox.jsx";
@@ -30,7 +30,7 @@ function DashboardPageTemplate({box1, Box1Icon, box2, Box2Icon, box3, Box3Icon, 
             navigate("/login");
         }
     }, [user])
-  
+
     const COLORS = ["#8884d8", "#82ca9d", "#ffc658"];
 
     return(

@@ -17,31 +17,35 @@ import UserProvider from './context/UserContext.jsx';
 import CandidateJobsPage from './pages/CandidateJobsPage.jsx';
 import Modal from 'react-modal';
 import ProfilePage from './pages/ProfilePage.jsx';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 Modal.setAppElement('#root');
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <UserProvider>
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path='/' element={<Layout />}>
-            <Route index element={<LandingPage />} />
-            <Route path='/candidate-overview' element={<CandidateOverviewPage />}></Route>
-            <Route path='/recruiter-overview' element={<RecruiterOverviewPage />}></Route>
-            <Route path='/pricing' element={<PricingPage />}></Route>
-          </Route>
-          <Route path='/:jobs' element={<JobsPage />}></Route>
-          <Route path='/jobs/:field' element={<JobsCategoryPage />}></Route>
-          <Route path='/signup' element={<SignUpPage />}></Route>
-          <Route path='/login' element={<LoginPage />}></Route>
-          <Route path='/:role/dashboard' element={<DashboardPage />}></Route>
-          <Route path='/candidate/jobs' element={<CandidateJobsPage />}></Route>
-          <Route path='/:role/dashboard' element={<DashboardPage />}></Route>
-          <Route path='/:role/profile' element={<ProfilePage />}></Route>
-        </Routes>
-      </BrowserRouter>
-    </UserProvider>
+    <QueryClientProvider client={queryClient}>
+      <UserProvider>
+        <BrowserRouter>
+          <ScrollToTop />
+          <Routes>
+            <Route path='/' element={<Layout />}>
+              <Route index element={<LandingPage />} />
+              <Route path='/candidate-overview' element={<CandidateOverviewPage />}></Route>
+              <Route path='/recruiter-overview' element={<RecruiterOverviewPage />}></Route>
+              <Route path='/pricing' element={<PricingPage />}></Route>
+            </Route>
+            <Route path='/:jobs' element={<JobsPage />}></Route>
+            <Route path='/jobs/:field' element={<JobsCategoryPage />}></Route>
+            <Route path='/signup' element={<SignUpPage />}></Route>
+            <Route path='/login' element={<LoginPage />}></Route>
+            <Route path='/candidate/jobs' element={<CandidateJobsPage />}></Route>
+            <Route path='/recruiter/candidates' element={<DashboardPage />}></Route>
+            <Route path='/:role/dashboard' element={<DashboardPage />}></Route>
+            <Route path='/:role/profile' element={<ProfilePage />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </UserProvider>
+    </QueryClientProvider>
   </StrictMode>
 )

@@ -45,4 +45,13 @@ const getApplicationByUserIDAndJobID = async(req, res) => {
     }
 }
 
-export default {applyJob, deleteApplicationByID, getAllApplications, getApplicationByUserIDAndJobID}
+const deleteAllApplications = async(req, res) => {
+    try{
+        await Application.deleteMany({});
+        return res.status(200).json({message: "Applications deleted!"});
+    }catch(err){
+        return res.status(500).json({message: err.message});
+    }
+}
+
+export default {applyJob, deleteApplicationByID, getAllApplications, getApplicationByUserIDAndJobID, deleteAllApplications}

@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { User } from "../models/User.js";
+import { Recruiter, User } from "../models/User.js";
 import { Candidate } from "../models/User.js";
 
 const getAllUsers = async(req, res) => {
@@ -39,6 +39,14 @@ const signup = async(req, res) => {
                 email,
                 password: hashedPassword,
                 savedJobs: []
+            })
+        }
+        else if (role.toLowerCase() == "recruiter"){
+            userCreated = await Recruiter.create({
+                role,
+                name,
+                email,
+                password: hashedPassword
             })
         }
         return res.status(200).json(userCreated);

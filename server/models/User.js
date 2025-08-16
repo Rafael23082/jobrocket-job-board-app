@@ -17,7 +17,8 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -44,3 +45,7 @@ const candidateSchema = new mongoose.Schema({
 })
 
 export const Candidate = User.discriminator("Candidate", candidateSchema);
+
+const recruiterSchema = new mongoose.Schema({})
+
+export const Recruiter = User.discriminator("Recruiter", recruiterSchema);
