@@ -55,7 +55,12 @@ const jobSchema = mongoose.Schema({
     requirements: [{
         type: String,
         required: true
-    }]
+    }],
+    postedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
+        required: true
+    }
 })
 
 const Job = mongoose.model("Job", jobSchema);

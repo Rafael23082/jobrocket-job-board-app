@@ -5,7 +5,7 @@ import { UserContext } from "../context/UserContext.jsx";
 import { useEffect } from "react";
 import axios from "axios";
 
-function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen, applyIsOpen, setApplyIsOpen, dashboard, applications}){
+function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen, applyIsOpen, setApplyIsOpen, dashboard, applications, listings}){
     const {user, setUser} = useContext(UserContext);
     const bookmarked = dashboard && user?.savedJobs?.includes(job._id);
     const [applicationStatus, setApplicationStatus] = useState("Loading...");
@@ -57,11 +57,11 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
                         </div>
                         <div className="grow md:pl-[2em] pl-0">
                             <div className="flex items-center md:mt-0 mt-[1em]">
-                                <span className="font-bold text-[1.1rem] flex items-center gap-x-[1em]">{job.role} {bookmarked && dashboard && <FaBookmark size={18} className="md:hidden cursor-pointer" color="#3B82F6" onClick={handleRemoveSavedJob} />} {!bookmarked && <FaRegBookmark size={18} className="md:hidden cursor-pointer" color="#3B82F6" onClick={handleSaveJob} />}</span>
+                                <span className="font-bold text-[1.1rem] flex items-center gap-x-[1em]">{job.role} {bookmarked && dashboard && <FaBookmark size={18} className="md:hidden cursor-pointer" color="#3B82F6" onClick={handleRemoveSavedJob} />} {!bookmarked && dashboard && <FaRegBookmark size={18} className="md:hidden cursor-pointer" color="#3B82F6" onClick={handleSaveJob} />}</span>
                             </div>
-                            {seeMore && <p className="text-[0.9rem] text-gray-800 pt-[0.5em] md:pt-0">{job.description}</p>}
+                            {seeMore && <p className="text-[0.9rem] text-gray-800 pt-[0.5em] md:pt-[0.2em]">{job.description}</p>}
                             <span className="text-[0.9rem] text-gray-800 mt-[0.5em] flex gap-x-[0.3em] flex-wrap">
-                                {job.company && <p>🏢 {job.company}</p>} {job.location && <p>| 🌐 {job.location}</p>} {job.salary && <p>| 💵 ${job.salary?.min} - ${job.salary?.max}</p>} {seeMore && <p>| 📊 {job.experience}</p>} {seeMore && <p>| 🕒 {job.employmentType}</p>}
+                                {job.company && <p>🏢 {job.company}</p>} {job.location && <p>| 🌐 {job.location}</p>} {job.salary && <p>| 💵 ${job.salary?.min} - ${job.salary?.max}</p>} {seeMore || listings && <p>| 📊 {job.experience}</p>} {seeMore || listings && <p>| 🕒 {job.employmentType}</p>}
                             </span>
                             <div className="flex mt-[0.8em] md:mt-[0.6em] flex-wrap gap-x-[0.7em] gap-y-[0.5em]">
                                 {job.tags.map((tag, index) => (
@@ -69,13 +69,19 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
                                         <p>{tag}</p>
                                     </div>
                                 ))}
-                                { seeMore &&
+                                { seeMore || listings &&
                                     <div className={`text-white bg-[#10B981] px-[0.5em] py-[0.3em] text-[0.7rem] rounded-[5px]`}>
                                         <p>{job.openings} Openings</p>
                                     </div>
                                 }
                             </div>
                             {seeMore && <p className="text-gray-800 pt-[1em] text-[0.8rem]">{job.postedAt}</p>}
+                            {listings && (
+                                <div className="flex items-center flex-wrap gap-x-[1em] pt-[1em]">
+                                    <p className="text-[0.9rem]">👥 {job.applications} Applicants</p>
+                                    <p className="text-[0.9rem] cursor-pointer text-blue-500">[👁 View Applicants]</p>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

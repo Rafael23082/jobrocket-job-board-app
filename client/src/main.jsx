@@ -18,6 +18,7 @@ import CandidateJobsPage from './pages/CandidateJobsPage.jsx';
 import Modal from 'react-modal';
 import ProfilePage from './pages/ProfilePage.jsx';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import RecruiterJobListingsPage from './pages/RecruiterJobListingsPage.jsx';
 
 Modal.setAppElement('#root');
 const queryClient = new QueryClient();
@@ -40,9 +41,9 @@ createRoot(document.getElementById('root')).render(
             <Route path='/signup' element={<SignUpPage />}></Route>
             <Route path='/login' element={<LoginPage />}></Route>
             <Route path='/candidate/jobs' element={<CandidateJobsPage />}></Route>
-            <Route path='/recruiter/candidates' element={<DashboardPage />}></Route>
             <Route path='/:role/dashboard' element={<DashboardPage />}></Route>
             <Route path='/:role/profile' element={<ProfilePage />}></Route>
+            <Route path='/recruiter/job-listings' element={<RecruiterJobListingsPage />}></Route>
           </Routes>
         </BrowserRouter>
       </UserProvider>

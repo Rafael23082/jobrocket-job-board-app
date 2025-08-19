@@ -69,7 +69,7 @@ function Pagination({category, jobOpened, setJobOpened, detailsIsOpen, setDetail
         }
     }
     return(
-        <div className={`${dashboard ? "mt-0": "mt-[2em]"}`}>
+        <div className={`${dashboard ? "mt-0": "my-[2em]"}`}>
             <div className={`items-center ${dashboard ? "hidden": "flex"}`}>
                 <p className="text-[1.4rem] sm:text-[1.5rem] lg:w-[60%] pt-[0.5em] py-[1em] font-bold grow">{category} Jobs</p>
             </div>

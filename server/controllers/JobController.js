@@ -133,4 +133,40 @@ const getAppliedJobs = async(req, res) => {
     }
 }
 
-export default {getAllJobs, addJob, addMultipleJobs, deleteJob, deleteAllJobs, saveJob, removeSavedJob, getSavedJobs, getNotAppliedJobs, getAppliedJobs}
+const getJobsPostedByRecruiter = async(req, res) => {
+    try{
+        const {userID} = req.params;
+        const jobs = await Job.find({postedBy: userID});
+
+        const jobIDs = jobs.map((job) => job._id)
+        const applicationCount = await Application.aggregate([
+            {
+                $match: {
+                    jobID: {$in: jobIDs}
+                }
+            }, 
+            {
+                $group: {
+                    _id: "$jobID",
+                    count: {$sum: 1}
+                }
+            }
+        ])
+
+        let applicationMap = {}
+        applicationCount.forEach((application) => {
+            applicationMap[application._id] = application.count;
+        })
+
+        const jobWithApplications = jobs.map((job) => ({
+            ...job.toObject(),
+            applications: applicationMap[job._id] || 0
+        }))
+
+        return res.status(200).json(jobWithApplications);
+    }catch(err){
+        return res.status(500).json({message: err.message});
+    }
+}
+
+export default {getAllJobs, addJob, addMultipleJobs, deleteJob, deleteAllJobs, saveJob, removeSavedJob, getSavedJobs, getNotAppliedJobs, getAppliedJobs, getJobsPostedByRecruiter}

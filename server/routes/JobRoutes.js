@@ -13,5 +13,6 @@ jobRoutes.post("/removeSavedJob", JobController.removeSavedJob);
 jobRoutes.get("/getSavedJobs/:userID", JobController.getSavedJobs);
 jobRoutes.get("/getNotAppliedJobs/:userID", JobController.getNotAppliedJobs);
 jobRoutes.get("/getAppliedJobs/:userID", JobController.getAppliedJobs);
+jobRoutes.get("/getJobsPostedByRecruiter/:userID", JobController.getJobsPostedByRecruiter);
 
 export default jobRoutes;
