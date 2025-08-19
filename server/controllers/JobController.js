@@ -103,7 +103,9 @@ const getSavedJobs = async(req, res) => {
     let savedJobs = [];
     for (const jobID of jobIDs){
         let job = await Job.findById(jobID);
-        savedJobs.push(job);
+        if (job){
+            savedJobs.push(job);
+        }
     }
     return res.status(200).json(savedJobs);
 }

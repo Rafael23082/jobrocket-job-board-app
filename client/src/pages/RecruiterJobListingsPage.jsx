@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Job from "../components/Job.jsx";
+import { BarLoader } from "react-spinners";
 
 function RecruiterJobListingsPage(){
     const navigate = useNavigate();
@@ -60,6 +61,17 @@ function RecruiterJobListingsPage(){
                     </div>
                 </div>
             </div>
+            {isLoading && (
+                <div className={`w-[100%] h-[100vh] flex absolute top-0 bg-white left-0 justify-center items-center z-0`}>
+                    <DashboardSideNavbar placeholder={true} />
+                    <BarLoader
+                        color={"#3B82F6"}
+                        loading={isLoading}
+                        height={4}
+                        width={100}
+                    />
+                </div>
+            )}
         </>
     )
 }

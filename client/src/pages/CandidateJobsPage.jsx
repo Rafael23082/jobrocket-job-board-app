@@ -9,6 +9,9 @@ import { useEffect } from "react";
 import Pagination from "../components/Pagination.jsx";
 import DescriptionSlideOverPanel from "../components/DescriptionSlideOverPanel.jsx";
 import ApplicationFormModal from "../components/ApplicationFormModal.jsx";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { BarLoader } from "react-spinners";
 
 function CandidateJobsPage(){
     const [menuOpen, setMenuOpen] = useState(false);
@@ -31,12 +34,34 @@ function CandidateJobsPage(){
         }
     }, [user, detailsIsOpen, applyIsOpen])
     
+    const fetchJobs = async() => {
+        let res;
+        let filteredJobs;
+        if (category == "All"){
+            res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getNotAppliedJobs/${user._id}`)
+            filteredJobs = res.data;
+        } else if (category == "Saved"){
+            res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getSavedJobs/${user._id}`)
+            filteredJobs = res.data;
+        } else if (category == "Applications"){
+            res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getAppliedJobs/${user._id}`)
+            filteredJobs = res.data;
+        }
+        return filteredJobs;
+    }
+
+    const {data: allJobs = [], isLoading} = useQuery({
+        queryKey: [category],
+        queryFn: () => fetchJobs(),
+        keepPreviousData: true
+    })
+
     return(
         <>
             <DashboardSideNavbar current={"Jobs"} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
             <div className="flex bg-[#fffcfc] overflow-hidden" style={{fontFamily: "'Roboto', sans-serif"}}>
                 <DashboardSideNavbar placeholder={true} />
-                <div className="flex-1 h-fit flex flex-col">
+                <div className={`${allJobs.length == 0 ? "min-h-screen": "h-fit"} flex-1 flex flex-col`}>
                     <div className="bg-blue-500 py-[1.2em] flex items-center justify-between px-5 z-10">
                         <div className="flex-1">
                             <IoMdMenu size={30} className="block lg:hidden cursor-pointer mr-10 margin-right" color="white" onClick={() => {setMenuOpen(!menuOpen)}} />
@@ -54,12 +79,18 @@ function CandidateJobsPage(){
                             <p className="inline-block w-20 text-center cursor-pointer" onClick={() => setCategory("Applications")}>Applied</p>
                             <div className={`absolute top-5 h-[3px] w-20 bg-blue-500 mt-[0.7em] ${category == "All" && "translate-x-0"} ${category == "Saved" && "translate-x-full"} ${category == "Applications" && "translate-x-[200%]"} transition-all duration-300`}></div>
                         </div>
-                        <div className="flex">
+                        <div className={`${allJobs.length == 0 ? "hidden": "flex"}`}>
                             <div className={`border-box overflow-x-hidden w-[100%] padding-x px-10 pt-[0.5em]`}>
-                                <Pagination category={category} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} dashboard={true} />
+                                <Pagination data={allJobs} field={category} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} dashboard={true} />
                             </div>
                         </div>
                     </div>
+                    {allJobs.length == 0 && (
+                        <div className="w-[100%] grow flex justify-center items-center flex-col gap-y-[1.5em] pb-[2em]">
+                            <img className="w-[70px]" src="/magnifying-glass.png" />
+                            <p className="text-gray-500">No jobs to be displayed</p>
+                        </div>
+                    )}
                 </div>
             </div>
             {
@@ -72,6 +103,17 @@ function CandidateJobsPage(){
                     <ApplicationFormModal jobOpened={jobOpened} setJobOpened={setJobOpened} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} />
                 )
             }
+            {isLoading && (
+                <div className={`w-[100%] h-[100vh] flex absolute top-0 bg-white left-0 justify-center items-center z-0`}>
+                    <DashboardSideNavbar placeholder={true} />
+                    <BarLoader
+                        color={"#3B82F6"}
+                        loading={isLoading}
+                        height={4}
+                        width={100}
+                    />
+                </div>
+            )}
         </>
     )
 }
