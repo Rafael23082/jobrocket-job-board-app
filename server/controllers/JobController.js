@@ -171,4 +171,14 @@ const getJobsPostedByRecruiter = async(req, res) => {
     }
 }
 
-export default {getAllJobs, addJob, addMultipleJobs, deleteJob, deleteAllJobs, saveJob, removeSavedJob, getSavedJobs, getNotAppliedJobs, getAppliedJobs, getJobsPostedByRecruiter}
+const getJobByID = async(req, res) => {
+    try{
+        const {jobID} = req.params;
+        const job = await Job.findById(jobID);
+        return res.status(200).json(job);
+    }catch(err){
+        return res.status(500).json({message: err.message});
+    }
+}
+
+export default {getAllJobs, addJob, addMultipleJobs, deleteJob, deleteAllJobs, saveJob, removeSavedJob, getSavedJobs, getNotAppliedJobs, getAppliedJobs, getJobsPostedByRecruiter, getJobByID}

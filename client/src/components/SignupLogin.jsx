@@ -1,12 +1,11 @@
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-import { IoIosArrowDown } from "react-icons/io";
-import { IoIosArrowUp } from "react-icons/io";
 import { useState } from "react";
 import { IoIosWarning } from "react-icons/io";
 import axios from "axios"
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext.jsx";
+import DropdownBox from "./DropdownBox.jsx";
 
 function SignupLogin({heading, subheading, fields, button, alternative, alternative2, text, minheight, signup}){
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -89,13 +88,7 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                         field.type == "select" ? (
                             <div key={index}>
                                 <p className={`${index == 0 ? "pt-[0em]": "pt-[1em]"} font-bold`}>{field.name} <span className="text-red-500">*</span></p>
-                                <div className="relative mt-[0.4em] border rounded-[5px]">
-                                    <span className="py-[0.3em] flex items-center justify-between px-[1em] select-none" onClick={() => {setDropdownOpen(!dropdownOpen)}}>{dropdownText} {!dropdownOpen ? <IoIosArrowDown />: <IoIosArrowUp/>}</span>
-                                    <div className={`flex flex-col absolute top-[calc(100%+10px)] w-[100%] rounded-[10px] select-none overflow-hidden shadow ${dropdownOpen ? "max-h-[1000px] border duration-[0.5s]": "max-h-0 border-transparent duration-[0.1s]"} bg-white transition-all`}>
-                                        <p className="px-[1em] py-[0.5em] bg-white hover:brightness-90" onClick={() => {setDropdownText("Candidate"); setDropdownOpen(!dropdownOpen)}}>Candidate</p>
-                                        <p className="px-[1em] py-[0.5em] bg-white hover:brightness-90" onClick={() => {setDropdownText("Recruiter"); setDropdownOpen(!dropdownOpen)}}>Recruiter</p>
-                                    </div>
-                                </div>
+                                <DropdownBox index={index} values={["Recruiter", "Candidate"]} dropdownText={dropdownText} setDropdownText={setDropdownText} dropdownOpen={dropdownOpen} setDropdownOpen={setDropdownOpen} />
                                 {errors[field.name] && (
                                     <span className="text-red-500 text-[0.75rem] pt-[0.5em] flex items-center gap-x-[5px]"><IoIosWarning />{errors[field.name]}</span>
                                 )}
