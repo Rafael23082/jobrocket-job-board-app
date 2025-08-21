@@ -8,18 +8,26 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Job from "../components/Job.jsx";
 import { BarLoader } from "react-spinners";
+import DescriptionSlideOverPanel from "../components/DescriptionSlideOverPanel.jsx";
 
 function RecruiterJobListingsPage(){
     const navigate = useNavigate();
 
     const [menuOpen, setMenuOpen] = useState(false);
+    const [detailsIsOpen, setDetailsIsOpen] = useState(false);
+    const [jobOpened, setJobOpened] = useState({})
 
     const {user} = useContext(UserContext);
     useEffect(() => {
         if (!user){ 
             navigate("/login");
         }
-    }, [user])
+        if (detailsIsOpen){
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+    }, [user, detailsIsOpen])
 
     const fetchJobs = async() => {
         try{
@@ -55,7 +63,7 @@ function RecruiterJobListingsPage(){
                     <div className="padding-x px-10 my-[2em]">
                         {allJobs.map((job, index) => (
                             <div className="py-[1.5em] border-b border-gray-200" key={index}>
-                                <Job job={job} listings={true} />
+                                <Job job={job} listings={true} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
                             </div> 
                         ))}
                     </div>
@@ -72,6 +80,11 @@ function RecruiterJobListingsPage(){
                     />
                 </div>
             )}
+            {
+                detailsIsOpen && (
+                    <DescriptionSlideOverPanel jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
+                )
+            }
         </>
     )
 }

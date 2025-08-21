@@ -17,26 +17,42 @@ function ProfilePage(){
 
     const {role} = useParams();
     const candidate = role.toLowerCase() == "candidate";
+    const [menuOpen, setMenuOpen] = useState(false);
 
     useEffect(() => {
         if (!user){
             navigate("/login");
         }
-        setFormValues(({
-            ["Full Name"]: user?.name ?? "",
-            ["Email"]: user?.email ?? "",
-            ["Location"]: user?.location ?? "",
-            ["Additional Information"]: user?.additionalInformation ?? "",
-            ["Upload your resume"]: user?.resume ?? ""
-        }))
 
-        setInitialValues(({
-            ["Full Name"]: user?.name ?? "",
-            ["Email"]: user?.email ?? "",
-            ["Location"]: user?.location ?? "",
-            ["Additional Information"]: user?.additionalInformation ?? "",
-            ["Upload your resume"]: user?.resume ?? ""
-        }))
+        if (role.toLowerCase() == "candidate"){
+            setFormValues(({
+                ["Full Name"]: user?.name ?? "",
+                ["Email"]: user?.email ?? "",
+                ["Location"]: user?.location ?? "",
+                ["Additional Information"]: user?.additionalInformation ?? "",
+                ["Upload your resume"]: user?.resume ?? ""
+            }))
+
+            setInitialValues(({
+                ["Full Name"]: user?.name ?? "",
+                ["Email"]: user?.email ?? "",
+                ["Location"]: user?.location ?? "",
+                ["Additional Information"]: user?.additionalInformation ?? "",
+                ["Upload your resume"]: user?.resume ?? ""
+            }))
+        }else{
+            setFormValues(({
+                ["Full Name"]: user?.name ?? "",
+                ["Email"]: user?.email ?? "",
+                ["Company"]: user?.company ?? "",
+            }))
+
+            setInitialValues(({
+                ["Full Name"]: user?.name ?? "",
+                ["Email"]: user?.email ?? "",
+                ["Company"]: user?.company ?? "",
+            }))
+        }
     }, [user])
 
     const buttonsDisplayed = JSON.stringify(formValues) != JSON.stringify(initialValues);
@@ -49,15 +65,25 @@ function ProfilePage(){
         }
 
         if (Object.keys(errors).length == 0){
-            const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/user/updateUserDetails/${user._id}`, {
-                name: formValues["Full Name"],
-                email: formValues["Email"],
-                location: formValues["Location"],
-                additionalInformation: formValues["Additional Information"],
-                resume: formValues["Upload your resume"]
-            })
-            setInitialValues(formValues);
-            setUser(res.data);
+            if (role?.toLowerCase() == "candidate"){
+                const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/user/updateUserDetails/${user._id}`, {
+                    name: formValues["Full Name"],
+                    email: formValues["Email"],
+                    location: formValues["Location"],
+                    additionalInformation: formValues["Additional Information"],
+                    resume: formValues["Upload your resume"]
+                })
+                setInitialValues(formValues);
+                setUser(res.data);
+            }else{
+                const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/user/updateUserDetails/${user._id}`, {
+                    name: formValues["Full Name"],
+                    email: formValues["Email"],
+                    company: formValues["Company"]  
+                })
+                setInitialValues(formValues);
+                setUser(res.data);
+            }
         }
         setErrors(errors);
     }
@@ -95,6 +121,10 @@ function ProfilePage(){
                 name: "Email",
                 type: "text",
                 placeholder: "Email"
+            }, {
+                name: "Company",
+                type: "text",
+                placeholder: "Company"
             }]   
     }
 

@@ -4,12 +4,12 @@ import Modal from "react-modal";
 
 function DescriptionSlideOverPanel({jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen}){
 return(
-    <Modal className="w-[100%] sm:w-[80%] lg:w-[70%] max-w-[1000px] max-h-[100vh] sm:max-h-[80vh] overflow-auto bg-white rounded-[5px] p-[2em] z-40 relative shadow-lg" isOpen={detailsIsOpen} onRequestClose={() => setDetailsIsOpen(false)} overlayClassName="inset-0 fixed bg-[rgba(0,0,0,0.5)] flex justify-center items-center z-[90]">
+    <Modal className="w-[100%] sm:w-[80%] lg:w-[70%] max-w-[1000px] max-h-[100vh] sm:max-h-[80vh] overflow-auto bg-white rounded-[5px] py-[3em] px-[2em] sm:px-[3em] z-40 relative shadow-lg" isOpen={detailsIsOpen} onRequestClose={() => setDetailsIsOpen(false)} overlayClassName="inset-0 fixed bg-[rgba(0,0,0,0.5)] flex justify-center items-center z-[90]">
         <div style={{fontFamily: "'Roboto', sans-serif"}}>
             <p className="text-[1.5rem] font-medium pr-[1em]">{jobOpened.role}</p>
             <p className="pt-[0.2em] text-[1rem]">{jobOpened.company}</p>
             <div className="h-[0.1px] w-[100%] mt-[0.8em] bg-black"></div>
-            <IoIosClose color="black" size={40} className="absolute top-[2em] right-5 cursor-pointer" onClick={() => setDetailsIsOpen(false)} />
+            <IoIosClose color="black" size={40} className="absolute top-[3em] right-5 cursor-pointer" onClick={() => setDetailsIsOpen(false)} />
             <p className="pt-[0.8em]">Description: {jobOpened.description}</p>
             <p className="pt-[0.8em]">Location: {jobOpened.location}</p>
             <p className="pt-[0.8em]">Salary: ${jobOpened.salary?.min} - ${jobOpened.salary?.max}</p>

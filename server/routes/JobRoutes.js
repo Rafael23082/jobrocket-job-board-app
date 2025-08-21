@@ -15,5 +15,6 @@ jobRoutes.get("/getNotAppliedJobs/:userID", JobController.getNotAppliedJobs);
 jobRoutes.get("/getAppliedJobs/:userID", JobController.getAppliedJobs);
 jobRoutes.get("/getJobsPostedByRecruiter/:userID", JobController.getJobsPostedByRecruiter);
 jobRoutes.get("/getJobByID/:jobID", JobController.getJobByID);
+jobRoutes.put("/updateJobByID/:jobID", JobController.updateJobByID);
 
 export default jobRoutes;

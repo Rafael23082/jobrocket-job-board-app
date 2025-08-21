@@ -8,10 +8,13 @@ import { UserContext } from "../context/UserContext.jsx";
 import DropdownBox from "./DropdownBox.jsx";
 
 function SignupLogin({heading, subheading, fields, button, alternative, alternative2, text, minheight, signup}){
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [dropdownText, setDropdownText] = useState("Select your role");
+    const [dropdownIndex, setDropdownIndex] = useState(null);
     const [formValues, setFormValues] = useState(() => fields.reduce((acc, field) => {
-        acc[field.name] = "";
+        if (field.name == "Role"){
+            acc[field.name] = "Select your role"
+        }else{
+            acc[field.name] = "";
+        }
         return acc;
     }, {}))
     const navigate = useNavigate();
@@ -22,7 +25,7 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
         let newErrors = {}
         fields.map((field) => {
             if (field.name == "Role"){
-                if (dropdownText == "Select your role"){
+                if (formValues[field.name] == "Select your role"){
                     newErrors[field.name] = "Select your role."
                 }
             }
@@ -50,10 +53,10 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                         name: formValues["Full Name"],
                         email: formValues["Email"],
                         password: formValues["Password"],
-                        role: dropdownText
+                        role: formValues["Role"]
                     })
                     setUser(res.data);
-                    navigate(`/${dropdownText.toLowerCase()}/dashboard`)
+                    navigate(`/${formValues["Role"].toLowerCase()}/dashboard`)
                 }catch(err){
                     console.log(err);
                 }
@@ -88,7 +91,7 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                         field.type == "select" ? (
                             <div key={index}>
                                 <p className={`${index == 0 ? "pt-[0em]": "pt-[1em]"} font-bold`}>{field.name} <span className="text-red-500">*</span></p>
-                                <DropdownBox index={index} values={["Recruiter", "Candidate"]} dropdownText={dropdownText} setDropdownText={setDropdownText} dropdownOpen={dropdownOpen} setDropdownOpen={setDropdownOpen} />
+                                <DropdownBox index={index} values={["Recruiter", "Candidate"]} fieldName={field.name} formValues={formValues} setFormValues={setFormValues} dropdownIndex={dropdownIndex} setDropdownIndex={setDropdownIndex} />
                                 {errors[field.name] && (
                                     <span className="text-red-500 text-[0.75rem] pt-[0.5em] flex items-center gap-x-[5px]"><IoIosWarning />{errors[field.name]}</span>
                                 )}

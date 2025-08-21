@@ -88,21 +88,17 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
                     </div>
                 </div>
                 <div className="flex pl-0 md:pl-[2em] mt-[1.2em] md:mt-0">
-                    <button className="border border-[#3B82F6] text-[#3B82F6] px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold mr-[1em] cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition ease duration-[0.3s] whitespace-nowrap" onClick={() => {
-                        if (listings){
-                            navigate(`/recruiter/edit-job/${job?._id}`);
-                        }else{
-                            setJobOpened(job); setDetailsIsOpen(true)
-                        }
-                    }}>{listings ? "Edit": "Details"}</button>
+                    <button className="border border-[#3B82F6] text-[#3B82F6] px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold mr-[1em] cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition ease duration-[0.3s] whitespace-nowrap" onClick={() => {setJobOpened(job); setDetailsIsOpen(true)}}>Details</button>
                     <button className={`bg-[#3B82F6] text-white px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold ${applications ? "": "cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]"} whitespace-nowrap`} onClick={() => {
-                        if (!dashboard && !applications){
+                        if (listings){
+                            navigate(`/recruiter/edit-job/${job._id}`)
+                        }else if (!dashboard && !applications){
                             setJobOpened(job); 
                             setApplyIsOpen(true);
-                        }else if (!applications){
+                        }else if (!applications && dashboard){
                             handleApplyLoggedIn();
                         }
-                    }}>{applications && `${applicationStatus}`}{!applications && !listings && "Apply"}{listings && "Close Job"}</button>
+                    }}>{applications && `${applicationStatus}`}{!applications && !listings && "Apply"}{listings && "Edit"}</button>
                 </div>
                 {bookmarked && <FaBookmark size={18} className="hidden md:block cursor-pointer absolute top-0 right-0" color="#3B82F6" onClick={handleRemoveSavedJob} />} {!bookmarked && dashboard && <FaRegBookmark size={18} className="hidden md:block cursor-pointer absolute top-0 right-0" color="#3B82F6" onClick={handleSaveJob} />}
             </div>
