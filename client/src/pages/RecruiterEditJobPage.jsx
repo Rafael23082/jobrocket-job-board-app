@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import DropdownBox from "../components/DropdownBox.jsx";
+import TagsInputBox from "../components/TagsInputBox.jsx";
 
 function RecruiterEditJobPage(){
     const [menuOpen, setMenuOpen] = useState(false);
@@ -39,7 +40,9 @@ function RecruiterEditJobPage(){
             'salary.min': formValues["Minimum Salary"],
             'salary.max': formValues["Maximum Salary"],
             description: formValues["Description"],
-            employmentType: formValues["Employment Type"]
+            employmentType: formValues["Employment Type"],
+            openings: formValues["Openings"],
+            tags: formValues["Tags"]
         })
         setInitialValues(formValues);
         setJob(res.data);
@@ -50,14 +53,16 @@ function RecruiterEditJobPage(){
             const job = await fetchJob();
             setJob(job);
             let values = {
-                ["Role"]: job?.role ?? "",
-                ["Company"]: job?.company ?? "",
-                ["Location"]: job?.location ?? "",
-                ["Field"]: job?.field ?? "",
-                ["Minimum Salary"]: job?.salary?.min ?? "",
-                ["Maximum Salary"]: job?.salary?.max ?? "",
-                ["Description"]: job?.description,
-                ["Employment Type"]: job?.employmentType ?? "" 
+                ["Role"]: job?.role ?? "loading...",
+                ["Company"]: job?.company ?? "loading...",
+                ["Location"]: job?.location ?? "loading...",
+                ["Field"]: job?.field ?? "loading...",
+                ["Minimum Salary"]: job?.salary?.min ?? 0,
+                ["Maximum Salary"]: job?.salary?.max ?? 0,
+                ["Description"]: job?.description ?? "loading...",
+                ["Employment Type"]: job?.employmentType ?? "loading...",
+                ["Openings"]: job?.openings ?? 0,
+                ["Tags"]: job?.tags ?? []
             }
             setFormValues(values);
             setInitialValues(values);
@@ -66,6 +71,8 @@ function RecruiterEditJobPage(){
     }, [jobID])
 
     const buttonsDisplayed = JSON.stringify(formValues) != JSON.stringify(initialValues);
+
+    const values = ["Hello", "World"]
 
     const fields = [{
         name: "Role",
@@ -99,6 +106,14 @@ function RecruiterEditJobPage(){
         name: "Employment Type",
         type: "select",
         options: ["Full-Time", "Part-Time", "Internship"]
+    }, {
+        name: "Openings",
+        type: "number",
+        placeholder: "Openings"
+    }, {
+        name: "Tags",
+        type: "tags",
+        options: ["JavaScript", "React", "Frontend", "Remote", "Node.js", "AWS", "Backend", "APIs", "MongoDB", "UI Design", "UX Design", "Figma", "Prototyping", "Express", "Full-Stack", "DevOps", "CI/CD", "Docker", "Kubernetes", "Python", "Machine Learning", "Data Analysis", "Pandas", "AI", "React Native", "iOS", "Android", "Mobile Development"]
     }]
 
     return(
@@ -150,6 +165,10 @@ function RecruiterEditJobPage(){
                                         }} value={formValues[field.name]}
                                         />
                                     </div>
+                                )
+                            }else if (field.type == "tags"){
+                                return(
+                                    <TagsInputBox formValues={formValues} setFormValues={setFormValues} field={field} index={index} />
                                 )
                             }
                         })}
