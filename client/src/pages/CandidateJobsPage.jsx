@@ -104,14 +104,16 @@ function CandidateJobsPage(){
                 )
             }
             {isLoading && (
-                <div className={`w-[100%] h-[100vh] flex absolute top-0 bg-white left-0 justify-center items-center z-0`}>
+                <div className={`w-[100%] min-h-[100vh] flex absolute top-0 bg-white left-0 items-center z-0`}>
                     <DashboardSideNavbar placeholder={true} />
-                    <BarLoader
-                        color={"#3B82F6"}
-                        loading={isLoading}
-                        height={4}
-                        width={100}
-                    />
+                    <div className="flex grow justify-center">
+                        <BarLoader
+                            color={"#3B82F6"}
+                            loading={isLoading}
+                            height={4}
+                            width={100}
+                        />
+                    </div>
                 </div>
             )}
         </>
