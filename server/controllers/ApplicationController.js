@@ -1,4 +1,5 @@
 import Application from "../models/Application.js";
+import {User} from "../models/User.js";
 
 const applyJob = async(req, res) => {
     try{
@@ -54,4 +55,21 @@ const deleteAllApplications = async(req, res) => {
     }
 }
 
-export default {applyJob, deleteApplicationByID, getAllApplications, getApplicationByUserIDAndJobID, deleteAllApplications}
+const getJobApplicants = async(req, res) => {
+    try{
+        const {jobID} = req.params;
+        const applicants = await Application.find({jobID: jobID})
+
+        let applicantsArr = [];
+        for (let i = 0; i < applicants.length; i ++){
+            let applicantID = applicants[i].userID;
+            let applicant = await User.findById(applicantID);
+            applicantsArr.push(applicant);
+        }
+        return res.status(200).json(applicantsArr);
+    }catch(err){
+        return res.status(500).json({message: err.message});
+    }
+}
+
+export default {applyJob, deleteApplicationByID, getAllApplications, getApplicationByUserIDAndJobID, deleteAllApplications, getJobApplicants};

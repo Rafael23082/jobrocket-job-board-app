@@ -3,12 +3,12 @@ import mongoose, { mongo } from "mongoose";
 const applicationSchema = mongoose.Schema({
     jobID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "job",
+        ref: "Job",
         required: true
     }, 
     userID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "user",
+        ref: "Candidate",
         required: true
     },
     status: {

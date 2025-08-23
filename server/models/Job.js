@@ -58,7 +58,7 @@ const jobSchema = mongoose.Schema({
     }],
     postedBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "user",
+        ref: "Recruiter",
         required: true
     }
 })

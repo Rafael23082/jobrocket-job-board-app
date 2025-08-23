@@ -31,7 +31,7 @@ export const User = mongoose.model("User", userSchema);
 const candidateSchema = new mongoose.Schema({
     savedJobs: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "job"
+        ref: "Job"
     }],
     location: {
         type: String

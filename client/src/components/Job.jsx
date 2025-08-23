@@ -81,7 +81,7 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
                             {listings && (
                                 <div className="flex items-center flex-wrap gap-x-[1em] pt-[1em]">
                                     <p className="text-[0.9rem]">👥 {job.applications} Applicants</p>
-                                    <p className="text-[0.9rem] cursor-pointer text-blue-500">[👁 View Applicants]</p>
+                                    <p className="text-[0.9rem] cursor-pointer text-blue-500 hover:underline" onClick={() => navigate(`/recruiter/applicants/${job?._id}`)}>[👁 View Applicants]</p>
                                 </div>
                             )}
                         </div>
