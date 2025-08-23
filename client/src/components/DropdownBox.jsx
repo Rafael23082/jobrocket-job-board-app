@@ -12,7 +12,7 @@ function DropdownBox({index, values, fieldName, formValues, setFormValues, dropd
                        setDropdownIndex(index)
                     }
                 }}>{formValues[fieldName]} {dropdownIndex != index ? <IoIosArrowDown />: <IoIosArrowUp/>}</span>
-                <div className={`flex flex-col absolute bottom-[calc(100%+10px)] w-[100%] rounded-[10px] select-none overflow-hidden shadow ${dropdownIndex == index ? "max-h-[1000px] border duration-[0.5s]": "max-h-0 border-transparent duration-[0.1s]"} bg-white transition-all`}>
+                <div className={`flex flex-col absolute top-[calc(100%+10px)] w-[100%] rounded-[10px] select-none overflow-hidden shadow ${dropdownIndex == index ? "max-h-48 border duration-[0.3s]": "max-h-0 border-transparent duration-[0.1s]"} bg-white z-50 transition-all overflow-y-auto`}>
                     {values.map((value, index) => (
                         <p className="px-[1em] py-[0.5em] bg-white hover:brightness-90" onClick={() => {setFormValues((prev) => ({...prev, [fieldName]: value})); setDropdownIndex(null)}}>{value}</p>                        
                     ))}

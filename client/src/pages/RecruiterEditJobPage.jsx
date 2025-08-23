@@ -9,6 +9,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import DropdownBox from "../components/DropdownBox.jsx";
 import TagsInputBox from "../components/TagsInputBox.jsx";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { IoIosWarning } from "react-icons/io";
 
 function RecruiterEditJobPage(){
     const [menuOpen, setMenuOpen] = useState(false);
@@ -19,6 +21,7 @@ function RecruiterEditJobPage(){
     const {jobID} = useParams();
     const [job, setJob] = useState({});
     const [dropdownIndex, setDropdownIndex] = useState(null);
+    const [errors, setErrors] = useState({});
 
     useEffect(() => {
         if (!user){
@@ -32,20 +35,49 @@ function RecruiterEditJobPage(){
     }
 
     const handleSave = async() => {
-        let res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/job/updateJobByID/${jobID}`, {
-            role: formValues["Role"],
-            company: formValues["Company"],
-            location: formValues["Location"],
-            field: formValues["Field"],
-            'salary.min': formValues["Minimum Salary"],
-            'salary.max': formValues["Maximum Salary"],
-            description: formValues["Description"],
-            employmentType: formValues["Employment Type"],
-            openings: formValues["Openings"],
-            tags: formValues["Tags"]
+        let newErrors = {};
+        fields.map((field) => {
+            if (field.type == "text" || field.type == "textarea" || field.type == "number" || field.type == "select"){
+                let value = formValues[field.name]
+                if (String(value).trim() == ""){
+                    newErrors[field.name] = "Please fill out this field."
+                }
+                if (field.type == "number"){
+                    if (formValues[field.name] <= 0){
+                        newErrors[field.name] = "Value must be greater than 0."
+                    }
+                }
+            }else if (field.name == "Tags"){
+                if (formValues[field.name].length == 0){
+                    newErrors[field.name] = "Please select at least one tag"
+                }
+            }else if (field.name == "Requirements"){
+                let requirements = formValues[field.name];
+                let blank = requirements.some((requirement) => requirement.trim() == "");
+                if (blank){
+                    newErrors[field.name] = "Please fill out all fields."
+                }
+            }
         })
-        setInitialValues(formValues);
-        setJob(res.data);
+
+        if (Object.keys(newErrors).length == 0){
+            let res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/job/updateJobByID/${jobID}`, {
+                role: formValues["Role"],
+                company: formValues["Company"],
+                location: formValues["Location"],
+                field: formValues["Field"],
+                'salary.min': formValues["Minimum Salary"],
+                'salary.max': formValues["Maximum Salary"],
+                description: formValues["Description"],
+                employmentType: formValues["Employment Type"],
+                openings: formValues["Openings"],
+                tags: formValues["Tags"],
+                requirements: formValues["Requirements"]
+            })
+            setInitialValues(formValues);
+            setJob(res.data);
+        }
+        setErrors(newErrors);
     }
 
     useEffect(() => {
@@ -62,7 +94,8 @@ function RecruiterEditJobPage(){
                 ["Description"]: job?.description ?? "loading...",
                 ["Employment Type"]: job?.employmentType ?? "loading...",
                 ["Openings"]: job?.openings ?? 0,
-                ["Tags"]: job?.tags ?? []
+                ["Tags"]: job?.tags ?? [],
+                ["Requirements"]: job?.requirements ?? []
             }
             setFormValues(values);
             setInitialValues(values);
@@ -72,50 +105,63 @@ function RecruiterEditJobPage(){
 
     const buttonsDisplayed = JSON.stringify(formValues) != JSON.stringify(initialValues);
 
-    const values = ["Hello", "World"]
-
-    const fields = [{
+    const fields = [
+    {
         name: "Role",
         type: "text",
-        placeholder: "Job role"
-    }, {
+        placeholder: "Job role",
+    },
+    {
         name: "Company",
         type: "text",
-        placeholder: "Email"
-    }, {
+        placeholder: "Company name",
+    },
+    {
         name: "Location",
         type: "text",
-        placeholder: "Location"
-    }, {
-        name: "Field",
-        type: "select",
-        options: ["Tech", "Design", "Data", "Business", "Marketing"]
-    }, {
-        name: "Minimum Salary",
-        type: "number",
-        placeholder: "Minimum Salary"
-    }, {
-        name: "Maximum Salary",
-        type: "number",
-        placeholder: "Maximum Salary"
-    }, {
-        name: "Description",
-        type: "textarea",
-        placeholder: "Description"
-    }, {
+        placeholder: "Location",
+    },
+    {
         name: "Employment Type",
         type: "select",
-        options: ["Full-Time", "Part-Time", "Internship"]
-    }, {
+        options: ["Full-Time", "Part-Time", "Internship"],
+    },
+    {
+        name: "Field",
+        type: "select",
+        options: ["Tech", "Design", "Data", "Business", "Marketing"],
+    },
+    {
+        name: "Description",
+        type: "textarea",
+        placeholder: "Description",
+    },
+    {
+        name: "Requirements",
+        type: "list",
+        placeholder: "Add a requirement",
+    },
+    {
+        name: "Tags",
+        type: "list",
+        options: ["JavaScript", "React", "Frontend", "Remote", "Node.js", "AWS", "Backend", "APIs", "MongoDB", "UI Design", "UX Design", "Figma", "Prototyping", "Express", "Full-Stack", "DevOps", "CI/CD", "Docker", "Kubernetes", "Python", "Machine Learning", "Data Analysis", "Pandas", "AI", "React Native", "iOS", "Android", "Mobile Development"]
+    },
+    {
+        name: "Minimum Salary",
+        type: "number",
+        placeholder: "Minimum Salary",
+    },
+    {
+        name: "Maximum Salary",
+        type: "number",
+        placeholder: "Maximum Salary",
+    },
+    {
         name: "Openings",
         type: "number",
-        placeholder: "Openings"
-    }, {
-        name: "Tags",
-        type: "tags",
-        options: ["JavaScript", "React", "Frontend", "Remote", "Node.js", "AWS", "Backend", "APIs", "MongoDB", "UI Design", "UX Design", "Figma", "Prototyping", "Express", "Full-Stack", "DevOps", "CI/CD", "Docker", "Kubernetes", "Python", "Machine Learning", "Data Analysis", "Pandas", "AI", "React Native", "iOS", "Android", "Mobile Development"]
-    }]
-
+        placeholder: "Openings",
+    },
+    ];
     return(
         <>
             <DashboardSideNavbar current={"Jobs"} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
@@ -135,8 +181,39 @@ function RecruiterEditJobPage(){
                     <div className="px-10 padding-x my-[2em]">
                         <p className="text-[1.25rem] font-medium">Edit Job</p>
                         {fields.map((field, index) => {
-                            if (field.type == "text" || field.type == "number"){
+                            if (field.name.toLowerCase() == "requirements"){
                                 return(
+                                    <>
+                                    <div>
+                                        <p className={`text-gray-500 font-medium text-[0.875rem] ${index == 0 ? "pt-[2em]": "pt-[1em]"}`}>{field.name}</p>
+                                        {formValues["Requirements"]?.map((requirement, index) => (
+                                            <div className={`flex items-center ${index == 0 ? "mt-[0.4em]": "mt-[1em]"} rounded-[5px] border focus-within:outline`}>
+                                                <input type={field.type} className={`px-[1em] py-[0.3em] flex-1 focus:outline-none`} placeholder={"Requirement"} value={requirement} onChange={(e) => {
+                                                    let requirementsArr = [...formValues["Requirements"]]
+                                                    requirementsArr[index] = e.target.value;
+                                                    setFormValues((prev) => ({...prev, ["Requirements"]: requirementsArr}))
+                                                }} />
+                                                <FaRegTrashAlt className="mx-[1em] cursor-pointer" size={13} color="red" onClick={() => {
+                                                    let requirementsArr = [...formValues["Requirements"]];
+                                                    requirementsArr.splice(index, 1);
+                                                    setFormValues((prev) => ({...prev, ["Requirements"]: requirementsArr}));
+                                                }} />
+                                            </div>
+                                        ))}
+                                        <button className="bg-blue-500 text-white rounded-[5px] text-[0.8rem] px-[0.7em] py-[0.3em] mt-[1em] cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]" onClick={() => {
+                                            let requirementsArr = [...formValues["Requirements"], ""];
+                                            setFormValues((prev) => ({...prev, ["Requirements"]: requirementsArr}))
+                                        }}>Add requirement</button>
+                                    </div>
+                                    {errors[field.name] && (
+                                        <span className="text-red-500 text-[0.75rem] pt-[0.5em] flex items-center gap-x-[5px]"><IoIosWarning />{errors[field.name]}</span>
+                                    )}
+                                    </>
+                                )
+                            }
+                            else if (field.type == "text" || field.type == "number"){
+                                return(
+                                    <>
                                     <div>
                                         <p className={`text-gray-500 font-medium text-[0.875rem] ${index == 0 ? "pt-[2em]": "pt-[1em]"}`}>{field.name}</p>
                                         <input type={field.type} className="px-[1em] mt-[0.4em] border py-[0.3em] w-[100%] rounded-[5px]" placeholder={field.placeholder} value={formValues[field.name]}
@@ -147,6 +224,10 @@ function RecruiterEditJobPage(){
                                         }}
                                         />
                                     </div>
+                                    {errors[field.name] && (
+                                        <span className="text-red-500 text-[0.75rem] pt-[0.5em] flex items-center gap-x-[5px]"><IoIosWarning />{errors[field.name]}</span>
+                                    )}
+                                    </>
                                 )
                             }else if (field.type == "select"){
                                 return(
@@ -157,6 +238,7 @@ function RecruiterEditJobPage(){
                                 )
                             }else if (field.type == "textarea"){
                                 return(
+                                    <>
                                     <div>
                                         <p className={`text-gray-500 font-medium text-[0.875rem] ${index == 0 ? "pt-[2em]": "pt-[1em]"}`}>{field.name}</p>
                                         <textarea className="px-[1em] mt-[0.4em] border py-[0.3em] w-[100%] rounded-[5px]" rows={6} 
@@ -165,15 +247,24 @@ function RecruiterEditJobPage(){
                                         }} value={formValues[field.name]}
                                         />
                                     </div>
+                                    {errors[field.name] && (
+                                        <span className="text-red-500 text-[0.75rem] pt-[0.5em] flex items-center gap-x-[5px]"><IoIosWarning />{errors[field.name]}</span>
+                                    )}
+                                    </>
                                 )
-                            }else if (field.type == "tags"){
+                            }else if (field.type == "list" && field.name == "Tags"){
                                 return(
+                                    <>
                                     <TagsInputBox formValues={formValues} setFormValues={setFormValues} field={field} index={index} />
+                                    {errors[field.name] && (
+                                        <span className="text-red-500 text-[0.75rem] pt-[0.5em] flex items-center gap-x-[5px]"><IoIosWarning />{errors[field.name]}</span>
+                                    )}
+                                    </>
                                 )
                             }
                         })}
                         <div className="flex mt-[2em] justify-center"> 
-                            <button className={`${buttonsDisplayed ? "block": "invisible"} block border border-[#3B82F6] text-[#3B82F6] px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold mr-[1em] cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition-colors ease duration-[0.3s]`} onClick={() => {setFormValues(initialValues)}}>Cancel</button>
+                            <button className={`${buttonsDisplayed ? "block": "invisible"} block border border-[#3B82F6] text-[#3B82F6] px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold mr-[1em] cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition-colors ease duration-[0.3s]`} onClick={() => {setFormValues(initialValues); setErrors({});}}>Cancel</button>
                             <button className={`${buttonsDisplayed ? "block": "invisible"} bg-[#3B82F6] text-white px-[1.5em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition-colors ease duration-[0.3s]`} onClick={handleSave}>Save Changes</button>
                         </div>
                     </div>
