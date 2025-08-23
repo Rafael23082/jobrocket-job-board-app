@@ -10,14 +10,14 @@ import { FaLightbulb } from "react-icons/fa";
 function CandidateOverviewPage(){
   return(
     <> 
-      <section className="border-b-[0.7px] border-gray-100">
+      <section>
         <div className="max-w-[1300px] mx-auto">
           <OverviewHeroSection heading={"Find Your Next Opportunity With Confidence"} subheading={"Discover jobs tailored to your skills, connect with top employers, and take the next step in your career journey."} button1={"Create your profile"} button2={"Browse jobs"} />
         </div>
       </section>
 
-      <section className="border-y-[0.7px] border-gray-100">
-        <FeatureHighlightSection title={"Opportunities will come your way"} img={"opportunity.jpg"} feature1={"Apply easily"} description1={"Submit job applications with just one click—no lengthy forms or repetitive info."} Icon1={MdTouchApp} feature2={"Get matched instantly"} description2={"Receive personalized job matches based on your profile, skills, and preferences—no endless scrolling needed."} Icon2={FaLightbulb} />
+      <section className="bg-slate-50">
+        <FeatureHighlightSection title={"Opportunities will come your way"} img={"opportunity.png"} feature1={"Apply easily"} description1={"Submit job applications with just one click—no lengthy forms or repetitive info."} Icon1={MdTouchApp} feature2={"Get matched instantly"} description2={"Receive personalized job matches based on your profile, skills, and preferences—no endless scrolling needed."} Icon2={FaLightbulb} />
       </section>
 
       <section className="border-t-[0.7px] border-gray-100">

@@ -121,10 +121,6 @@ function ProfilePage(){
                 name: "Email",
                 type: "text",
                 placeholder: "Email"
-            }, {
-                name: "Company",
-                type: "text",
-                placeholder: "Company"
             }]   
     }
 

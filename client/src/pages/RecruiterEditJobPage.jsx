@@ -11,6 +11,8 @@ import DropdownBox from "../components/DropdownBox.jsx";
 import TagsInputBox from "../components/TagsInputBox.jsx";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { IoIosWarning } from "react-icons/io";
+import { HiArrowLongLeft } from "react-icons/hi2";
+import { useQuery } from '@tanstack/react-query';
 
 function RecruiterEditJobPage(){
     const [menuOpen, setMenuOpen] = useState(false);
@@ -19,7 +21,6 @@ function RecruiterEditJobPage(){
     const [formValues, setFormValues] = useState({});
     const [initialValues, setInitialValues] = useState({});
     const {jobID} = useParams();
-    const [job, setJob] = useState({});
     const [dropdownIndex, setDropdownIndex] = useState(null);
     const [errors, setErrors] = useState({});
 
@@ -36,6 +37,11 @@ function RecruiterEditJobPage(){
 
     const handleSave = async() => {
         let newErrors = {};
+        
+        if (formValues["Minimum Salary"] >= formValues["Maximum Salary"]){
+            newErrors["Maximum Salary"] = "Maximum salary must be greater than minimum salary."
+        }
+
         fields.map((field) => {
             if (field.type == "text" || field.type == "textarea" || field.type == "number" || field.type == "select"){
                 let value = formValues[field.name]
@@ -49,13 +55,18 @@ function RecruiterEditJobPage(){
                 }
             }else if (field.name == "Tags"){
                 if (formValues[field.name].length == 0){
-                    newErrors[field.name] = "Please select at least one tag"
+                    newErrors[field.name] = "Please select at least one tag."
+                }else if (formValues[field.name].length > 5){
+                    newErrors[field.name] = "Please use no more than 5 tags."
                 }
             }else if (field.name == "Requirements"){
                 let requirements = formValues[field.name];
                 let blank = requirements.some((requirement) => requirement.trim() == "");
                 if (blank){
                     newErrors[field.name] = "Please fill out all fields."
+                }
+                if (requirements.length == 0){
+                    newErrors[field.name] = "There must be at least one requirement."
                 }
             }
         })
@@ -80,28 +91,29 @@ function RecruiterEditJobPage(){
         setErrors(newErrors);
     }
 
+    const {data: job = {}} = useQuery({
+        queryKey: [jobID],
+        queryFn: () => fetchJob(),
+        keepPreviousData: true
+    })
+
     useEffect(() => {
-        const fetchAndSetJob = async() => {
-            const job = await fetchJob();
-            setJob(job);
-            let values = {
-                ["Role"]: job?.role ?? "loading...",
-                ["Company"]: job?.company ?? "loading...",
-                ["Location"]: job?.location ?? "loading...",
-                ["Field"]: job?.field ?? "loading...",
-                ["Minimum Salary"]: job?.salary?.min ?? 0,
-                ["Maximum Salary"]: job?.salary?.max ?? 0,
-                ["Description"]: job?.description ?? "loading...",
-                ["Employment Type"]: job?.employmentType ?? "loading...",
-                ["Openings"]: job?.openings ?? 0,
-                ["Tags"]: job?.tags ?? [],
-                ["Requirements"]: job?.requirements ?? []
-            }
-            setFormValues(values);
-            setInitialValues(values);
+        let values = {
+            ["Role"]: job?.role ?? "loading...",
+            ["Company"]: job?.company ?? "loading...",
+            ["Location"]: job?.location ?? "loading...",
+            ["Field"]: job?.field ?? "loading...",
+            ["Minimum Salary"]: job?.salary?.min ?? 0,
+            ["Maximum Salary"]: job?.salary?.max ?? 0,
+            ["Description"]: job?.description ?? "loading...",
+            ["Employment Type"]: job?.employmentType ?? "loading...",
+            ["Openings"]: job?.openings ?? 0,
+            ["Tags"]: job?.tags ?? [],
+            ["Requirements"]: job?.requirements ?? []
         }
-        fetchAndSetJob();
-    }, [jobID])
+        setFormValues(values);
+        setInitialValues(values);
+    }, [job])
 
     const buttonsDisplayed = JSON.stringify(formValues) != JSON.stringify(initialValues);
 
@@ -179,7 +191,11 @@ function RecruiterEditJobPage(){
                         </div>
                     </div>
                     <div className="px-10 padding-x my-[2em]">
-                        <p className="text-[1.25rem] font-medium">Edit Job</p>
+                        <span className="flex cursor-pointer hover:underline items-center gap-x-[0.4em] text-blue-500" onClick={() => navigate("/recruiter/job-listings")}>
+                            <HiArrowLongLeft color="#3B82F6" />
+                            <p className="text-sm">Back to jobs</p>
+                        </span>
+                        <p className="text-[1.25rem] font-medium pt-5">Edit Job</p>
                         {fields.map((field, index) => {
                             if (field.name.toLowerCase() == "requirements"){
                                 return(

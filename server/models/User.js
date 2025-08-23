@@ -46,10 +46,6 @@ const candidateSchema = new mongoose.Schema({
 
 export const Candidate = User.discriminator("Candidate", candidateSchema);
 
-const recruiterSchema = new mongoose.Schema({
-    company: {
-        type: String
-    }
-})
+const recruiterSchema = new mongoose.Schema({})
 
 export const Recruiter = User.discriminator("Recruiter", recruiterSchema);
