@@ -21,6 +21,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import RecruiterJobListingsPage from './pages/RecruiterJobListingsPage.jsx';
 import RecruiterEditJobPage from './pages/RecruiterEditJobPage.jsx';
 import ApplicantsPage from './pages/ApplicantsPage.jsx';
+import { Toaster } from "sonner";
 
 Modal.setAppElement('#root');
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ createRoot(document.getElementById('root')).render(
       <UserProvider>
         <BrowserRouter>
           <ScrollToTop />
+          <Toaster position='top-center' />
           <Routes>
             <Route path='/' element={<Layout />}>
               <Route index element={<LandingPage />} />

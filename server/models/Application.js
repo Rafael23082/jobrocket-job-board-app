@@ -16,6 +16,11 @@ const applicationSchema = mongoose.Schema({
         required: true,
         enum: ["pending", "reviewed", "interview", "accepted", "rejected"],
         default: "pending"
+    },
+    postedAt: {
+        type: Date,
+        required: true,
+        default: new Date()
     }
 })
 

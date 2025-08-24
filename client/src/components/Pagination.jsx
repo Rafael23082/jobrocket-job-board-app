@@ -40,7 +40,7 @@ function Pagination({data, field, isLoading, jobOpened, setJobOpened, detailsIsO
             </div>
             {displayedJobs.map((job, index) => (
                 <div className="py-[1.5em] border-b border-gray-200" key={index}>
-                    <Job job={job} seeMore={true} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} dashboard={dashboard} applications={field == "Applications"} />
+                    <Job data={data} job={job} seeMore={true} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} dashboard={dashboard} applications={field == "Applications"} />
                 </div> 
             ))}
             {data.length != 0 && (

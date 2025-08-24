@@ -5,6 +5,7 @@ import { UserContext } from "../context/UserContext.jsx";
 import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {toast} from "sonner";
 
 function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen, applyIsOpen, setApplyIsOpen, dashboard, applications, listings}){
     const {user, setUser} = useContext(UserContext);
@@ -32,10 +33,16 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
         }))
     }
     const handleApplyLoggedIn = async() => {
-        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/application/applyJob`, {
-            userID: user._id,
-            jobID: job._id
-        })
+        if (user?.name?.trim() && user?.email?.trim() && user?.location?.trim() && user?.additionalInformation?.trim() && user?.resume?.trim() != ""){
+            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/application/applyJob`, {
+                userID: user._id,
+                jobID: job._id
+            })
+        }else{
+            toast.error("Profile incomplete.", {
+                description: "Please finish your profile before applying."
+            })
+        }
     }
 
     useEffect(() => {
