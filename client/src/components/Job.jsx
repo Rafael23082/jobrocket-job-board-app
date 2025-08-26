@@ -6,11 +6,11 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {toast} from "sonner";
+import { useQuery } from "@tanstack/react-query";
 
 function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen, applyIsOpen, setApplyIsOpen, dashboard, applications, listings}){
     const {user, setUser} = useContext(UserContext);
     const bookmarked = dashboard && user?.savedJobs?.includes(job._id);
-    const [applicationStatus, setApplicationStatus] = useState("Loading...");
     const navigate = useNavigate();
 
     const handleSaveJob = async() => {
@@ -39,23 +39,25 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
                 jobID: job._id
             })
         }else{
-            toast.error("Profile incomplete.", {
+            toast.success("Profile incomplete.", {
                 description: "Please finish your profile before applying."
             })
         }
     }
 
-    useEffect(() => {
-        const getApplicationStatus = async() => {
-            if (applications){
-                const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/application/getApplicationByUserIDAndJobID/${user._id}/${job._id}`);
-                const application = res.data;
-                setApplicationStatus(application.status.charAt(0).toUpperCase() + application.status.slice(1));
-            }
-        }
+    const {data: status = "Loading..."} = useQuery({
+        queryKey: [job],
+        queryFn: () => getApplicationStatus(),
+        keepPreviousData: true
+    })
 
-        getApplicationStatus();
-    }, [job])
+    const getApplicationStatus = async() => {
+        if (applications){
+            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/application/getApplicationByUserIDAndJobID/${user._id}/${job._id}`);
+            const application = res.data;
+            return application.status.charAt(0).toUpperCase() + application.status.slice(1);
+        }
+    }
 
     return(
             <div className="flex items-start md:items-center flex-col md:flex-row relative" style={{fontFamily: "'Roboto', sans-serif"}}>
@@ -105,7 +107,7 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
                         }else if (!applications && dashboard){
                             handleApplyLoggedIn();
                         }
-                    }}>{applications && `${applicationStatus}`}{!applications && !listings && "Apply"}{listings && "Edit"}</button>
+                    }}>{applications && `${status}`}{!applications && !listings && "Apply"}{listings && "Edit"}</button>
                 </div>
                 {bookmarked && <FaBookmark size={18} className="hidden md:block cursor-pointer absolute top-0 right-0" color="#3B82F6" onClick={handleRemoveSavedJob} />} {!bookmarked && dashboard && <FaRegBookmark size={18} className="hidden md:block cursor-pointer absolute top-0 right-0" color="#3B82F6" onClick={handleSaveJob} />}
             </div>
