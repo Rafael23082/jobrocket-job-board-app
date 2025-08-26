@@ -30,7 +30,7 @@ function ProfilePage(){
     }
 
     const handleFileUpload = async(e) => {
-        const file = e.target.files[e.target.files.length - 1];
+        const file = e.target.files[0];
         const resumeLink = await convertToBase64(file);
         console.log(resumeLink);
         setFormValues((prev) => ({
