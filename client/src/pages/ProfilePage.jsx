@@ -19,39 +19,49 @@ function ProfilePage(){
     const candidate = role.toLowerCase() == "candidate";
     const [menuOpen, setMenuOpen] = useState(false);
 
+    const convertToBase64 = (file) => {
+        return new Promise((resolve, _reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            }
+        })
+    }
+
+    const handleFileUpload = async(e) => {
+        const file = e.target.files[e.target.files.length - 1];
+        const resumeLink = await convertToBase64(file);
+        console.log(resumeLink);
+        setFormValues((prev) => ({
+            ...prev, ["resume"]: resumeLink, ["resumeName"]: file.name
+        }))
+    }
+
     useEffect(() => {
         if (!user){
             navigate("/login");
         }
 
         if (role.toLowerCase() == "candidate"){
-            setFormValues(({
-                ["Full Name"]: user?.name ?? "",
-                ["Email"]: user?.email ?? "",
-                ["Location"]: user?.location ?? "",
-                ["Additional Information"]: user?.additionalInformation ?? "",
-                ["Upload your resume"]: user?.resume ?? ""
-            }))
+            let values = {
+                ["name"]: user?.name ?? "",
+                ["email"]: user?.email ?? "",
+                ["location"]: user?.location ?? "",
+                ["additionalInformation"]: user?.additionalInformation ?? "",
+                ["resume"]: user?.resume ?? "",
+                ["resumeName"]: user?.resumeName ?? ""  
+            }
 
-            setInitialValues(({
-                ["Full Name"]: user?.name ?? "",
-                ["Email"]: user?.email ?? "",
-                ["Location"]: user?.location ?? "",
-                ["Additional Information"]: user?.additionalInformation ?? "",
-                ["Upload your resume"]: user?.resume ?? ""
-            }))
+            setFormValues(values);
+            setInitialValues(values);
         }else{
-            setFormValues(({
-                ["Full Name"]: user?.name ?? "",
-                ["Email"]: user?.email ?? "",
-                ["Company"]: user?.company ?? "",
-            }))
-
-            setInitialValues(({
-                ["Full Name"]: user?.name ?? "",
-                ["Email"]: user?.email ?? "",
-                ["Company"]: user?.company ?? "",
-            }))
+            let values = {
+                ["name"]: user?.name ?? "",
+                ["email"]: user?.email ?? ""        
+            }
+            setFormValues(values);
+            setInitialValues(values);
         }
     }, [user])
 
@@ -59,27 +69,27 @@ function ProfilePage(){
 
     const handleSubmit = async() => {
         let errors = {};
-        const valid = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(formValues["Email"]);
+        const valid = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(formValues["email"]);
         if (!valid){
-            errors["Email"] = "Invalid email format."
+            errors["email"] = "Invalid email format."
         }
 
         if (Object.keys(errors).length == 0){
             if (role?.toLowerCase() == "candidate"){
                 const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/user/updateUserDetails/${user._id}`, {
-                    name: formValues["Full Name"],
-                    email: formValues["Email"],
-                    location: formValues["Location"],
-                    additionalInformation: formValues["Additional Information"],
-                    resume: formValues["Upload your resume"]
+                    name: formValues["name"],
+                    email: formValues["email"],
+                    location: formValues["location"],
+                    additionalInformation: formValues["additionalInformation"],
+                    resume: formValues["resume"],
+                    resumeName: formValues["resumeName"]
                 })
                 setInitialValues(formValues);
                 setUser(res.data);
             }else{
                 const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/user/updateUserDetails/${user._id}`, {
-                    name: formValues["Full Name"],
-                    email: formValues["Email"],
-                    company: formValues["Company"]  
+                    name: formValues["name"],
+                    email: formValues["email"]
                 })
                 setInitialValues(formValues);
                 setUser(res.data);
@@ -92,32 +102,39 @@ function ProfilePage(){
     
     if (candidate){
         fields = [{
+                key: "name",
                 name: "Full Name",
                 type: "text",
                 placeholder: "Your full name"
             }, {
+                key: "email",
                 name: "Email",
                 type: "text",
                 placeholder: "Email"
             }, {
+                key: "location",
                 name: "Location",
                 type: "text",
                 placeholder: "Location"
             }, {
+                key: "additionalInformation",
                 name: "Additional Information",
                 type: "textarea",
                 placeholder: "Summary"
             }, {
+                key: "resume",
                 name: "Upload your resume",
                 type: "file",
                 placeholder: ""
             }]
     }else{
         fields = [{
+                key: "name",
                 name: "Full Name",
                 type: "text",
                 placeholder: "Your full name"
             }, {
+                key: "email",
                 name: "Email",
                 type: "text",
                 placeholder: "Email"
@@ -151,14 +168,14 @@ function ProfilePage(){
                             return(
                                 <div className="pt-[1em]" key={index}>
                                     <p className="text-gray-500 font-medium text-[0.875rem]">{field.name}</p>
-                                    <input type={field.type} className="px-[1em] mt-[0.4em] border py-[0.3em] w-[100%] rounded-[5px]" placeholder={field.placeholder} value={formValues[field.name]}
+                                    <input type={field.type} className="px-[1em] mt-[0.4em] border py-[0.3em] w-[100%] rounded-[5px]" placeholder={field.placeholder} value={formValues[field.key] ?? ""}
                                     onChange={(e) => {
                                         setFormValues((prev) => ({
-                                            ...prev, [field.name]: e.target.value
+                                            ...prev, [field.key]: e.target.value
                                         }))
                                     }}
                                     />
-                                    {errors[field.name] && (
+                                    {errors[field.key] && (
                                         <span className="text-red-500 text-[0.75rem] pt-[0.5em] flex items-center gap-x-[5px]"><IoIosWarning />{errors[field.name]}</span>
                                     )}
                                 </div>       
@@ -169,8 +186,8 @@ function ProfilePage(){
                                     <p className="text-gray-500 font-medium text-[0.875rem]">{field.name}</p>
                                     <textarea className="px-[1em] mt-[0.4em] border py-[0.3em] w-[100%] rounded-[5px]" rows={6} 
                                     onChange={(e) => {
-                                        setFormValues((prev) => ({...prev, [field.name]: e.target.value}))
-                                    }} value={formValues[field.name]} placeholder={field.placeholder}
+                                        setFormValues((prev) => ({...prev, [field.key]: e.target.value}))
+                                    }} value={formValues[field.key] ?? ""} placeholder={field.placeholder}
                                     />
                                 </div>
                             )
@@ -180,14 +197,15 @@ function ProfilePage(){
                                     <label for="resume" className="flex flex-col mt-[0.4em] border py-[0.5em] w-[100%] rounded-[5px] border-dashed items-center py-[1em] cursor-pointer">
                                         <label for="resume" className="text-[0.9rem] font-semibold px-[1.5em] py-[0.8em] border bg-gray-100 border-gray-400 rounded-[5px] cursor-pointer hover:brightness-90">Drag or browse your resume</label>
                                         <p className="text-[0.9rem] text-gray-400 pt-[0.5em]">supports .pdf, .doc, .docx, or .txt files</p>
-                                        {formValues[field.name] && (
-                                            <p className="text-[0.9rem] pt-[0.5em]">{formValues[field.name]}</p>
+                                        {formValues[field.key] && (
+                                            <span className="text-[0.9rem] pt-[0.5em] flex gap-x-[0.8em]">
+                                                <p>{formValues["resumeName"]}</p>
+                                                <p className="text-blue-500 cursor-pointer" onClick={() => {window.open(formValues["resume"])}}>[Download]</p>
+                                            </span>
                                         )}
                                     </label>
                                     <input type="file" id="resume" accept=".pdf,.doc,.docx,.txt" className="hidden"
-                                    onChange={(e) => {
-                                        setFormValues((prev) => ({...prev, [field.name]: e.target.files[0]?.name}))
-                                    }}
+                                    onChange={(e) => {handleFileUpload(e)}}
                                     />
                                 </div>
                             );

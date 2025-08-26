@@ -45,19 +45,21 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
         }
     }
 
-    const {data: status = "Loading..."} = useQuery({
-        queryKey: [job],
-        queryFn: () => getApplicationStatus(),
-        keepPreviousData: true
-    })
-
     const getApplicationStatus = async() => {
         if (applications){
             const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/application/getApplicationByUserIDAndJobID/${user._id}/${job._id}`);
             const application = res.data;
             return application.status.charAt(0).toUpperCase() + application.status.slice(1);
+        }else{
+            return "Undefined."
         }
     }
+
+    const {data: status = "Loading..."} = useQuery({
+        queryKey: [job],
+        queryFn: () => getApplicationStatus(),
+        keepPreviousData: true
+    })
 
     return(
             <div className="flex items-start md:items-center flex-col md:flex-row relative" style={{fontFamily: "'Roboto', sans-serif"}}>

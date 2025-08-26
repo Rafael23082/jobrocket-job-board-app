@@ -25,9 +25,9 @@ function JobsCategoryPage(){
     }, [detailsIsOpen, applyIsOpen])
 
     const fetchJobs = async() => {
-            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getAllJobs`);       
-            const filteredJobs = res.data.filter((job) => job.field.toLowerCase() == field.toLowerCase());   
-            return filteredJobs;
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getAllJobs`);       
+        const filteredJobs = res.data.filter((job) => job.field.toLowerCase() == field.toLowerCase());   
+        return filteredJobs;
     }
 
     const {data: allJobs = [], isLoading} = useQuery({

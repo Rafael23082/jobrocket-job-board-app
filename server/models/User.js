@@ -41,6 +41,9 @@ const candidateSchema = new mongoose.Schema({
     },
     resume: {
         type: String
+    },
+    resumeName: {
+        type: String
     }
 })
 
