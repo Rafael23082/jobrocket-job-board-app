@@ -8,7 +8,9 @@ import { useNavigate } from "react-router-dom";
 import {toast} from "sonner";
 import { useQuery } from "@tanstack/react-query";
 
-function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen, applyIsOpen, setApplyIsOpen, dashboard, applications, listings}){
+function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen, applyIsOpen, setApplyIsOpen, dashboard, field, listings, refetch}){
+    const applications = field == "Applications";
+    const saved = field == "Saved";
     const {user, setUser} = useContext(UserContext);
     const bookmarked = dashboard && user?.savedJobs?.includes(job._id);
     const navigate = useNavigate();
@@ -21,6 +23,9 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
         setUser((prev) => ({
             ...prev, savedJobs: [...prev.savedJobs, job._id]
         }))
+        if (saved){
+            refetch();
+        }
     }
 
     const handleRemoveSavedJob = async() => {
@@ -31,6 +36,17 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
         setUser((prev) => ({
             ...prev, savedJobs: prev.savedJobs.filter((jobID) => jobID != job._id)
         }))
+
+        if (saved){
+            refetch();
+            toast.success("Job removed successfully.", {
+                description: `${job.role} removed from saved jobs.`,
+                action: {
+                    label: "Undo",
+                    onClick: () => handleSaveJob()
+                }
+            })
+        }
     }
     const handleApplyLoggedIn = async() => {
         if (user?.name?.trim() && user?.email?.trim() && user?.location?.trim() && user?.additionalInformation?.trim() && user?.resume?.trim() != ""){

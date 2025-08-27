@@ -55,10 +55,10 @@ const deleteAllApplications = async(req, res) => {
     }
 }
 
-const getJobApplicants = async(req, res) => {
+const getPendingJobApplicants = async(req, res) => {
     try{
         const {jobID} = req.params;
-        const applicants = await Application.find({jobID: jobID})
+        const applicants = await Application.find({jobID: jobID, status: "pending"})
 
         let applicantsArr = [];
         for (let i = 0; i < applicants.length; i ++){
@@ -72,4 +72,4 @@ const getJobApplicants = async(req, res) => {
     }
 }
 
-export default {applyJob, deleteApplicationByID, getAllApplications, getApplicationByUserIDAndJobID, deleteAllApplications, getJobApplicants};
+export default {applyJob, deleteApplicationByID, getAllApplications, getApplicationByUserIDAndJobID, deleteAllApplications, getPendingJobApplicants};

@@ -50,7 +50,7 @@ function CandidateJobsPage(){
         return filteredJobs;
     }
 
-    const {data: allJobs = [], isLoading} = useQuery({
+    const {data: allJobs = [], refetch, isLoading} = useQuery({
         queryKey: [category],
         queryFn: () => fetchJobs(),
         keepPreviousData: true
@@ -81,7 +81,7 @@ function CandidateJobsPage(){
                         </div>
                         <div className={`${allJobs.length == 0 ? "hidden": "flex"}`}>
                             <div className={`border-box overflow-x-hidden w-[100%] padding-x px-10 pt-[0.5em]`}>
-                                <Pagination data={allJobs} field={category} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} dashboard={true} />
+                                <Pagination data={allJobs} field={category} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} dashboard={true} refetch={refetch} />
                             </div>
                         </div>
                     </div>

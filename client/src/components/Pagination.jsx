@@ -4,7 +4,7 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useEffect } from "react";
 
-function Pagination({data, field, isLoading, jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen, applyIsOpen, setApplyIsOpen, dashboard}){
+function Pagination({data, field, isLoading, jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen, applyIsOpen, setApplyIsOpen, dashboard, refetch}){
     const [page, setPage] = useState(1);
     const maxDisplayed = 5;
     const [maxPages, setMaxPages] = useState(0);
@@ -20,6 +20,7 @@ function Pagination({data, field, isLoading, jobOpened, setJobOpened, detailsIsO
             setMaxPages(0);
             setDisplayedJobs([]);
         }
+        console.log(field)
     }, [data, page]);
 
     const handleNext = () => {
@@ -40,7 +41,7 @@ function Pagination({data, field, isLoading, jobOpened, setJobOpened, detailsIsO
             </div>
             {displayedJobs.map((job, index) => (
                 <div className="py-[1.5em] border-b border-gray-200" key={index}>
-                    <Job data={data} job={job} seeMore={true} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} dashboard={dashboard} applications={field == "Applications"} />
+                    <Job data={data} job={job} seeMore={true} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} dashboard={dashboard} field={field} refetch={refetch} />
                 </div> 
             ))}
             {data.length != 0 && (

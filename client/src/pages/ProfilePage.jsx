@@ -195,8 +195,8 @@ function ProfilePage(){
                             return(
                                 <div key={index} className="mt-[1em]">
                                     <label for="resume" className="flex flex-col mt-[0.4em] border py-[0.5em] w-[100%] rounded-[5px] border-dashed items-center py-[1em] cursor-pointer">
-                                        <label for="resume" className="text-[0.9rem] font-semibold px-[1.5em] py-[0.8em] border bg-gray-100 border-gray-400 rounded-[5px] cursor-pointer hover:brightness-90">Drag or browse your resume</label>
-                                        <p className="text-[0.9rem] text-gray-400 pt-[0.5em]">supports .pdf, .doc, .docx, or .txt files</p>
+                                        <label for="resume" className="text-[0.9rem] font-semibold px-[1.5em] py-[0.8em] border bg-gray-100 border-gray-400 rounded-[5px] cursor-pointer hover:brightness-90">Browse your resume</label>
+                                        <p className="text-[0.9rem] text-gray-400 pt-[0.5em]">supports .doc, .docx, or .txt files</p>
                                         {formValues[field.key] && (
                                             <span className="text-[0.9rem] pt-[0.5em] flex gap-x-[0.8em]">
                                                 <p>{formValues["resumeName"]}</p>
@@ -204,7 +204,7 @@ function ProfilePage(){
                                             </span>
                                         )}
                                     </label>
-                                    <input type="file" id="resume" accept=".pdf,.doc,.docx,.txt" className="hidden"
+                                    <input type="file" id="resume" accept=".doc,.docx,.txt" className="hidden"
                                     onChange={(e) => {handleFileUpload(e)}}
                                     />
                                 </div>

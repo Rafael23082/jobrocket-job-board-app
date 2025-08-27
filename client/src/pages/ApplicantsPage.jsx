@@ -23,7 +23,7 @@ function ApplicantsPage(){
     }, [user])
 
     const fetchApplicants = async() => {
-        let res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/application/getJobApplicants/${jobID}`);
+        let res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/application/getPendingJobApplicants/${jobID}`);
         return res.data;
     }
 
