@@ -13,6 +13,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { IoIosWarning } from "react-icons/io";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { useQuery } from '@tanstack/react-query';
+import { BarLoader } from "react-spinners";
 
 function RecruiterEditJobPage(){
     const [menuOpen, setMenuOpen] = useState(false);
@@ -91,7 +92,7 @@ function RecruiterEditJobPage(){
         setErrors(newErrors);
     }
 
-    const {data: job = {}} = useQuery({
+    const {data: job = {}, isLoading} = useQuery({
         queryKey: [jobID],
         queryFn: () => fetchJob(),
         keepPreviousData: true
@@ -286,6 +287,19 @@ function RecruiterEditJobPage(){
                     </div>
                 </div>
             </div>
+            {isLoading && (
+                <div className={`w-[100%] min-h-[100vh] flex absolute top-0 bg-white left-0 items-center z-0`}>
+                    <DashboardSideNavbar placeholder={true} />
+                    <div className="flex grow justify-center">
+                        <BarLoader
+                            color={"#3B82F6"}
+                            loading={isLoading}
+                            height={4}
+                            width={100}
+                        />
+                    </div>
+                </div>
+            )}
         </>
     )
 }

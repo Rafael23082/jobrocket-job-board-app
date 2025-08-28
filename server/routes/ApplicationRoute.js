@@ -8,6 +8,7 @@ applicationRoutes.delete("/deleteApplicationById/:applicationID", ApplicationCon
 applicationRoutes.get("/getAllApplications", ApplicationController.getAllApplications);
 applicationRoutes.get("/getApplicationByUserIDAndJobID/:userID/:jobID", ApplicationController.getApplicationByUserIDAndJobID);
 applicationRoutes.delete("/deleteAllApplications", ApplicationController.deleteAllApplications);
-applicationRoutes.get("/getPendingJobApplicants/:jobID", ApplicationController.getPendingJobApplicants);
+applicationRoutes.get("/getJobApplicants/:jobID", ApplicationController.getJobApplicants);
+applicationRoutes.put("/updateApplicationStatus/:userID/:jobID", ApplicationController.updateApplicationStatus);
 
 export default applicationRoutes;

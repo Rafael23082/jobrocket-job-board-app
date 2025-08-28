@@ -9,6 +9,7 @@ import axios from "axios";
 import Job from "../components/Job.jsx";
 import { BarLoader } from "react-spinners";
 import DescriptionSlideOverPanel from "../components/DescriptionSlideOverPanel.jsx";
+import { IoIosAdd } from "react-icons/io";
 
 function RecruiterJobListingsPage(){
     const navigate = useNavigate();
@@ -61,11 +62,20 @@ function RecruiterJobListingsPage(){
                         </div>
                     </div>
                     <div className="padding-x px-10 my-[2em]">
-                        {allJobs.map((job, index) => (
-                            <div className="py-[1.5em] border-b border-gray-200" key={index}>
-                                <Job job={job} listings={true} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
-                            </div> 
-                        ))}
+                        <div className="flex flex-wrap justify-between items-center mt-5">
+                            <p className="text-[1.25rem] font-medium block">My Job Listings</p>
+                            <button className="bg-[#3B82F6] text-white pl-[1em] pr-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s] flex items-center gap-x-[0.3em]">
+                                <IoIosAdd size={20} />
+                                <p>Add Job</p>
+                            </button>
+                        </div>
+                        <div className="my-[2em]">
+                            {allJobs.map((job, index) => (
+                                <div className="py-[1.5em] border-b border-gray-200" key={index}>
+                                    <Job job={job} listings={true} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
+                                </div> 
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

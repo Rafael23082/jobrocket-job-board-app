@@ -55,15 +55,16 @@ const deleteAllApplications = async(req, res) => {
     }
 }
 
-const getPendingJobApplicants = async(req, res) => {
+const getJobApplicants = async(req, res) => {
     try{
         const {jobID} = req.params;
-        const applicants = await Application.find({jobID: jobID, status: "pending"})
+        const applicants = await Application.find({jobID: jobID})
 
         let applicantsArr = [];
         for (let i = 0; i < applicants.length; i ++){
             let applicantID = applicants[i].userID;
-            let applicant = await User.findById(applicantID);
+            let applicant = await User.findById(applicantID).lean();
+            applicant["status"] = applicants[i].status
             applicantsArr.push(applicant);
         }
         return res.status(200).json(applicantsArr);
@@ -72,4 +73,22 @@ const getPendingJobApplicants = async(req, res) => {
     }
 }
 
-export default {applyJob, deleteApplicationByID, getAllApplications, getApplicationByUserIDAndJobID, deleteAllApplications, getPendingJobApplicants};
+const updateApplicationStatus = async(req, res) => {
+    try{
+        const {userID, jobID} = req.params;
+        const {status} = req.body;
+        const application = await Application.findOneAndUpdate({
+            userID: userID,
+            jobID: jobID
+        }, {
+            status: status
+        }, {
+            new: true
+        })
+        return res.status(200).json(application);
+    }catch(err){
+        return res.status(500).json({message: err.message});
+    }
+}
+
+export default {applyJob, deleteApplicationByID, getAllApplications, getApplicationByUserIDAndJobID, deleteAllApplications, getJobApplicants, updateApplicationStatus};

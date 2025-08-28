@@ -9,6 +9,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import ApplicantCard from "../components/ApplicantCard.jsx";
 import { HiArrowLongLeft } from "react-icons/hi2";
+import { BarLoader } from "react-spinners";
 
 function ApplicantsPage(){
     const {jobID} = useParams();
@@ -23,11 +24,12 @@ function ApplicantsPage(){
     }, [user])
 
     const fetchApplicants = async() => {
-        let res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/application/getPendingJobApplicants/${jobID}`);
+        let res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/application/getJobApplicants/${jobID}`);
+        console.log(res.data);
         return res.data;
     }
 
-    const {data: applicants = []} = useQuery({
+    const {data: applicants = [], refetch, isLoading} = useQuery({
         queryKey: [jobID],
         queryFn: () => fetchApplicants(),
         keepPreviousData: true
@@ -56,7 +58,7 @@ function ApplicantsPage(){
                         </span>
                         <div className={`${applicants.length == 0 ? "pt-0": "pt-5"}`}>
                             {applicants?.map((applicant) => (
-                                <ApplicantCard applicant={applicant} />
+                                <ApplicantCard applicant={applicant} jobID={jobID} refetch={refetch} />
                             ))}
                         </div>
                     </div>
@@ -68,6 +70,19 @@ function ApplicantsPage(){
                     )}
                 </div>
             </div>
+            {isLoading && (
+                <div className={`w-[100%] min-h-[100vh] flex absolute top-0 bg-white left-0 items-center z-0`}>
+                    <DashboardSideNavbar placeholder={true} />
+                    <div className="flex grow justify-center">
+                        <BarLoader
+                            color={"#3B82F6"}
+                            loading={isLoading}
+                            height={4}
+                            width={100}
+                        />
+                    </div>
+                </div>
+            )}
         </>
     )
 }
