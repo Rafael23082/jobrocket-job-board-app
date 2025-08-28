@@ -22,6 +22,7 @@ import RecruiterJobListingsPage from './pages/RecruiterJobListingsPage.jsx';
 import RecruiterEditJobPage from './pages/RecruiterEditJobPage.jsx';
 import ApplicantsPage from './pages/ApplicantsPage.jsx';
 import { Toaster } from "sonner";
+import RecruiterAddJobPage from './pages/RecruiterAddJobPage.jsx';
 
 Modal.setAppElement('#root');
 const queryClient = new QueryClient();
@@ -50,6 +51,7 @@ createRoot(document.getElementById('root')).render(
             <Route path='/recruiter/job-listings' element={<RecruiterJobListingsPage />}></Route>
             <Route path='/recruiter/edit-job/:jobID' element={<RecruiterEditJobPage />}></Route>
             <Route path='/recruiter/applicants/:jobID' element={<ApplicantsPage />}></Route>
+            <Route path='/recruiter/add-job' element={<RecruiterAddJobPage />}></Route>
           </Routes>
         </BrowserRouter>
       </UserProvider>

@@ -9,7 +9,7 @@ function TagsInputBox({formValues, setFormValues, field, index}){
     useEffect(() => {
         let fieldOptions;
         if (currentTag.trim() != ""){
-            fieldOptions = field.options.filter((option) => option.toLowerCase().includes(currentTag.toLowerCase()) && !formValues["Tags"].some((tag) => tag.toLowerCase() == option.toLowerCase()));
+            fieldOptions = field.options.filter((option) => option.toLowerCase().includes(currentTag.toLowerCase()) && !formValues["tags"].some((tag) => tag.toLowerCase() == option.toLowerCase()));
         }else{
             fieldOptions = []
         }
@@ -28,12 +28,12 @@ function TagsInputBox({formValues, setFormValues, field, index}){
             <p className={`text-gray-500 font-medium text-[0.875rem] ${index == 0 ? "pt-[2em]": "pt-[1em]"}`}>{field.name}</p>
             <div className="mt-[0.4em] border w-[100%] rounded-[5px] focus-within:border focus-within:outline">
                 <div className="px-[1em] py-[1em] flex flex-wrap gap-x-[0.7em] gap-y-[0.5em]">
-                    {formValues[field.name]?.map((tag, index) => (
+                    {formValues[field.key]?.map((tag, index) => (
                         <div key={index} className={`text-white bg-[#3B82F6] px-[0.5em] py-[0.3em] text-[0.7rem] rounded-[5px] flex gap-x-[0.3em] items-center`}>
                             <p>{tag}</p>
                             <IoIosClose size={17} className="cursor-pointer" onClick={() => {
-                                let newTagArray = formValues["Tags"].filter((t) => t.toLowerCase() != tag.toLowerCase());
-                                setFormValues((prev) => ({...prev, ["Tags"]: newTagArray}))
+                                let newTagArray = formValues["tags"].filter((t) => t.toLowerCase() != tag.toLowerCase());
+                                setFormValues((prev) => ({...prev, ["tags"]: newTagArray}))
                             }} />
                         </div>
                     ))}
@@ -44,10 +44,10 @@ function TagsInputBox({formValues, setFormValues, field, index}){
                 <div className={`flex flex-col absolute top-[calc(100%+10px)] w-[100%] rounded-[10px] select-none overflow-hidden border shadow bg-white max-h-48 overflow-y-auto`}>
                     {suggestionOptions.map((suggestion, index) => (
                         <p key={index} className="px-[1em] py-[0.5em] bg-white hover:brightness-90" onClick={() => {
-                            let found = formValues["Tags"].some((tag) => tag.toLowerCase() == suggestion.toLowerCase());
+                            let found = formValues["tags"].some((tag) => tag.toLowerCase() == suggestion.toLowerCase());
                             if (!found){
-                                let newTagArray = [...(formValues["Tags"]), suggestion]
-                                setFormValues((prev) => ({...prev, ["Tags"]: newTagArray}));
+                                let newTagArray = [...(formValues["tags"]), suggestion]
+                                setFormValues((prev) => ({...prev, ["tags"]: newTagArray}));
                             }
                             setCurrentTag("");
                             setSuggestionOptions([])

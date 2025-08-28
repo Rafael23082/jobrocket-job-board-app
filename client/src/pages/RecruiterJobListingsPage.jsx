@@ -64,7 +64,7 @@ function RecruiterJobListingsPage(){
                     <div className="padding-x px-10 my-[2em]">
                         <div className="flex flex-wrap justify-between items-center mt-5">
                             <p className="text-[1.25rem] font-medium block">My Job Listings</p>
-                            <button className="bg-[#3B82F6] text-white pl-[1em] pr-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s] flex items-center gap-x-[0.3em]">
+                            <button className="bg-[#3B82F6] text-white pl-[1em] pr-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s] flex items-center gap-x-[0.3em]" onClick={() => navigate("/recruiter/add-job")}>
                                 <IoIosAdd size={20} />
                                 <p>Add Job</p>
                             </button>

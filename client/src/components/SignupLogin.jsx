@@ -10,10 +10,10 @@ import DropdownBox from "./DropdownBox.jsx";
 function SignupLogin({heading, subheading, fields, button, alternative, alternative2, text, minheight, signup}){
     const [dropdownIndex, setDropdownIndex] = useState(null);
     const [formValues, setFormValues] = useState(() => fields.reduce((acc, field) => {
-        if (field.name == "Role"){
-            acc[field.name] = "Select your role"
+        if (field.key == "role"){
+            acc[field.key] = "Select your role"
         }else{
-            acc[field.name] = "";
+            acc[field.key] = "";
         }
         return acc;
     }, {}))
@@ -24,25 +24,25 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
     const handleSubmit = async() => {
         let newErrors = {}
         fields.map((field) => {
-            if (field.name == "Role"){
-                if (formValues[field.name] == "Select your role"){
-                    newErrors[field.name] = "Select your role."
+            if (field.key == "role"){
+                if (formValues[field.key] == "Select your role"){
+                    newErrors[field.key] = "Select your role."
                 }
             }
-            if (field.name == "Email"){
-                const valid = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(formValues[field.name]);
+            if (field.key == "email"){
+                const valid = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(formValues[field.key]);
                 if (!valid){
-                    newErrors[field.name] = "Invalid email format."
+                    newErrors[field.key] = "Invalid email format."
                 }
             }
-            if (field.name == "Password"){
-                const length = formValues[field.name].length;
+            if (field.key == "password"){
+                const length = formValues[field.key].length;
                 if (length < 8){
-                    newErrors[field.name] = "Minimum of 8 characters."   
+                    newErrors[field.key] = "Minimum of 8 characters."   
                 }
             }
-            if (formValues[field.name].trim() == "" && field.name != "Role"){
-                newErrors[field.name] = "This field is required."
+            if (formValues[field.key].trim() == "" && field.key != "role"){
+                newErrors[field.key] = "This field is required."
             }
         })
         setErrors(newErrors);
@@ -50,13 +50,13 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
             if (signup){
                 try{
                     const res = await axios.post("http://localhost:4000/api/user/signup", {
-                        name: formValues["Full Name"],
-                        email: formValues["Email"],
-                        password: formValues["Password"],
-                        role: formValues["Role"]
+                        name: formValues["name"],
+                        email: formValues["email"],
+                        password: formValues["password"],
+                        role: formValues["role"]
                     })
                     setUser(res.data);
-                    navigate(`/${formValues["Role"].toLowerCase()}/dashboard`)
+                    navigate(`/${formValues["role"].toLowerCase()}/dashboard`)
                 }catch(err){
                     console.log(err);
                 }
@@ -64,8 +64,8 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
             else if(!signup){
                 try{
                     const res = await axios.post("http://localhost:4000/api/user/login", {
-                        email: formValues["Email"],
-                        password: formValues["Password"]
+                        email: formValues["email"],
+                        password: formValues["password"]
                     })
                     console.log(res.data);
                     setUser(res.data);
@@ -91,21 +91,21 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                         field.type == "select" ? (
                             <div key={index}>
                                 <p className={`${index == 0 ? "pt-[0em]": "pt-[1em]"} font-bold`}>{field.name} <span className="text-red-500">*</span></p>
-                                <DropdownBox index={index} values={["Recruiter", "Candidate"]} fieldName={field.name} formValues={formValues} setFormValues={setFormValues} dropdownIndex={dropdownIndex} setDropdownIndex={setDropdownIndex} />
-                                {errors[field.name] && (
-                                    <span className="text-red-500 text-[0.75rem] pt-[0.5em] flex items-center gap-x-[5px]"><IoIosWarning />{errors[field.name]}</span>
+                                <DropdownBox index={index} values={["Recruiter", "Candidate"]} fieldName={field.name} fieldKey={field.key} formValues={formValues} setFormValues={setFormValues} dropdownIndex={dropdownIndex} setDropdownIndex={setDropdownIndex} />
+                                {errors[field.key] && (
+                                    <span className="text-red-500 text-[0.75rem] pt-[0.5em] flex items-center gap-x-[5px]"><IoIosWarning />{errors[field.key]}</span>
                                 )}
                             </div>
                         ): (
                             <div key={index}>
                                 <p className={`${index == 0 ? "pt-[0em]": "pt-[1em]"} font-bold`}>{field.name} <span className="text-red-500">*</span></p>
-                                <input type={field.type} className="px-[1em] mt-[0.4em] border py-[0.3em] w-[100%] rounded-[5px]" placeholder={`${field.placeholder}`} value={formValues[field.name]}
+                                <input type={field.type} className="px-[1em] mt-[0.4em] border py-[0.3em] w-[100%] rounded-[5px]" placeholder={`${field.placeholder}`} value={formValues[field.key]}
                                 onChange={(e) => setFormValues((prev) => ({
-                                    ...prev, [field.name]: e.target.value
+                                    ...prev, [field.key]: e.target.value
                                 }))}
                                 />
-                                {errors[field.name] && (
-                                    <span className="text-red-500 text-[0.75rem] pt-[0.5em] flex items-center gap-x-[5px]"><IoIosWarning />{errors[field.name]}</span>
+                                {errors[field.key] && (
+                                    <span className="text-red-500 text-[0.75rem] pt-[0.5em] flex items-center gap-x-[5px]"><IoIosWarning />{errors[field.key]}</span>
                                 )}
                             </div>
                         )
