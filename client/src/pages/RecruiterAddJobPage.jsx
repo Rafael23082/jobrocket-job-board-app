@@ -1,25 +1,43 @@
 import JobInput from "../components/JobInput.jsx";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext.jsx";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 function RecruiterAddJobPage(){
     const [formValues, setFormValues] = useState({});
     const [initialValues, setInitialValues] = useState({});
+    const {user} = useContext(UserContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user){
+            navigate("/login");
+        }
+    }, [user])
+
     const backendAction = async() => {
-        let res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/job/updateJobByID/${jobID}`, {
-            role: formValues["Role"],
-            company: formValues["Company"],
-            location: formValues["Location"],
-            field: formValues["Field"],
-            "salary.min": formValues["Minimum Salary"],
-            "salary.max": formValues["Maximum Salary"],
-            description: formValues["Description"],
-            employmentType: formValues["Employment Type"],
-            openings: formValues["Openings"],
-            tags: formValues["Tags"],
-            requirements: formValues["Requirements"],
+        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/job/addJob`, {
+            role: formValues["role"],
+            company: formValues["company"],
+            location: formValues["location"],
+            field: formValues["field"],
+            minSalary: formValues["minimumSalary"],
+            maxSalary: formValues["maximumSalary"],
+            description: formValues["description"],
+            employmentType: formValues["employmentType"],
+            openings: formValues["openings"],
+            tags: formValues["tags"],
+            requirements: formValues["requirements"],
+            experience: formValues["experience"],
+            postedBy: user?._id
         });
-        return res;
+        toast.success("Job successfully added.", {
+            description: `${formValues["role"]} job added.`
+        })
+        navigate("/recruiter/job-listings")
     }
 
     useEffect(() => {
@@ -34,7 +52,8 @@ function RecruiterAddJobPage(){
             ["employmentType"]: "Select an employment type",
             ["openings"]: "",
             ["tags"]: [],
-            ["requirements"]: [""]
+            ["requirements"]: [""],
+            ["experience"]: ""
         }
         setFormValues(values);
         setInitialValues(values);

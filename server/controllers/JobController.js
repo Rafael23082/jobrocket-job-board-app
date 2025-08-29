@@ -14,8 +14,8 @@ const getAllJobs = async(req, res) => {
 
 const addJob = async(req, res) => {
     try{
-        const {role, company, location, field, minSalary, maxSalary, description, tags, openings, experience, employmentType, requirements} = req.body;
-        const newJob = await Job.create({
+        const {role, company, location, field, minSalary, maxSalary, description, tags, openings, experience, employmentType, requirements, postedBy} = req.body;
+        await Job.create({
             role,
             company,
             location,
@@ -30,7 +30,8 @@ const addJob = async(req, res) => {
             experience, 
             employmentType,
             postedAt: Date.now(),
-            requirements
+            requirements,
+            postedBy
         })
         res.status(200).json({message: "Job Added!"});
     }catch(err){

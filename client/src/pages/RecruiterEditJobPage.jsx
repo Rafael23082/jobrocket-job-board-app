@@ -4,26 +4,33 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 function RecruiterEditJobPage(){
     const {jobID} = useParams();
     const [formValues, setFormValues] = useState({});
     const [initialValues, setInitialValues] = useState({});
+    const navigate = useNavigate();
     const backendAction = async() => {
-        let res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/job/updateJobByID/${jobID}`, {
-            role: formValues["Role"],
-            company: formValues["Company"],
-            location: formValues["Location"],
-            field: formValues["Field"],
-            "salary.min": formValues["Minimum Salary"],
-            "salary.max": formValues["Maximum Salary"],
-            description: formValues["Description"],
-            employmentType: formValues["Employment Type"],
-            openings: formValues["Openings"],
-            tags: formValues["Tags"],
-            requirements: formValues["Requirements"],
+        await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/job/updateJobByID/${jobID}`, {
+            role: formValues["role"],
+            company: formValues["company"],
+            location: formValues["location"],
+            field: formValues["field"],
+            "salary.min": formValues["minimumSalary"],
+            "salary.max": formValues["maximumSalary"],
+            description: formValues["description"],
+            employmentType: formValues["employmentType"],
+            openings: formValues["openings"],
+            tags: formValues["tags"],
+            requirements: formValues["requirements"],
+            experience: formValues["experience"]
         });
-        return res;
+        toast.success("Job successfully updated.", {
+            description: `${formValues["role"]} job details updated.`
+        })
+        navigate("/recruiter/job-listings")
     }
 
     const fetchJob = async() => {
@@ -32,24 +39,26 @@ function RecruiterEditJobPage(){
     }
 
     const {data: job = {}, isLoading} = useQuery({
-        queryKey: [jobID],
+        queryKey: ['editJob', jobID],
         queryFn: () => fetchJob(),
         keepPreviousData: true
     })
 
     useEffect(() => {
+        console.log(job);
         let values = {
             ["role"]: job?.role ?? "loading...",
             ["company"]: job?.company ?? "loading...",
             ["location"]: job?.location ?? "loading...",
             ["field"]: job?.field ?? "loading...",
-            ["minimumSalary"]: job?.salary?.min ?? 0,
-            ["maximumSalary"]: job?.salary?.max ?? 0,
+            ["minimumSalary"]: job?.salary?.min ?? "",
+            ["maximumSalary"]: job?.salary?.max ?? "",
             ["description"]: job?.description ?? "loading...",
             ["employmentType"]: job?.employmentType ?? "loading...",
-            ["openings"]: job?.openings ?? 0,
+            ["openings"]: job?.openings ?? "",
             ["tags"]: job?.tags ?? [],
-            ["requirements"]: job?.requirements ?? [""]
+            ["requirements"]: job?.requirements ?? [""],
+            ["experience"]: job?.experience ?? ""
         }
         setFormValues(values);
         setInitialValues(values);

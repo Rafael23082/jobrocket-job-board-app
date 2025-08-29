@@ -25,14 +25,14 @@ function ApplicantsPage(){
 
     const fetchApplicants = async() => {
         let res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/application/getJobApplicants/${jobID}`);
-        console.log(res.data);
         return res.data;
     }
 
     const {data: applicants = [], refetch, isLoading} = useQuery({
-        queryKey: [jobID],
+        queryKey: ['applicants', jobID],
         queryFn: () => fetchApplicants(),
-        keepPreviousData: true
+        keepPreviousData: true,
+        enabled: !!jobID
     })
 
     return(

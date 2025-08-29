@@ -67,7 +67,7 @@ const getJobApplicants = async(req, res) => {
             applicant["status"] = applicants[i].status
             applicantsArr.push(applicant);
         }
-        return res.status(200).json(applicantsArr);
+        return res.status(200).json(applicantsArr || []);
     }catch(err){
         return res.status(500).json({message: err.message});
     }

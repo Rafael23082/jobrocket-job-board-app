@@ -30,10 +30,6 @@ function JobInput({formValues, setFormValues, initialValues, setInitialValues, b
 
     const handleSave = async() => {
         let newErrors = {};
-        
-        if (formValues["minimumSalary"] >= formValues["maximumSalary"]){
-            newErrors["maximumSalary"] = "Maximum salary must be greater than minimum salary."
-        }
 
         fields.map((field) => {
             if (field.type == "text" || field.type == "textarea" || field.type == "number"){
@@ -41,9 +37,22 @@ function JobInput({formValues, setFormValues, initialValues, setInitialValues, b
                 if (String(value).trim() == ""){
                     newErrors[field.key] = "Please fill out this field."
                 }
-                if (field.type == "number"){
+                if (field.key == "minimumSalary"){
                     if (formValues[field.key] <= 0){
                         newErrors[field.key] = "Value must be greater than 0."
+                    }
+                    if (formValues["minimumSalary"] >= formValues["maximumSalary"]){
+                        newErrors["maximumSalary"] = "Maximum salary must be greater than minimum salary."
+                    }
+                }
+                if (field.key == "experience"){
+                    if (formValues[field.key] < 0){
+                        newErrors[field.key] = "Value must be a greater or equals to 0."
+                    }
+                }
+                if (field.key == "openings"){
+                    if (formValues[field.key] <= 0){
+                        newErrors[field.key] = "Value must be a greater than 0."
                     }
                 }
             }else if (field.key == "tags"){
@@ -71,6 +80,7 @@ function JobInput({formValues, setFormValues, initialValues, setInitialValues, b
         if (Object.keys(newErrors).length == 0){
             await backendAction();
             setInitialValues(formValues);
+            
         }
         setErrors(newErrors);
     }
@@ -94,7 +104,7 @@ function JobInput({formValues, setFormValues, initialValues, setInitialValues, b
         key: "location",
         name: "Location",
         type: "text",
-        placeholder: "Company name",
+        placeholder: "Location",
     },
     {
         key: "employmentType",
@@ -127,6 +137,12 @@ function JobInput({formValues, setFormValues, initialValues, setInitialValues, b
         name: "Tags",
         type: "list",
         options: ["JavaScript", "React", "Frontend", "Remote", "Node.js", "AWS", "Backend", "APIs", "MongoDB", "UI Design", "UX Design", "Figma", "Prototyping", "Express", "Full-Stack", "DevOps", "CI/CD", "Docker", "Kubernetes", "Python", "Machine Learning", "Data Analysis", "Pandas", "AI", "React Native", "iOS", "Android", "Mobile Development"]
+    },
+    {
+        key: "experience",
+        name: "Experience (years)",
+        type: "number",
+        placeholder: "minimum years of experience"        
     },
     {
         key: "minimumSalary",
@@ -207,9 +223,21 @@ function JobInput({formValues, setFormValues, initialValues, setInitialValues, b
                                         <p className={`text-gray-500 font-medium text-[0.875rem] ${index == 0 ? "pt-[2em]": "pt-[1em]"}`}>{field.name}</p>
                                         <input type={field.type} className="px-[1em] mt-[0.4em] border py-[0.3em] w-[100%] rounded-[5px]" placeholder={field.placeholder} value={formValues[field.key]}
                                         onChange={(e) => {
-                                            setFormValues((prev) => ({
-                                                ...prev, [field.key]: e.target.value
-                                            }))
+                                            if (field.type == "text"){
+                                                setFormValues((prev) => ({
+                                                    ...prev, [field.key]: e.target.value
+                                                }))
+                                            }else{
+                                                if (e.target.value == ""){
+                                                    setFormValues((prev) => ({
+                                                        ...prev, [field.key]: e.target.value
+                                                    }))
+                                                }else{
+                                                    setFormValues((prev) => ({
+                                                        ...prev, [field.key]: Number(e.target.value)
+                                                    }))              
+                                                }
+                                            }
                                         }}
                                         />
                                     </div>

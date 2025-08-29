@@ -90,7 +90,7 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
                             </div>
                             {seeMore && <p className="text-[0.9rem] text-gray-800 pt-[0.5em] md:pt-[0.2em]">{job.description}</p>}
                             <span className="text-[0.9rem] text-gray-800 mt-[0.5em] flex gap-x-[0.3em] flex-wrap">
-                                {job.company && <p>🏢 {job.company}</p>} {job.location && <p>| 🌐 {job.location}</p>} {job.salary && <p>| 💵 ${job.salary?.min} - ${job.salary?.max}</p>} {seeMore || listings && <p>| 📊 {job.experience}</p>} {seeMore || listings && <p>| 🕒 {job.employmentType}</p>}
+                                {job.company && <p>🏢 {job.company}</p>} {job.location && <p>| 🌐 {job.location}</p>} {job.salary && <p>| 💵 ${job.salary?.min} - ${job.salary?.max}</p>} {seeMore || listings && <p>| 📊 Min. {job.experience} years</p>} {seeMore || listings && <p>| 🕒 {job.employmentType}</p>}
                             </span>
                             <div className="flex mt-[0.8em] md:mt-[0.6em] flex-wrap gap-x-[0.7em] gap-y-[0.5em]">
                                 {job.tags.map((tag, index) => (

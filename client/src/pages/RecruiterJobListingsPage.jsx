@@ -28,11 +28,12 @@ function RecruiterJobListingsPage(){
         } else {
             document.body.style.overflow = "auto";
         }
+        console.log(user);
     }, [user, detailsIsOpen])
 
     const fetchJobs = async() => {
         try{
-            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getJobsPostedByRecruiter/${user._id}`);
+            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getJobsPostedByRecruiter/${user?._id}`);
             return res.data;
         }catch(err){
             console.log(err);
@@ -40,8 +41,9 @@ function RecruiterJobListingsPage(){
     }
 
     const {data: allJobs = [], isLoading} = useQuery({
-        queryKey: [user],
+        queryKey: [user?._id, 'jobListing'],
         queryFn: () => fetchJobs(),
+        enabled: !!user?._id,
         keepPreviousData: true
     })
 
