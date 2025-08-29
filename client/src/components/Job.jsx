@@ -54,8 +54,12 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
                 userID: user._id,
                 jobID: job._id
             })
+            toast.success("Application submitted successfully!", {
+                description: "We'll notify you if the recruiter responds."
+            })
+            refetch();
         }else{
-            toast.success("Profile incomplete.", {
+            toast.error("Profile incomplete.", {
                 description: "Please finish your profile before applying."
             })
         }
@@ -116,7 +120,7 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
                 </div>
                 <div className="flex pl-0 md:pl-[2em] mt-[1.2em] md:mt-0">
                     <button className="border border-[#3B82F6] text-[#3B82F6] px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold mr-[1em] cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition ease duration-[0.3s] whitespace-nowrap" onClick={() => {setJobOpened(job); setDetailsIsOpen(true)}}>Details</button>
-                    <button className={`text-white px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold ${status.toLowerCase() == "pending" && "bg-orange-600"} ${status.toLowerCase() == "rejected" && "bg-red-700"} ${status.toLowerCase() == "interview" && "bg-green-700"} ${!applications && "bg-[#3B82F6] cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]"} whitespace-nowrap`} onClick={() => {
+                    <button className={`text-white px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold ${status.toLowerCase() == "pending" && "bg-gray-600"} ${status.toLowerCase() == "rejected" && "bg-red-700"} ${status.toLowerCase() == "hired" && "bg-green-700"} ${status.toLowerCase() == "interview" && "bg-yellow-600"} ${!applications && "bg-[#3B82F6] cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]"} whitespace-nowrap`} onClick={() => {
                         if (listings){
                             navigate(`/recruiter/edit-job/${job._id}`)
                         }else if (!dashboard && !applications){
