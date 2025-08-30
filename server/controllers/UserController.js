@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 import { Recruiter, User } from "../models/User.js";
 import { Candidate } from "../models/User.js";
+import jwt from "jsonwebtoken";
+import { generateAccessToken } from "./authController.js";
 
 const getAllUsers = async(req, res) => {
     try{
@@ -49,7 +51,17 @@ const signup = async(req, res) => {
                 password: hashedPassword
             })
         }
-        return res.status(200).json(userCreated);
+
+        let payload = {
+            id: userCreated._id,
+            role: role
+        }
+        const accessToken = generateAccessToken(payload);
+        
+        return res.status(200).json({
+            user: userCreated,
+            accessToken: accessToken
+        });
     }catch(err){
         return res.status(500).json({message: err.message});
     }
@@ -68,7 +80,16 @@ const login = async(req, res) => {
         if (!correctPassword){
             return res.status(401).json({message: "Invalid credentials"});
         }
-        return res.status(200).json(user);
+
+        let payload = {
+            id: user._id,
+            role: user.role
+        }
+        const accessToken = generateAccessToken(payload);
+        return res.status(200).json({
+            user: user,
+            accessToken: accessToken
+        });
     }catch(err){
         return res.status(500).json({message: err.message});
     }

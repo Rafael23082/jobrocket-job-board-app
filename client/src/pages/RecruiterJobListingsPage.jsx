@@ -30,7 +30,7 @@ function RecruiterJobListingsPage(){
         }
         console.log(user);
     }, [user, detailsIsOpen])
-
+    
     const fetchJobs = async() => {
         try{
             const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getJobsPostedByRecruiter/${user?._id}`);

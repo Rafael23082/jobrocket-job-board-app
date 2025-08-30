@@ -2,6 +2,7 @@ import Application from "../models/Application.js";
 import Job from "../models/Job.js";
 import { User } from "../models/User.js";
 import { Candidate } from "../models/User.js";
+import jwt from "jsonwebtoken"
 
 const getAllJobs = async(req, res) => {
     try{

@@ -55,7 +55,7 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                         password: formValues["password"],
                         role: formValues["role"]
                     })
-                    setUser(res.data);
+                    setUser(res.data.user);
                     navigate(`/${formValues["role"].toLowerCase()}/dashboard`)
                 }catch(err){
                     console.log(err);
@@ -67,9 +67,8 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                         email: formValues["email"],
                         password: formValues["password"]
                     })
-                    console.log(res.data);
-                    setUser(res.data);
-                    navigate(`/${res.data.role.toLowerCase()}/dashboard`)
+                    setUser(res.data.user);
+                    navigate(`/${res.data.user.role.toLowerCase()}/dashboard`)
                 }catch(err){
                     console.log(err.message);
                 }
