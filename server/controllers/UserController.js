@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import { Recruiter, User } from "../models/User.js";
 import { Candidate } from "../models/User.js";
 import jwt from "jsonwebtoken";
-import { generateAccessToken } from "./authController.js";
+import { generateAccessToken, generateRefreshToken } from "./authController.js";
 
 const getAllUsers = async(req, res) => {
     try{
@@ -57,12 +57,24 @@ const signup = async(req, res) => {
             role: role
         }
         const accessToken = generateAccessToken(payload);
-        
-        return res.status(200).json({
-            user: userCreated,
-            accessToken: accessToken
-        });
-    }catch(err){
+        const refreshToken = generateRefreshToken(payload);
+
+        res.cookie("accessToken", accessToken, {
+            httpOnly: true,
+            secure: false, /** secure: true if in production (false only for development only) */
+            sameSite: "none", /** sameSite: strict if in production (lax only for development only) (due to backend and frontend and backend running in different origin) */
+            maxAge: 15 * 60 * 1000
+        })
+
+        res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            secure: false, /** secure: true if in production (false only for development only) */
+            sameSite: "none", /** sameSite: strict if in production (lax only for development only) (due to backend and frontend and backend running in different origin) */
+            maxAge: 7 * 24 * 60 * 1000
+        })
+
+        return res.status(200).json({ user: userCreated });
+    }catch(err){ 
         return res.status(500).json({message: err.message});
     }
 }
@@ -86,10 +98,23 @@ const login = async(req, res) => {
             role: user.role
         }
         const accessToken = generateAccessToken(payload);
-        return res.status(200).json({
-            user: user,
-            accessToken: accessToken
-        });
+        const refreshToken = generateRefreshToken(payload);
+
+        res.cookie("accessToken", accessToken, {
+            httpOnly: true,
+            secure: true, /** secure: true if in production (false only for development only) */
+            sameSite: "none", /** sameSite: lax if in production (none only for development only) (due to backend and frontend and backend running in different origin) */
+            maxAge: 15 * 60     * 1000
+        })
+
+        res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            secure: true, /** secure: true if in production (false only for development only) */
+            sameSite: "none", /** sameSite: lax if in production (none only for development only) (due to backend and frontend and backend running in different origin) */
+            maxAge: 7 * 24 * 60 * 1000
+        })
+
+        return res.status(200).json({user: user});
     }catch(err){
         return res.status(500).json({message: err.message});
     }

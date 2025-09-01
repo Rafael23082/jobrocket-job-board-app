@@ -20,7 +20,7 @@ function ApplicantCard({applicant, jobID, refetch}){
         try{
             await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/application/updateApplicationStatus/${applicant._id}/${jobID}`, {
                 status: status
-            })
+            }, {withCredentials: true})
         }catch(err){
             setStatusDisplay(previousStatus);
         }
@@ -37,7 +37,7 @@ function ApplicantCard({applicant, jobID, refetch}){
                                 setStatusDisplay(previousStatus)
                                 await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/application/updateApplicationStatus/${applicant._id}/${jobID}`, {
                                     status: previousStatus
-                                })
+                                }, {withCredentials: true})
                             }catch(err){
                                 setStatusDisplay(previousStatus);
                             }

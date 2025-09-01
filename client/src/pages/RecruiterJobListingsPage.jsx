@@ -33,7 +33,7 @@ function RecruiterJobListingsPage(){
     
     const fetchJobs = async() => {
         try{
-            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getJobsPostedByRecruiter/${user?._id}`);
+            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getJobsPostedByRecruiter/${user?._id}`, { withCredentials: true });
             return res.data;
         }catch(err){
             console.log(err);

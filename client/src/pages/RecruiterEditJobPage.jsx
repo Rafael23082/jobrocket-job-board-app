@@ -26,7 +26,7 @@ function RecruiterEditJobPage(){
             tags: formValues["tags"],
             requirements: formValues["requirements"],
             experience: formValues["experience"]
-        });
+        }, {withCredentials: true});
         toast.success("Job successfully updated.", {
             description: `${formValues["role"]} job details updated.`
         })
@@ -34,7 +34,7 @@ function RecruiterEditJobPage(){
     }
 
     const fetchJob = async() => {
-        let res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getJobByID/${jobID}`);
+        let res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getJobByID/${jobID}`, {withCredentials: true});
         return res.data;
     }
 

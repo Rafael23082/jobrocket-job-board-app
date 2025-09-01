@@ -54,7 +54,7 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                         email: formValues["email"],
                         password: formValues["password"],
                         role: formValues["role"]
-                    })
+                    }, { withCredentials: true })
                     setUser(res.data.user);
                     navigate(`/${formValues["role"].toLowerCase()}/dashboard`)
                 }catch(err){
@@ -66,7 +66,7 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                     const res = await axios.post("http://localhost:4000/api/user/login", {
                         email: formValues["email"],
                         password: formValues["password"]
-                    })
+                    }, { withCredentials: true })
                     setUser(res.data.user);
                     navigate(`/${res.data.user.role.toLowerCase()}/dashboard`)
                 }catch(err){

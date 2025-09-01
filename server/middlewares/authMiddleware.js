@@ -1,8 +1,10 @@
-const verify = (req, res, next) => {
-    const authHeader = req.headers.authorization;
-    if (authHeader){
-        const token = authHeader.split(" ")[1];
-        jwt.verify(token, "mySecretKey", (err, user) => {
+import jwt from "jsonwebtoken";
+
+export const verify = (req, res, next) => {
+    const accessToken = req.cookies.accessToken;
+    console.log("cookies: ", req.cookies);
+    if (accessToken){
+        jwt.verify(accessToken, "mySecretKey", (err, user) => {
             if (err){
                 return res.status(401).json("Token is invalid.");
             }

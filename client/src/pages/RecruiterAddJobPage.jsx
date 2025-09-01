@@ -33,7 +33,7 @@ function RecruiterAddJobPage(){
             requirements: formValues["requirements"],
             experience: formValues["experience"],
             postedBy: user?._id
-        });
+        }, {withCredentials: true});
         toast.success("Job successfully added.", {
             description: `${formValues["role"]} job added.`
         })

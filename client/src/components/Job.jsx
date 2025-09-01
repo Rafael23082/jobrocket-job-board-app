@@ -19,7 +19,7 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
         const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/job/saveJob`, {
             userID: user._id,
             jobID: job._id
-        })
+        }, {withCredentials: true})
         setUser((prev) => ({
             ...prev, savedJobs: [...prev.savedJobs, job._id]
         }))
@@ -32,7 +32,7 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
         const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/job/removeSavedJob`, {
             userID: user._id,
             jobID: job._id
-        })
+        }, {withCredentials: true})
         setUser((prev) => ({
             ...prev, savedJobs: prev.savedJobs.filter((jobID) => jobID != job._id)
         }))
@@ -53,7 +53,7 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
             await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/application/applyJob`, {
                 userID: user._id,
                 jobID: job._id
-            })
+            }, {withCredentials: true})
             toast.success("Application submitted successfully!", {
                 description: "We'll notify you if the recruiter responds."
             })
@@ -67,7 +67,7 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
 
     const getApplicationStatus = async() => {
         if (applications){
-            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/application/getApplicationByUserIDAndJobID/${user._id}/${job._id}`);
+            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/application/getApplicationByUserIDAndJobID/${user._id}/${job._id}`, {withCredentials: true});
             const application = res.data;
             return application.status.charAt(0).toUpperCase() + application.status.slice(1);
         }else{

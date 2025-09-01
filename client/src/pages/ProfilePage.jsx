@@ -83,14 +83,14 @@ function ProfilePage(){
                     additionalInformation: formValues["additionalInformation"],
                     resume: formValues["resume"],
                     resumeName: formValues["resumeName"]
-                })
+                }, {withCredentials: true})
                 setInitialValues(formValues);
                 setUser(res.data);
             }else{
                 const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/user/updateUserDetails/${user._id}`, {
                     name: formValues["name"],
                     email: formValues["email"]
-                })
+                }, {withCredentials: true})
                 setInitialValues(formValues);
                 setUser(res.data);
             }

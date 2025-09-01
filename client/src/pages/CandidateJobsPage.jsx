@@ -38,13 +38,13 @@ function CandidateJobsPage(){
         let res;
         let filteredJobs;
         if (category == "All"){
-            res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getNotAppliedJobs/${user._id}`)
+            res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getNotAppliedJobs/${user._id}`, {withCredentials: true})
             filteredJobs = res.data;
         } else if (category == "Saved"){
-            res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getSavedJobs/${user._id}`)
+            res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getSavedJobs/${user._id}`, {withCredentials: true})
             filteredJobs = res.data;
         } else if (category == "Applications"){
-            res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getAppliedJobs/${user._id}`)
+            res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getAppliedJobs/${user._id}`, {withCredentials: true})
             filteredJobs = res.data;
         }
         return filteredJobs;
