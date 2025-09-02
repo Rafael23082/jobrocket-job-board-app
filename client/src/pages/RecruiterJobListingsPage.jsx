@@ -10,6 +10,7 @@ import Job from "../components/Job.jsx";
 import { BarLoader } from "react-spinners";
 import DescriptionSlideOverPanel from "../components/DescriptionSlideOverPanel.jsx";
 import { IoIosAdd } from "react-icons/io";
+import DashboardNavbar from "../components/DashboardNavbar.jsx";
 
 function RecruiterJobListingsPage(){
     const navigate = useNavigate();
@@ -53,18 +54,9 @@ function RecruiterJobListingsPage(){
             <div className="flex bg-[#fffcfc] overflow-hidden" style={{fontFamily: "'Roboto', sans-serif"}}>
                 <DashboardSideNavbar placeholder={true} />
                 <div className="flex-1 h-fit flex flex-col">
-                    <div className="bg-blue-500 py-[1.2em] flex items-center justify-between px-5 z-10">
-                        <div className="flex-1">
-                            <IoMdMenu size={30} className="block lg:hidden cursor-pointer mr-10 margin-right" color="white" onClick={() => {setMenuOpen(!menuOpen)}} />
-                        </div>
-                        <div className="flex items-center">
-                            <IoIosNotifications color="white" size={20} className="mr-[1.7em] cursor-pointer hover:brightness-90" />
-                            <div className="w-8 h-8 rounded-full border border-white"></div>
-                            <p className="text-white font-medium pl-[0.8em] text-[0.9rem]">{user?.name}</p>
-                        </div>
-                    </div>
+                    <DashboardNavbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
                     <div className="padding-x px-10 my-[2em]">
-                        <div className="flex flex-wrap justify-between items-center mt-5">
+                        <div className="flex flex-wrap justify-between items-center mt-5 gap-y-[1em]">
                             <p className="text-[1.25rem] font-medium block">My Job Listings</p>
                             <button className="bg-[#3B82F6] text-white pl-[1em] pr-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s] flex items-center gap-x-[0.3em]" onClick={() => navigate("/recruiter/add-job")}>
                                 <IoIosAdd size={20} />

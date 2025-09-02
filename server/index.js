@@ -5,7 +5,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 import userRoutes from "./routes/UserRoutes.js";
 import applicationRoutes from "./routes/ApplicationRoute.js";
-import authRoutes from "./routes/AuthRoutes.js";
 import cookieParser from "cookie-parser";
 
 const app = express();
@@ -21,7 +20,6 @@ app.use(cors({
 app.use("/api/job", jobRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/application", applicationRoutes);
-app.use("/api/auth", authRoutes);
 
 connectDB();
 app.listen(4000, () => {

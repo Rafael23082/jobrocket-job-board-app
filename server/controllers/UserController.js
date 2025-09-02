@@ -104,19 +104,63 @@ const login = async(req, res) => {
             httpOnly: true,
             secure: true, /** secure: true if in production (false only for development only) */
             sameSite: "none", /** sameSite: lax if in production (none only for development only) (due to backend and frontend and backend running in different origin) */
-            maxAge: 15 * 60     * 1000
+            maxAge: 15 * 60 * 1000
         })
 
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
             secure: true, /** secure: true if in production (false only for development only) */
             sameSite: "none", /** sameSite: lax if in production (none only for development only) (due to backend and frontend and backend running in different origin) */
-            maxAge: 7 * 24 * 60 * 1000
+            maxAge: 7 * 24 * 60 * 60 * 1000
         })
 
         return res.status(200).json({user: user});
     }catch(err){
         return res.status(500).json({message: err.message});
+    }
+}
+
+const autoLogin = async(req, res) => {
+    try{
+        const accessToken = req.cookies.accessToken;
+        const refreshToken = req.cookies.refreshToken;
+
+        if (accessToken && refreshToken){
+            const payload = jwt.verify(accessToken, "mySecretKey");
+            jwt.verify(refreshToken, "myRefreshSecretKey");
+            const user = await User.findById(payload.id);
+            return res.status(200).json(user);
+        }
+
+        if (!accessToken && refreshToken){
+            const payload = jwt.verify(refreshToken, "myRefreshSecretKey");
+            const user = await User.findById(payload.id);
+            
+            const newAccessToken = generateAccessToken(payload);
+            const newRefreshToken = generateRefreshToken(payload);
+
+            res.cookie("accessToken", newAccessToken, {
+                httpOnly: true,
+                secure: true, /** secure: true if in production (false only for development only) */
+                sameSite: "none", /** sameSite: lax if in production (none only for development only) (due to backend and frontend and backend running in different origin) */
+                maxAge: 15 * 60     * 1000
+            })
+
+            res.cookie("refreshToken", newRefreshToken, {
+                httpOnly: true,
+                secure: true, /** secure: true if in production (false only for development only) */
+                sameSite: "none", /** sameSite: lax if in production (none only for development only) (due to backend and frontend and backend running in different origin) */
+                maxAge: 7 * 24 * 60 * 60 * 1000
+            })
+
+            return res.status(200).json(user);
+        }
+
+        if (!accessToken && !refreshToken) {
+            return res.status(401).json("No tokens provided. Please log in.");
+        }
+    }catch(err){
+        return res.status(500).json(err);
     }
 }
 
@@ -137,4 +181,26 @@ const updateUserDetails = async(req, res) => {
     }
 }
 
-export default {getAllUsers, deleteAllUsers, signup, login, updateUserDetails};
+const logout = async(req, res) => {
+    try{
+        res.clearCookie("accessToken", {
+            secure: true,
+            sameSite: "none",
+            httpOnly: true,
+            path: "/"
+        })
+
+        res.clearCookie("refreshToken", {
+            secure: true,
+            sameSite: "none",
+            httpOnly: true,
+            path: "/"
+        })
+
+        res.status(200).json("Logout successful!");
+    }catch(err){
+        return res.status(500).json(err.message);
+    }
+}
+
+export default {getAllUsers, deleteAllUsers, signup, login, updateUserDetails, logout, autoLogin};

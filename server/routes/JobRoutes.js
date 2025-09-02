@@ -4,7 +4,7 @@ import { verify } from "../middlewares/authMiddleware.js";
 
 const jobRoutes = express.Router();
 
-jobRoutes.get("/getAllJobs", verify, JobController.getAllJobs);
+jobRoutes.get("/getAllJobs", JobController.getAllJobs);
 jobRoutes.post("/addJob", verify, JobController.addJob);
 jobRoutes.post("/addMultipleJobs", verify, JobController.addMultipleJobs);
 jobRoutes.delete("/deleteJob/:jobID", verify, JobController.deleteJob);

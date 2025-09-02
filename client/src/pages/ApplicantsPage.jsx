@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import ApplicantCard from "../components/ApplicantCard.jsx";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { BarLoader } from "react-spinners";
+import DashboardNavbar from "../components/DashboardNavbar.jsx";
 
 function ApplicantsPage(){
     const {jobID} = useParams();
@@ -41,16 +42,7 @@ function ApplicantsPage(){
             <div className="flex bg-[#fffcfc] overflow-hidden" style={{fontFamily: "'Roboto', sans-serif"}}>
                 <DashboardSideNavbar placeholder={true} />
                 <div className={`${applicants.length == 0 ? "min-h-screen": "h-fit"} flex-1 flex flex-col`}>
-                    <div className="bg-blue-500 py-[1.2em] flex items-center justify-between px-5 z-10">
-                        <div className="flex-1">
-                            <IoMdMenu size={30} className="block lg:hidden cursor-pointer mr-10 margin-right" color="white" onClick={() => {setMenuOpen(!menuOpen)}} />
-                        </div>
-                        <div className="flex items-center">
-                            <IoIosNotifications color="white" size={20} className="mr-[1.7em] cursor-pointer hover:brightness-90" />
-                            <div className="w-8 h-8 rounded-full border border-white"></div>
-                            <p className="text-white font-medium pl-[0.8em] text-[0.9rem]">{user?.name}</p>
-                        </div>
-                    </div>
+                    <DashboardNavbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
                     <div className={`padding-x px-10 my-[2em]`}>
                         <span className="flex cursor-pointer hover:underline items-center gap-x-[0.4em] text-blue-500" onClick={() => navigate("/recruiter/job-listings")}>
                             <HiArrowLongLeft color="#3B82F6" />

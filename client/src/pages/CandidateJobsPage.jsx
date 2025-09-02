@@ -12,6 +12,7 @@ import ApplicationFormModal from "../components/ApplicationFormModal.jsx";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { BarLoader } from "react-spinners";
+import DashboardNavbar from "../components/DashboardNavbar.jsx";
 
 function CandidateJobsPage(){
     const [menuOpen, setMenuOpen] = useState(false);
@@ -62,16 +63,7 @@ function CandidateJobsPage(){
             <div className="flex bg-[#fffcfc] overflow-hidden" style={{fontFamily: "'Roboto', sans-serif"}}>
                 <DashboardSideNavbar placeholder={true} />
                 <div className={`${allJobs.length == 0 ? "min-h-screen": "h-fit"} flex-1 flex flex-col`}>
-                    <div className="bg-blue-500 py-[1.2em] flex items-center justify-between px-5 z-10">
-                        <div className="flex-1">
-                            <IoMdMenu size={30} className="block lg:hidden cursor-pointer mr-10 margin-right" color="white" onClick={() => {setMenuOpen(!menuOpen)}} />
-                        </div>
-                        <div className="flex items-center">
-                            <IoIosNotifications color="white" size={20} className="mr-[1.7em] cursor-pointer hover:brightness-90" />
-                            <div className="w-8 h-8 rounded-full border border-white"></div>
-                            <p className="text-white font-medium pl-[0.8em] text-[0.9rem]">{user?.name}</p>
-                        </div>
-                    </div>
+                    <DashboardNavbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
                     <div className="my-[2em]">
                         <div className="text-[0.9rem] mx-10 relative pb-[1em] relative z-10">
                             <p className="inline-block w-20 text-center cursor-pointer" onClick={() => setCategory("All")}>All</p>

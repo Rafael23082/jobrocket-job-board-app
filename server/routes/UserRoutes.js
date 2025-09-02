@@ -9,5 +9,7 @@ userRoutes.delete("/deleteAllUsers", verify, UserController.deleteAllUsers);
 userRoutes.post("/signup", UserController.signup);
 userRoutes.post("/login", UserController.login);
 userRoutes.put("/updateUserDetails/:userID", verify, UserController.updateUserDetails);
+userRoutes.post("/logout", UserController.logout);
+userRoutes.post("/autoLogin", UserController.autoLogin);
 
 export default userRoutes;
