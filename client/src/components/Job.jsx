@@ -3,10 +3,10 @@ import { FaBookmark } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa";
 import { UserContext } from "../context/UserContext.jsx";
 import { useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {toast} from "sonner";
 import { useQuery } from "@tanstack/react-query";
+import api from "../api/axios.js";
 
 function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen, applyIsOpen, setApplyIsOpen, dashboard, field, listings, refetch}){
     const applications = field == "Applications";
@@ -16,10 +16,10 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
     const navigate = useNavigate();
 
     const handleSaveJob = async() => {
-        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/job/saveJob`, {
+        const res = await api.post(`/job/saveJob`, {
             userID: user._id,
             jobID: job._id
-        }, {withCredentials: true})
+        })
         setUser((prev) => ({
             ...prev, savedJobs: [...prev.savedJobs, job._id]
         }))
@@ -29,10 +29,10 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
     }
 
     const handleRemoveSavedJob = async() => {
-        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/job/removeSavedJob`, {
+        const res = await api.post(`/job/removeSavedJob`, {
             userID: user._id,
             jobID: job._id
-        }, {withCredentials: true})
+        })
         setUser((prev) => ({
             ...prev, savedJobs: prev.savedJobs.filter((jobID) => jobID != job._id)
         }))
@@ -50,10 +50,10 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
     }
     const handleApplyLoggedIn = async() => {
         if (user?.name?.trim() && user?.email?.trim() && user?.location?.trim() && user?.additionalInformation?.trim() && user?.resume?.trim() != ""){
-            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/application/applyJob`, {
+            await api.post(`/application/applyJob`, {
                 userID: user._id,
                 jobID: job._id
-            }, {withCredentials: true})
+            })
             toast.success("Application submitted successfully!", {
                 description: "We'll notify you if the recruiter responds."
             })
@@ -67,7 +67,7 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
 
     const getApplicationStatus = async() => {
         if (applications){
-            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/application/getApplicationByUserIDAndJobID/${user._id}/${job._id}`, {withCredentials: true});
+            const res = await api.get(`/application/getApplicationByUserIDAndJobID/${user._id}/${job._id}`);
             const application = res.data;
             return application.status.charAt(0).toUpperCase() + application.status.slice(1);
         }else{

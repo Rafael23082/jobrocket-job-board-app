@@ -5,7 +5,7 @@ import DescriptionSlideOverPanel from "../components/DescriptionSlideOverPanel.j
 import Navbar from "../components/Navbar.jsx";
 import { useEffect } from "react";
 import ApplicationFormModal from "../components/ApplicationFormModal.jsx";
-import axios from "axios";
+import api from "../api/axios.js";
 import { useQuery } from "@tanstack/react-query";
 import { BarLoader } from "react-spinners";
 import DashboardSideNavbar from "../components/DashboardSideNavbar.jsx";
@@ -25,7 +25,7 @@ function JobsCategoryPage(){
     }, [detailsIsOpen, applyIsOpen])
 
     const fetchJobs = async() => {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getAllJobs`, {withCredentials: true});       
+        const res = await api.get(`/job/getAllJobs`);       
         const filteredJobs = res.data.filter((job) => job.field.toLowerCase() == field.toLowerCase());   
         return filteredJobs;
     }

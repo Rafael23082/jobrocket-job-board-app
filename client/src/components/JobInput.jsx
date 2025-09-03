@@ -6,7 +6,6 @@ import { useContext } from "react";
 import { UserContext } from "../context/UserContext.jsx";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import DropdownBox from "../components/DropdownBox.jsx";
 import TagsInputBox from "../components/TagsInputBox.jsx";
 import { FaRegTrashAlt } from "react-icons/fa";

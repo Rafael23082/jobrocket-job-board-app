@@ -6,7 +6,7 @@ import { IoMdMenu } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { IoLogOut } from "react-icons/io5";
 import { IoIosNotifications } from "react-icons/io";
-import axios from "axios";
+import api from "../api/axios.js";
 
 function DashboardNavbar({menuOpen, setMenuOpen}){
     const [logoutOpened, setLogoutOpened] = useState(false);
@@ -16,7 +16,7 @@ function DashboardNavbar({menuOpen, setMenuOpen}){
 
     const handleLogout = async() => {
         navigate("/");
-        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/logout`, {}, {withCredentials: true})
+        await api.post(`/user/logout`, {})
     }
 
     return(

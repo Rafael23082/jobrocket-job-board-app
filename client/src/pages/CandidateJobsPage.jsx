@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import Pagination from "../components/Pagination.jsx";
 import DescriptionSlideOverPanel from "../components/DescriptionSlideOverPanel.jsx";
 import ApplicationFormModal from "../components/ApplicationFormModal.jsx";
-import axios from "axios";
+import api from "../api/axios.js";
 import { useQuery } from "@tanstack/react-query";
 import { BarLoader } from "react-spinners";
 import DashboardNavbar from "../components/DashboardNavbar.jsx";
@@ -39,13 +39,13 @@ function CandidateJobsPage(){
         let res;
         let filteredJobs;
         if (category == "All"){
-            res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getNotAppliedJobs/${user._id}`, {withCredentials: true})
+            res = await api.get(`/job/getNotAppliedJobs/${user._id}`)
             filteredJobs = res.data;
         } else if (category == "Saved"){
-            res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getSavedJobs/${user._id}`, {withCredentials: true})
+            res = await api.get(`/job/getSavedJobs/${user._id}`)
             filteredJobs = res.data;
         } else if (category == "Applications"){
-            res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getAppliedJobs/${user._id}`, {withCredentials: true})
+            res = await api.get(`/job/getAppliedJobs/${user._id}`)
             filteredJobs = res.data;
         }
         return filteredJobs;

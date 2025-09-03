@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext.jsx";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import api from "../api/axios.js";
 import Job from "../components/Job.jsx";
 import { BarLoader } from "react-spinners";
 import DescriptionSlideOverPanel from "../components/DescriptionSlideOverPanel.jsx";
@@ -34,7 +34,7 @@ function RecruiterJobListingsPage(){
     
     const fetchJobs = async() => {
         try{
-            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getJobsPostedByRecruiter/${user?._id}`, { withCredentials: true });
+            const res = await api.get(`/job/getJobsPostedByRecruiter/${user?._id}`);
             return res.data;
         }catch(err){
             console.log(err);

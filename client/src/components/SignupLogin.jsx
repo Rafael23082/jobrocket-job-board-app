@@ -2,7 +2,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { IoIosWarning } from "react-icons/io";
-import axios from "axios"
+import api from "../api/axios.js";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext.jsx";
 import DropdownBox from "./DropdownBox.jsx";
@@ -49,12 +49,12 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
         if (Object.keys(newErrors).length == 0){
             if (signup){
                 try{
-                    const res = await axios.post("http://localhost:4000/api/user/signup", {
+                    const res = await api.post("/user/signup", {
                         name: formValues["name"],
                         email: formValues["email"],
                         password: formValues["password"],
                         role: formValues["role"]
-                    }, { withCredentials: true })
+                    })
                     setUser(res.data.user);
                     navigate(`/${formValues["role"].toLowerCase()}/dashboard`)
                 }catch(err){
@@ -63,10 +63,10 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
             }
             else if(!signup){
                 try{
-                    const res = await axios.post("http://localhost:4000/api/user/login", {
+                    const res = await api.post("/user/login", {
                         email: formValues["email"],
                         password: formValues["password"]
-                    }, { withCredentials: true })
+                    })
                     setUser(res.data.user);
                     navigate(`/${res.data.user.role.toLowerCase()}/dashboard`)
                 }catch(err){

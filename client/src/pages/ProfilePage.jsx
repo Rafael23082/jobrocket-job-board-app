@@ -4,7 +4,7 @@ import { UserContext } from "../context/UserContext.jsx";
 import { IoIosNotifications } from "react-icons/io";
 import { IoMdMenu } from "react-icons/io";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import api from "../api/axios.js";
 import { IoIosWarning } from "react-icons/io";
 import DashboardNavbar from "../components/DashboardNavbar.jsx";
 
@@ -77,21 +77,21 @@ function ProfilePage(){
 
         if (Object.keys(errors).length == 0){
             if (role?.toLowerCase() == "candidate"){
-                const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/user/updateUserDetails/${user._id}`, {
+                const res = await api.put(`/user/updateUserDetails/${user._id}`, {
                     name: formValues["name"],
                     email: formValues["email"],
                     location: formValues["location"],
                     additionalInformation: formValues["additionalInformation"],
                     resume: formValues["resume"],
                     resumeName: formValues["resumeName"]
-                }, {withCredentials: true})
+                })
                 setInitialValues(formValues);
                 setUser(res.data);
             }else{
-                const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/user/updateUserDetails/${user._id}`, {
+                const res = await api.put(`/user/updateUserDetails/${user._id}`, {
                     name: formValues["name"],
                     email: formValues["email"]
-                }, {withCredentials: true})
+                })
                 setInitialValues(formValues);
                 setUser(res.data);
             }

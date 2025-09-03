@@ -1,5 +1,5 @@
 import Job from "./Job.jsx";
-import axios from "axios";
+import api from "../api/axios.js";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -10,7 +10,7 @@ function JobSection({category, jobOpened, setJobOpened, detailsIsOpen, setDetail
     useEffect(() => {
         const getJobs = async() => {
             try{
-                const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getAllJobs`);
+                const res = await api.get(`/job/getAllJobs`);
                 const filteredJobs = res.data.filter((job) => job.field.toLowerCase() == category.toLowerCase());
                 setDisplayedJobs(filteredJobs.slice(0, 3));
             }catch(err){

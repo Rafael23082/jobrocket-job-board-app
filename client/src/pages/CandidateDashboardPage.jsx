@@ -6,7 +6,7 @@ import { FaClock } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext.jsx";
-import axios from "axios";
+import api from "../api/axios.js";
 
 function CandidateDashboardPage(){
     const {user} = useContext(UserContext);
@@ -15,7 +15,7 @@ function CandidateDashboardPage(){
         if (!user?._id) return;
 
         const fetchCandidateDashboardData = async() => {
-            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/fetchCandidateDashboardData/${user?._id}`, {withCredentials: true});
+            const res = await api.get(`/user/fetchCandidateDashboardData/${user?._id}`);
             setData(res.data);
         }
         fetchCandidateDashboardData();

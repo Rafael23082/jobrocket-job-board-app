@@ -1,5 +1,5 @@
 import JobInput from "../components/JobInput.jsx";
-import axios from "axios";
+import api from "../api/axios.js";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -13,7 +13,7 @@ function RecruiterEditJobPage(){
     const [initialValues, setInitialValues] = useState({});
     const navigate = useNavigate();
     const backendAction = async() => {
-        await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/job/updateJobByID/${jobID}`, {
+        await api.put(`/job/updateJobByID/${jobID}`, {
             role: formValues["role"],
             company: formValues["company"],
             location: formValues["location"],
@@ -26,7 +26,7 @@ function RecruiterEditJobPage(){
             tags: formValues["tags"],
             requirements: formValues["requirements"],
             experience: formValues["experience"]
-        }, {withCredentials: true});
+        });
         toast.success("Job successfully updated.", {
             description: `${formValues["role"]} job details updated.`
         })
@@ -34,7 +34,7 @@ function RecruiterEditJobPage(){
     }
 
     const fetchJob = async() => {
-        let res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/job/getJobByID/${jobID}`, {withCredentials: true});
+        let res = await api.get(`/job/getJobByID/${jobID}`);
         return res.data;
     }
 

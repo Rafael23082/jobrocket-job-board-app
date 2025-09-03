@@ -1,5 +1,5 @@
 import JobInput from "../components/JobInput.jsx";
-import axios from "axios";
+import api from "../api/axios.js";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext.jsx";
@@ -19,7 +19,7 @@ function RecruiterAddJobPage(){
     }, [user])
 
     const backendAction = async() => {
-        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/job/addJob`, {
+        await api.post(`/job/addJob`, {
             role: formValues["role"],
             company: formValues["company"],
             location: formValues["location"],
@@ -33,7 +33,7 @@ function RecruiterAddJobPage(){
             requirements: formValues["requirements"],
             experience: formValues["experience"],
             postedBy: user?._id
-        }, {withCredentials: true});
+        });
         toast.success("Job successfully added.", {
             description: `${formValues["role"]} job added.`
         })

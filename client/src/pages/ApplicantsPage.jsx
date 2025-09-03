@@ -5,7 +5,7 @@ import { IoMdMenu } from "react-icons/io";
 import { useState, useContext, useEffect} from "react";
 import { UserContext } from "../context/UserContext.jsx";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api/axios.js";
 import { useQuery } from "@tanstack/react-query";
 import ApplicantCard from "../components/ApplicantCard.jsx";
 import { HiArrowLongLeft } from "react-icons/hi2";
@@ -25,7 +25,7 @@ function ApplicantsPage(){
     }, [user])
 
     const fetchApplicants = async() => {
-        let res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/application/getJobApplicants/${jobID}`, {withCredentials: true});
+        let res = await api.get(`/application/getJobApplicants/${jobID}`);
         return res.data;
     }
 

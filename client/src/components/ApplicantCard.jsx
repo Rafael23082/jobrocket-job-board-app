@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaCalendarCheck } from "react-icons/fa";
-import axios from "axios";
+import api from "../api/axios";
 import {toast} from "sonner";
 
 function ApplicantCard({applicant, jobID, refetch}){
@@ -18,9 +18,9 @@ function ApplicantCard({applicant, jobID, refetch}){
         let previousStatus = applicant.status;
         setStatusDisplay(status);
         try{
-            await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/application/updateApplicationStatus/${applicant._id}/${jobID}`, {
+            await api.put(`/application/updateApplicationStatus/${applicant._id}/${jobID}`, {
                 status: status
-            }, {withCredentials: true})
+            })
         }catch(err){
             setStatusDisplay(previousStatus);
         }
@@ -35,9 +35,9 @@ function ApplicantCard({applicant, jobID, refetch}){
                         const handleUndo = async() => {
                             try{
                                 setStatusDisplay(previousStatus)
-                                await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/application/updateApplicationStatus/${applicant._id}/${jobID}`, {
+                                await api.put(`/application/updateApplicationStatus/${applicant._id}/${jobID}`, {
                                     status: previousStatus
-                                }, {withCredentials: true})
+                                })
                             }catch(err){
                                 setStatusDisplay(previousStatus);
                             }
