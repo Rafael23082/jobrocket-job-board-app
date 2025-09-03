@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import userRoutes from "./routes/UserRoutes.js";
 import applicationRoutes from "./routes/ApplicationRoute.js";
 import cookieParser from "cookie-parser";
+import authRoutes from "./routes/authRoutes.js";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(cors({
 app.use("/api/job", jobRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/application", applicationRoutes);
+app.use("/api/auth", authRoutes);
 
 connectDB();
 app.listen(4000, () => {
