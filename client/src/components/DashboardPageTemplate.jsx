@@ -7,7 +7,7 @@ import {AreaChart, Area, ResponsiveContainer, Legend, Tooltip, XAxis, YAxis, Bar
 import ActivtyFeedCard from "../components/ActivityFeedCard.jsx";
 import DashboardNavbar from "./DashboardNavbar.jsx";
 
-function DashboardPageTemplate({box1, Box1Icon, box2, Box2Icon, box3, Box3Icon, box4, Box4Icon, lineChartInfo, barChartInfo, pieChartInfo}){
+function DashboardPageTemplate({box1, Box1Icon, box1Value, box2, Box2Icon, box2Value, box3, Box3Icon, box3Value, lineChartInfo, barChartInfo, pieChartInfo}){
     const [logoutOpened, setLogoutOpened] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const productSales = [
@@ -42,10 +42,9 @@ function DashboardPageTemplate({box1, Box1Icon, box2, Box2Icon, box3, Box3Icon, 
                 <div className="pt-[2em] bg-blue-500 border-t border-white border-t-[0.1px]">
                     <p className="text-white pl-5 text-[1.25rem] font-medium">Dashboard</p>
                     <div className="flex px-5 gap-4 flex-col md:flex-row mt-5">
-                        <DashboardBox title={box1} value={10} Icon={Box1Icon} />
-                        <DashboardBox title={box2} value={10} Icon={Box2Icon} />
-                        <DashboardBox title={box3} value={10} Icon={Box3Icon} />
-                        <DashboardBox title={box4} value={10} Icon={Box4Icon} />
+                        <DashboardBox title={box1} value={box1Value} Icon={Box1Icon} />
+                        <DashboardBox title={box2} value={box2Value} Icon={Box2Icon} />
+                        <DashboardBox title={box3} value={box3Value} Icon={Box3Icon} />
                     </div>
                 </div>
 

@@ -3,6 +3,7 @@ import { Recruiter, User } from "../models/User.js";
 import { Candidate } from "../models/User.js";
 import jwt from "jsonwebtoken";
 import { generateAccessToken, generateRefreshToken } from "./authController.js";
+import Application from "../models/Application.js";
 
 const getAllUsers = async(req, res) => {
     try{
@@ -63,7 +64,7 @@ const signup = async(req, res) => {
             httpOnly: true,
             secure: false, /** secure: true if in production (false only for development only) */
             sameSite: "none", /** sameSite: strict if in production (lax only for development only) (due to backend and frontend and backend running in different origin) */
-            maxAge: 15 * 60 * 1000
+            maxAge: 15 * 60 * 1000 /** 15 * 60 * 1000 */
         })
 
         res.cookie("refreshToken", refreshToken, {
@@ -104,7 +105,7 @@ const login = async(req, res) => {
             httpOnly: true,
             secure: true, /** secure: true if in production (false only for development only) */
             sameSite: "none", /** sameSite: lax if in production (none only for development only) (due to backend and frontend and backend running in different origin) */
-            maxAge: 15 * 60 * 1000
+            maxAge: 15 * 60 * 1000 /** 15 * 60 * 1000 */
         })
 
         res.cookie("refreshToken", refreshToken, {
@@ -136,14 +137,19 @@ const autoLogin = async(req, res) => {
             const payload = jwt.verify(refreshToken, "myRefreshSecretKey");
             const user = await User.findById(payload.id);
             
-            const newAccessToken = generateAccessToken(payload);
-            const newRefreshToken = generateRefreshToken(payload);
+            const newPayload = {
+                id: payload.id,
+                role: payload.role
+            }
+
+            const newAccessToken = generateAccessToken(newPayload);
+            const newRefreshToken = generateRefreshToken(newPayload);
 
             res.cookie("accessToken", newAccessToken, {
                 httpOnly: true,
                 secure: true, /** secure: true if in production (false only for development only) */
                 sameSite: "none", /** sameSite: lax if in production (none only for development only) (due to backend and frontend and backend running in different origin) */
-                maxAge: 15 * 60     * 1000
+                maxAge: 15 * 60 * 1000 /** 15 * 60 * 1000 */
             })
 
             res.cookie("refreshToken", newRefreshToken, {
@@ -160,7 +166,7 @@ const autoLogin = async(req, res) => {
             return res.status(401).json("No tokens provided. Please log in.");
         }
     }catch(err){
-        return res.status(500).json(err);
+        return res.status(500).json(err.message);
     }
 }
 
@@ -183,19 +189,8 @@ const updateUserDetails = async(req, res) => {
 
 const logout = async(req, res) => {
     try{
-        res.clearCookie("accessToken", {
-            secure: true,
-            sameSite: "none",
-            httpOnly: true,
-            path: "/"
-        })
-
-        res.clearCookie("refreshToken", {
-            secure: true,
-            sameSite: "none",
-            httpOnly: true,
-            path: "/"
-        })
+        res.clearCookie("accessToken")
+        res.clearCookie("refreshToken")
 
         res.status(200).json("Logout successful!");
     }catch(err){
@@ -203,4 +198,40 @@ const logout = async(req, res) => {
     }
 }
 
-export default {getAllUsers, deleteAllUsers, signup, login, updateUserDetails, logout, autoLogin};
+const deleteUserByID = async(req, res) => {
+    try{
+        const {userID} = req.params;
+        await User.findByIdAndDelete(userID);
+        return res.status(200).json("User successfully deleted!");
+    }catch(err){
+        return res.status(500).json(err.message);
+    }
+}
+
+const fetchCandidateDashboardData = async(req, res) => {
+    try{
+        const {userID} = req.params;
+        const applicationCount = await Application.countDocuments({
+            userID: userID
+        })
+
+        const user = await Candidate.findById(userID);
+        const userObject = user.toObject();
+        const profileProgress = Object.keys(userObject).length - 5; /** Only show attributes displayed in profile page */
+        if (userObject.resume){
+            profileProgress -= 1; /** resume name and link are overlapping */
+        }
+
+        let profileProgressPercentage = String((profileProgress / 5) * 100) + "%"
+
+        return res.status(200).json({
+            applicationCount: applicationCount,
+            savedJobsCount: user.savedJobs.length,
+            profileProgress: profileProgressPercentage
+        })
+    }catch(err){
+        return res.status(500).json(err.message);
+    }
+}
+
+export default {getAllUsers, deleteAllUsers, signup, login, updateUserDetails, logout, autoLogin, deleteUserByID, fetchCandidateDashboardData};

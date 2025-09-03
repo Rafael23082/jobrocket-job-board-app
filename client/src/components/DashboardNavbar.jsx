@@ -20,7 +20,7 @@ function DashboardNavbar({menuOpen, setMenuOpen}){
     }
 
     return(
-        <div className="bg-blue-500 py-[1.2em] flex items-center justify-between px-5 w-[100%]">
+        <div className="bg-blue-500 py-[1.2em] flex items-center justify-between px-5 w-[100%] z-[9999]">
             <div>
                 {menuOpen ? (
                     <IoClose size={30} className="block lg:hidden cursor-pointer mr-10 margin-right" color="white" onClick={() => {setMenuOpen(!menuOpen)}} />

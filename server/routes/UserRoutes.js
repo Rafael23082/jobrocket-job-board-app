@@ -4,12 +4,14 @@ import { verify } from "../middlewares/authMiddleware.js";
 
 const userRoutes = express.Router();
 
-userRoutes.get("/getAllUsers", verify, UserController.getAllUsers);
-userRoutes.delete("/deleteAllUsers", verify, UserController.deleteAllUsers);
+userRoutes.get("/getAllUsers", UserController.getAllUsers);
+userRoutes.delete("/deleteAllUsers", UserController.deleteAllUsers);
+userRoutes.delete("/deleteUserByID/:userID", UserController.deleteUserByID);
 userRoutes.post("/signup", UserController.signup);
 userRoutes.post("/login", UserController.login);
 userRoutes.put("/updateUserDetails/:userID", verify, UserController.updateUserDetails);
-userRoutes.post("/logout", UserController.logout);
+userRoutes.post("/logout", verify, UserController.logout);
 userRoutes.post("/autoLogin", UserController.autoLogin);
+userRoutes.get("/fetchCandidateDashboardData/:userID", verify, UserController.fetchCandidateDashboardData)
 
 export default userRoutes;

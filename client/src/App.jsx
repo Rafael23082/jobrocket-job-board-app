@@ -12,7 +12,8 @@ import JobsPage from "./pages/JobsPage.jsx";
 import JobsCategoryPage from "./pages/JobsCategoryPage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
-import DashboardPage from "./pages/DashboardPage.jsx";
+import RecruiterDashboardPage from "./pages/RecruiterDashboardPage.jsx";
+import CandidateDashboardPage from "./pages/CandidateDashboardPage.jsx";
 import CandidateJobsPage from "./pages/CandidateJobsPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import RecruiterJobListingsPage from "./pages/RecruiterJobListingsPage.jsx";
@@ -78,7 +79,8 @@ export default function App() {
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/candidate/jobs" element={<CandidateJobsPage />} />
-            <Route path="/:role/dashboard" element={<DashboardPage />} />
+            <Route path="/candidate/dashboard" element={<CandidateDashboardPage />} />
+            <Route path="/recruiter/dashboard" element={<RecruiterDashboardPage />} />
             <Route path="/:role/profile" element={<ProfilePage />} />
             <Route path="/recruiter/job-listings" element={<RecruiterJobListingsPage />} />
             <Route path="/recruiter/edit-job/:jobID" element={<RecruiterEditJobPage />} />

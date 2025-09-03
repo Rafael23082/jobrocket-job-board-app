@@ -6,6 +6,6 @@ export const generateAccessToken = (payload) => {
 }
 
 export const generateRefreshToken = (payload) => {
-    const refreshToken = jwt.sign(payload, "myRefreshSecretKey");
+    const refreshToken = jwt.sign(payload, "myRefreshSecretKey", {expiresIn: "7d"});
     return refreshToken;
 }
