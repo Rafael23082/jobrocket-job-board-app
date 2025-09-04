@@ -22,7 +22,8 @@ function CandidateDashboardPage(){
     const {data, isLoading} = useQuery({
         queryKey: [user],
         queryFn: () => fetchCandidateDashboardData(),
-        keepPreviousData: true
+        keepPreviousData: true,
+        enabled: !!user?._id
     })
 
     return(

@@ -8,20 +8,7 @@ import ActivtyFeedCard from "../components/ActivityFeedCard.jsx";
 import DashboardNavbar from "./DashboardNavbar.jsx";
 
 function DashboardPageTemplate({box1, Box1Icon, box1Value, box2, Box2Icon, box2Value, box3, Box3Icon, box3Value, lineChartInfo, barChartInfo, pieChartInfo}){
-    const [logoutOpened, setLogoutOpened] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
-    const productSales = [
-        {name: "Q1", product1: 1, product2: 4},
-        {name: "Q2", product1: 3, product2: 9},
-        {name: "Q3", product1: 8, product2: 4},
-        {name: "Q4", product1: 4, product2: 1},
-    ]
-
-    const applicationStatus = [
-        {name: "Applied", value: 2},
-        {name: "Rejected", value: 2},
-        {name: "Interview", value: 2}
-    ]
     const {user} = useContext(UserContext);
     const navigate = useNavigate();
     useEffect(() => {
@@ -52,13 +39,28 @@ function DashboardPageTemplate({box1, Box1Icon, box1Value, box2, Box2Icon, box2V
                     <div className="absolute top-0 left-0 h-[130px] bg-blue-500 w-[100%] z-0"></div>
                     <div className="flex pt-[2em] gap-[2em] flex-col lg:flex-row w-[100%]">
                         <div className="w-[100%] lg:w-[50%] bg-white rounded-[5px] p-[1.4em] shadow z-1">
-                            <p className=" font-medium text-[1.1rem]">{pieChartInfo.title}</p>
+                            <p className=" font-medium text-[1.1rem]">{pieChartInfo?.title}</p>
                             <ResponsiveContainer width="100%" height={350}>
                                 <PieChart>
-                                    <Pie data={pieChartInfo.dataset} dataKey={pieChartInfo.dataKey}>
-                                        {applicationStatus.map((entry, index) => (
-                                            <Cell key={index} fill={COLORS[index % COLORS.length]} />
-                                        ))}
+                                    <Pie data={pieChartInfo?.dataset || []} dataKey={pieChartInfo?.dataKey}>
+                                    {pieChartInfo?.dataset?.map((entry, index) => {
+                                        let fillColor;
+                                        switch (entry.name) {
+                                            case "Hired":
+                                            fillColor = "#22c55e";
+                                            break;
+                                            case "Interview":
+                                            fillColor = "#3b82f6";
+                                            break;
+                                            case "Pending":
+                                            fillColor = "#f97316";
+                                            break;
+                                            case "Rejected":
+                                            fillColor = "#ef4444";
+                                            break;
+                                        }
+                                        return <Cell key={index} fill={fillColor} />;
+                                    })}
                                     </Pie>
                                     <Legend wrapperStyle={{fontSize: "0.875rem"}} />
                                     <Tooltip />
@@ -66,13 +68,13 @@ function DashboardPageTemplate({box1, Box1Icon, box1Value, box2, Box2Icon, box2V
                             </ResponsiveContainer>
                         </div>
                         <div className="w-[100%] lg:w-[50%] rounded-[5px] p-[1.4em] shadow bg-white relative z-1">
-                            <p className="font-medium pb-[2em] text-[1.1rem]">{barChartInfo.title}</p>
+                            <p className="font-medium pb-[2em] text-[1.1rem]">{barChartInfo?.title}</p>
                             <ResponsiveContainer width="100%" height={350}>
-                                <BarChart data={barChartInfo.dataset}>
-                                    {barChartInfo.dataKeys.map((dataKey) => (
+                                <BarChart data={barChartInfo?.dataset}>
+                                    {barChartInfo?.dataKeys.map((dataKey) => (
                                         <Bar dataKey={dataKey}>
-                                            {barChartInfo.dataset.map((entry, index) => (
-                                            <Cell key={`cell-${index}`} fill={["#8884d8", "#82ca9d", "#ffc658", "#ff8042", "#00C49F"][index % 5]} />
+                                            {barChartInfo?.dataset?.map((entry, index) => (
+                                                <Cell key={`cell-${index}`} fill={["#8884d8", "#82ca9d", "#ffc658", "#ff8042", "#00C49F"][index % 5]} />
                                             ))}
                                         </Bar>
                                     ))}
@@ -84,10 +86,10 @@ function DashboardPageTemplate({box1, Box1Icon, box1Value, box2, Box2Icon, box2V
                         </div>
                     </div>
                     <div className="w-[100%] bg-slate-700 shadow rounded-[5px] p-[1.4em] relative z-1">
-                        <p className="text-white font-medium pb-[2em] text-[1.1rem]">{lineChartInfo.title}</p>
+                        <p className="text-white font-medium pb-[2em] text-[1.1rem]">{lineChartInfo?.title}</p>
                         <ResponsiveContainer width="100%" height={350}>
-                            <LineChart data={lineChartInfo.dataset}>
-                                {lineChartInfo.dataKeys.map((dataKey) => (
+                            <LineChart data={lineChartInfo?.dataset}>
+                                {lineChartInfo?.dataKeys.map((dataKey) => (
                                     <Line type="monotone" dataKey={dataKey} stroke="#8884d8" fill="#8884d8" strokeWidth={3} dot={false} />
                                 ))}
                                 <Tooltip />

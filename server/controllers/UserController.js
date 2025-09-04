@@ -368,7 +368,7 @@ const fetchRecruiterDashboardData = async(req, res) => {
         let applicantsStatusData = [];
         for (const key in applicantsStatusDict){
             applicantsStatusData.push({
-                name: key,
+                name: key.charAt(0).toUpperCase() + key.slice(1),
                 value: applicantsStatusDict[key]
             });
         }
