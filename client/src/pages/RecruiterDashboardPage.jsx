@@ -2,42 +2,58 @@ import DashboardPageTemplate from "../components/DashboardPageTemplate.jsx";
 import { FaPaperPlane } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { FaClock } from "react-icons/fa";
-import { FiEye } from "react-icons/fi";
-import { data } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext.jsx";
+import { useState, useEffect } from "react";
+import api from "../api/axios.js";
+import { useQuery } from "@tanstack/react-query";
+import { BarLoader } from "react-spinners";
+import DashboardSideNavbar from "../components/DashboardSideNavbar.jsx";
 
 function RecruiterDashboardPage(){
+    const {user} = useContext(UserContext);
+
+    const fetchCandidateDashboardData = async() => {
+        const res = await api.get(`/user/fetchRecruiterDashboardData/${user?._id}`);
+        return res.data;
+    }
+    
+    const {data, isLoading} = useQuery({
+        queryKey: [user],
+        queryFn: () => fetchCandidateDashboardData(),
+        keepPreviousData: true
+    })
+
     return(
         <> 
+            {isLoading && (
+                <div className={`w-[100%] min-h-[100vh] flex absolute top-0 bg-white left-0 items-center z-[9998]`}>
+                    <DashboardSideNavbar placeholder={true} />
+                    <div className="flex grow justify-center">
+                        <BarLoader
+                            color={"#3B82F6"}
+                            loading={isLoading}
+                            height={4}
+                            width={100}
+                        />
+                    </div>
+                </div>
+            )}
             <DashboardPageTemplate 
-                box1={"JOBS APPLIED"} Box1Icon={FaPaperPlane} box1Value={10} box2={"JOBS SAVED"} Box2Icon={FaHeart} box2Value={10} box3={"RESPONSE TIME"} Box3Icon={FaClock} box3Value={10} box4={"PROFILE VIEWS"} 
-                Box4Icon={FiEye} box4Value={10}
+                box1={"JOBS POSTED"} Box1Icon={FaPaperPlane} box1Value={data?.jobPostedCount} box2={"TOTAL APPLICANTS"} Box2Icon={FaHeart} box2Value={data?.totalApplicants} box3={"APPLICATIONS PER JOB (AVG)"} Box3Icon={FaClock} box3Value={data?.applicantsPerJob}
                 lineChartInfo={{
-                    title: "Applications overtime",
-                    dataset: [
-                                {name: "Q1", product1: 1, product2: 4},
-                                {name: "Q2", product1: 3, product2: 9},
-                                {name: "Q3", product1: 8, product2: 4},
-                                {name: "Q4", product1: 4, product2: 1},
-                            ],
-                    dataKeys: ["product1", "product2"]
+                    title: "Applicants overtime",
+                    dataset: data?.applicationOvertimeData,
+                    dataKeys: ["Applicants"]
                 }}
                 barChartInfo={{
-                    title: "Saved jobs per category",
-                    dataset: [
-                                {name: "Tech", value: 4},
-                                {name: "Design", value: 9},
-                                {name: "Data", value: 4},
-                                {name: "Marketing", value: 1},
-                            ],
+                    title: "Posted jobs per category",
+                    dataset: data?.jobCategoryData,
                     dataKeys: ["value"]
                 }}
                 pieChartInfo={{ 
-                    title: "Applications status",
-                    dataset: [
-                            {name: "Applied", value: 2},
-                            {name: "Rejected", value: 2},
-                            {name: "Interview", value: 2}
-                        ],
+                    title: "Applicants status",
+                    dataset: data?.applicantsStatusData,
                     dataKey: "value",
                     nameKey: "name"
                 }}

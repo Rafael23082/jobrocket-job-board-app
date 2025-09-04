@@ -54,7 +54,7 @@ export default function App() {
   return (
     <>
         {loading && (
-            <div className={`w-[100%] min-h-[100vh] flex absolute top-0 bg-white left-0 items-center z-[9999]`}>
+            <div className={`w-[100%] min-h-[100vh] flex absolute top-0 bg-white left-0 items-center z-[9998]`}>
                 <div className="flex grow justify-center">
                     <BarLoader
                         color={"#3B82F6"}

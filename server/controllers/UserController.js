@@ -4,6 +4,7 @@ import { Candidate } from "../models/User.js";
 import jwt from "jsonwebtoken";
 import { generateAccessToken, generateRefreshToken } from "./authController.js";
 import Application from "../models/Application.js";
+import Job from "../models/Job.js";
 
 const getAllUsers = async(req, res) => {
     try{
@@ -217,21 +218,190 @@ const fetchCandidateDashboardData = async(req, res) => {
 
         const user = await Candidate.findById(userID);
         const userObject = user.toObject();
-        const profileProgress = Object.keys(userObject).length - 5; /** Only show attributes displayed in profile page */
-        if (userObject.resume){
-            profileProgress -= 1; /** resume name and link are overlapping */
+
+        let fieldCount = 0;
+        const profileFields = ["name", "email", "location", "additionalInformation", "resumeName"];
+        profileFields.forEach((field) => {
+            if (userObject[field]){
+                fieldCount += 1
+            }
+        })
+
+        let profileProgressPercentage = String((fieldCount / 5) * 100) + "%"
+
+        let savedJobList = [];
+        for (const jobID of user.savedJobs){
+            const job = await Job.findById(jobID);
+            savedJobList.push(job);
         }
 
-        let profileProgressPercentage = String((profileProgress / 5) * 100) + "%"
+        let jobsCategoryDict = {};
+        savedJobList.forEach((job) => {
+            if (!jobsCategoryDict[job.field]){
+                jobsCategoryDict[job.field] = 1;
+            }
+            else{
+                jobsCategoryDict[job.field] += 1
+            }
+        })
+
+        let jobCategoryData = [];
+        for (const key in jobsCategoryDict){
+            jobCategoryData.push({
+                name: key,
+                value: jobsCategoryDict[key]
+            });
+        }
+
+        let appliedJobList = await Application.find({userID: userID});
+        let applicationStatusDict = {};
+        for (const application of appliedJobList){
+            if (!applicationStatusDict[application.status]){
+                applicationStatusDict[application.status] = 1
+            }else{
+                applicationStatusDict[application.status] += 1
+            }
+        }
+
+        let applicationStatusData = [];
+        for (const key in applicationStatusDict){
+            applicationStatusData.push({
+                name: key.charAt(0).toUpperCase() + key.slice(1),
+                value: applicationStatusDict[key]
+            });
+        }
+
+        let applicationDateRanges = {};
+        let year = new Date().getFullYear();
+        let month = new Date().getMonth();
+
+        for (let i = 0; i < 4; i ++){
+            let applicationCount = await Application.countDocuments({
+                userID: user._id,
+                postedAt: {
+                    $gte: new Date(year, month, 1, 0, 0, 0),
+                    $lte: new Date(year, month + 1, 0, 23, 59, 59)
+                }
+            });
+            applicationDateRanges[`${month + 1}-${year}`] = applicationCount
+
+            month -= 1;
+            if (month == 0){
+                month = 11;
+                year -= 1;
+            }
+        }
+
+        const applicationOvertimeData = Object.entries(applicationDateRanges).map(([key, value]) => ({
+            name: key,
+            Applications: value
+        })).reverse();
 
         return res.status(200).json({
             applicationCount: applicationCount,
             savedJobsCount: user.savedJobs.length,
-            profileProgress: profileProgressPercentage
+            profileProgress: profileProgressPercentage,
+            jobCategoryData: jobCategoryData,
+            applicationStatusData: applicationStatusData,
+            applicationOvertimeData: applicationOvertimeData
         })
     }catch(err){
         return res.status(500).json(err.message);
     }
 }
 
-export default {getAllUsers, deleteAllUsers, signup, login, updateUserDetails, logout, autoLogin, deleteUserByID, fetchCandidateDashboardData};
+const fetchRecruiterDashboardData = async(req, res) => {
+    try{
+        const {userID} = req.params;
+
+        const jobsPosted = await Job.find({
+            postedBy: userID
+        })
+
+        const jobIDs = jobsPosted.map((job) => job._id);
+        const totalApplicants = await Application.countDocuments({
+            jobID: { $in: jobIDs }
+        });
+
+        const applicantsPerJob = (totalApplicants / jobsPosted.length).toFixed(2);
+        
+        let applicantsDateRanges = {};
+        let year = new Date().getFullYear();
+        let month = new Date().getMonth();
+
+        for (let i = 0; i < 4; i ++){
+            let applicantsCount = await Application.countDocuments({
+                jobID: { $in: jobIDs },
+                postedAt: {
+                    $gte: new Date(year, month, 1, 0, 0, 0),
+                    $lte: new Date(year, month + 1, 0, 23, 59, 59)
+                }
+            });
+            applicantsDateRanges[`${month + 1}-${year}`] = applicantsCount
+
+            month -= 1;
+            if (month == 0){
+                month = 11;
+                year -= 1;
+            }
+        }
+
+        const applicationOvertimeData = Object.entries(applicantsDateRanges).map(([key, value]) => ({
+            name: key,
+            Applicants: value
+        })).reverse();
+
+        const applications = await Application.find({
+            jobID: { $in: jobIDs }
+        });
+
+        let applicantsStatusDict = {};
+        applications.forEach((application) => {
+            if (!applicantsStatusDict[application.status]){
+                applicantsStatusDict[application.status] = 1;
+            }
+            else{
+                applicantsStatusDict[application.status] += 1
+            }
+        })
+
+        let applicantsStatusData = [];
+        for (const key in applicantsStatusDict){
+            applicantsStatusData.push({
+                name: key,
+                value: applicantsStatusDict[key]
+            });
+        }
+
+        let jobsCategoryDict = {};
+        jobsPosted.forEach((job) => {
+            if (!jobsCategoryDict[job.field]){
+                jobsCategoryDict[job.field] = 1;
+            }
+            else{
+                jobsCategoryDict[job.field] += 1
+            }
+        })
+
+        let jobCategoryData = [];
+        for (const key in jobsCategoryDict){
+            jobCategoryData.push({
+                name: key,
+                value: jobsCategoryDict[key]
+            });
+        }
+
+        return res.status(200).json({
+            jobPostedCount: jobsPosted.length,
+            totalApplicants: totalApplicants,
+            applicantsPerJob: applicantsPerJob,
+            applicationOvertimeData: applicationOvertimeData,
+            applicantsStatusData: applicantsStatusData,
+            jobCategoryData: jobCategoryData
+        })
+    }catch(err){
+        return res.status(500).json(err.message);
+    }
+}
+
+export default {getAllUsers, deleteAllUsers, signup, login, updateUserDetails, logout, autoLogin, deleteUserByID, fetchCandidateDashboardData, fetchRecruiterDashboardData};

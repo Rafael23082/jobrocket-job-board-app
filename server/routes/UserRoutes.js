@@ -13,5 +13,6 @@ userRoutes.put("/updateUserDetails/:userID", verify, UserController.updateUserDe
 userRoutes.post("/logout", verify, UserController.logout);
 userRoutes.post("/autoLogin", UserController.autoLogin);
 userRoutes.get("/fetchCandidateDashboardData/:userID", verify, UserController.fetchCandidateDashboardData)
+userRoutes.get("/fetchRecruiterDashboardData/:userID", verify, UserController.fetchRecruiterDashboardData)
 
 export default userRoutes;
