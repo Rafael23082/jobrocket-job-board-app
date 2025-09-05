@@ -76,7 +76,7 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
     }
 
     const {data: status = "Loading..."} = useQuery({
-        queryKey: [job],
+        queryKey: ["job", job],
         queryFn: () => getApplicationStatus(),
         keepPreviousData: true
     })

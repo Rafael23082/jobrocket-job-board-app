@@ -11,7 +11,6 @@ import TagsInputBox from "../components/TagsInputBox.jsx";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { IoIosWarning } from "react-icons/io";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { useQuery } from '@tanstack/react-query';
 import { BarLoader } from "react-spinners";
 import DashboardNavbar from "./DashboardNavbar.jsx";
 

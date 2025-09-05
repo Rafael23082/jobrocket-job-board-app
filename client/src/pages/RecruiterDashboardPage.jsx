@@ -13,14 +13,14 @@ import DashboardSideNavbar from "../components/DashboardSideNavbar.jsx";
 function RecruiterDashboardPage(){
     const {user} = useContext(UserContext);
 
-    const fetchCandidateDashboardData = async() => {
+    const fetchRecruiterDashboardData = async() => {
         const res = await api.get(`/user/fetchRecruiterDashboardData/${user?._id}`);
         return res.data;
     }
     
     const {data, isLoading} = useQuery({
-        queryKey: [user],
-        queryFn: () => fetchCandidateDashboardData(),
+        queryKey: ["recruiterDashboard", user?._id],
+        queryFn: () => fetchRecruiterDashboardData(),
         keepPreviousData: true,
         enabled: !!user?._id
     })
