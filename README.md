@@ -38,4 +38,9 @@ A modern job board application for connecting job seekers with job opportunities
 - npm install
 
 ### Configuration
-- Create .env file in client root folder.
+Create .env file in client root folder containing:
+- VITE_BACKEND_URL = Contains the URL in which the backend runs in.
+
+Create .env file in server root folder containing:
+- MONGODB_URL = Mongoose connection string.
+- FRONTEND_URL = Contains the URL in which the frontend runs in.
