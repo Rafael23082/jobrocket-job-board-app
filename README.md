@@ -52,7 +52,7 @@ Create .env file in server root folder containing:
 | POST | `/api/users/signup` | Register a new user | ❌ |
 | POST | `/api/users/login` | Login user | ❌ |
 | POST | `/api/users/logout` | Logout user | ✅ |
-| POST | `/api/users/autoLogin` | Auto login with refresh token | ❌ |
+| POST | `/api/users/autoLogin` | Auto login with refresh or access token | ✅ |
 | PUT | `/api/users/updateUserDetails/:userID` | Update user profile | ✅ |
 | GET | `/api/users/fetchCandidateDashboardData/:userID` | Candidate dashboard data | ✅ |
 | GET | `/api/users/fetchRecruiterDashboardData/:userID` | Recruiter dashboard data | ✅ |
@@ -63,10 +63,9 @@ Create .env file in server root folder containing:
 | Method | Endpoint | Description | Auth |
 |--------|----------|-------------|------|
 | GET | `/api/jobs/getAllJobs` | Get all jobs | ❌ |
-| GET | `/api/jobs/getJobByID/:jobID` | Get a job by ID | ❌ |
+| GET | `/api/jobs/getJobByID/:jobID` | Get a job by ID | ✅ |
 | POST | `/api/jobs/addJob` | Add a job (recruiter only) | ✅ |
 | PUT | `/api/jobs/updateJobByID/:jobID` | Update job | ✅ |
-| DELETE | `/api/jobs/deleteJob/:jobID` | Delete a job | ✅ |
 | GET | `/api/jobs/getJobsPostedByRecruiter/:userID` | Recruiter’s jobs | ✅ |
 | POST | `/api/jobs/saveJob` | Save a job for later | ✅ |
 | POST | `/api/jobs/removeSavedJob` | Remove saved job | ✅ |
@@ -83,6 +82,3 @@ Create .env file in server root folder containing:
 | GET | `/api/applications/getJobApplicants/:jobID` | Get applicants for a job | ✅ |
 | PUT | `/api/applications/updateApplicationStatus/:userID/:jobID` | Update application status | ✅ |
 | GET | `/api/applications/getApplicationByUserIDAndJobID/:userID/:jobID` | Get specific application | ✅ |
-| GET | `/api/applications/getAllApplications` | Get all applications | ❌ |
-| DELETE | `/api/applications/deleteApplicationById/:applicationID` | Delete application by ID | ❌ |
-| DELETE | `/api/applications/deleteAllApplications` | Delete all applications | ❌ |
