@@ -30,8 +30,12 @@ A modern job board application for connecting job seekers with job opportunities
 - Auto login and logout handling.
 
 ## Installation and configuration
+### Installation
 - git clone https://github.com/Rafael23082/jobrocket-job-board-app.git
 - cd client
 - npm install
 - cd ../server
 - npm install
+
+### Configuration
+- Create .env file in client root folder.
