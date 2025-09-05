@@ -28,3 +28,7 @@ A modern job board application for connecting job seekers with job opportunities
 ### System features
 - Secure authentication with access and refresh tokens.
 - Auto login and logout handling.
+
+## Installation
+- Clone github repository.
+- 
