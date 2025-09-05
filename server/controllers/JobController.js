@@ -50,25 +50,6 @@ const addMultipleJobs = async(req, res) => {
     }
 }
 
-const deleteJob = async(req, res) => {
-    try{
-        const {jobID} = req.params;
-        await Job.findByIdAndDelete(jobID);
-        return res.status(200).json({message: "Job deleted!"});
-    }catch(err){
-        return res.status(500).json({message: err.message});
-    }
-}
-
-const deleteAllJobs = async(req, res) => {
-    try{
-        await Job.deleteMany({});
-        return res.status(200).json({message: "Jobs deleted"});
-    }catch(err){
-        return res.status(500).json({message: err.message});
-    }
-}
-
 const saveJob = async(req, res) => {
     try{
         const {jobID, userID} = req.body;
@@ -193,4 +174,4 @@ const updateJobByID = async(req, res) => {
     }
 }
 
-export default {getAllJobs, addJob, addMultipleJobs, deleteJob, deleteAllJobs, saveJob, removeSavedJob, getSavedJobs, getNotAppliedJobs, getAppliedJobs, getJobsPostedByRecruiter, getJobByID, updateJobByID}
+export default {getAllJobs, addJob, saveJob, removeSavedJob, getSavedJobs, getNotAppliedJobs, getAppliedJobs, getJobsPostedByRecruiter, getJobByID, updateJobByID}

@@ -14,25 +14,6 @@ const applyJob = async(req, res) => {
     }
 }
 
-const deleteApplicationByID = async(req, res) => {
-    try{
-        const {applicationID} = req.params;
-        await Application.findByIdAndDelete(applicationID);
-        return res.status(200).json({message: "Application deleted!"});
-    }catch(err){
-        return res.status(500).json({message: err.message});
-    }
-}
-
-const getAllApplications = async(req, res) => {
-    try{
-        const results = await Application.find({});
-        return res.status(200).json(results);
-    }catch(err){
-        return res.status(500).json({message: err.message});
-    }
-}
-
 const getApplicationByUserIDAndJobID = async(req, res) => {
     try{
         const {userID, jobID} = req.params;
@@ -46,15 +27,6 @@ const getApplicationByUserIDAndJobID = async(req, res) => {
     }
 }
 
-const deleteAllApplications = async(req, res) => {
-    try{
-        await Application.deleteMany({});
-        return res.status(200).json({message: "Applications deleted!"});
-    }catch(err){
-        return res.status(500).json({message: err.message});
-    }
-}
-
 const getJobApplicants = async(req, res) => {
     try{
         const {jobID} = req.params;
@@ -64,8 +36,13 @@ const getJobApplicants = async(req, res) => {
         for (let i = 0; i < applicants.length; i ++){
             let applicantID = applicants[i].userID;
             let applicant = await User.findById(applicantID).lean();
-            applicant["status"] = applicants[i].status
-            applicantsArr.push(applicant);
+
+            if (applicant){
+                applicant["status"] = applicants[i].status
+                applicantsArr.push(applicant);
+            }else{
+                console.log("Invalid userID: ", applicants[i].userID)
+            }
         }
         return res.status(200).json(applicantsArr || []);
     }catch(err){
@@ -91,4 +68,4 @@ const updateApplicationStatus = async(req, res) => {
     }
 }
 
-export default {applyJob, deleteApplicationByID, getAllApplications, getApplicationByUserIDAndJobID, deleteAllApplications, getJobApplicants, updateApplicationStatus};
+export default {applyJob, getApplicationByUserIDAndJobID, getJobApplicants, updateApplicationStatus};

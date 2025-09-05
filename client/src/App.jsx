@@ -21,7 +21,7 @@ import RecruiterEditJobPage from "./pages/RecruiterEditJobPage.jsx";
 import ApplicantsPage from "./pages/ApplicantsPage.jsx";
 import RecruiterAddJobPage from "./pages/RecruiterAddJobPage.jsx";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "./api/axios.js";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "./context/UserContext.jsx";
@@ -37,8 +37,7 @@ export default function App() {
     useEffect(() => {
         const handleAutoLogin = async() => {
             try{
-                let res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/autoLogin`, {}, {withCredentials: true});
-                console.log(res.data);
+                let res = await api.post(`/user/autoLogin`);
                 setUser(res.data);
                 navigate(`/${res.data.role}/dashboard`);
             }catch(err){

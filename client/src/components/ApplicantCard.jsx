@@ -62,7 +62,7 @@ function ApplicantCard({applicant, jobID, refetch}){
                         <span className="text-[0.9rem] text-gray-800 pt-[0.5em] md:pt-[0.2em] flex gap-x-[0.3em] text-gray-800">
                             <p>🌐 {applicant.location} </p><p>| ℹ️ {applicant.additionalInformation}</p>
                         </span>
-                        <p className={`text-[0.9rem] ${statusDisplay == "hired" && "text-green-700"} ${statusDisplay == "interview" && "text-yellow-600"} ${statusDisplay == "pending" && "text-gray-600"} ${statusDisplay == "rejected" && "text-red-700"} pt-[0.5em] md:pt-[0.2em]`}>Status: {statusDisplay.charAt(0).toUpperCase() + statusDisplay.slice(1)}</p>
+                        <p className={`text-[0.9rem] ${statusDisplay == "hired" && "text-green-700"} ${statusDisplay == "interview" && "text-blue-500"} ${statusDisplay == "pending" && "text-gray-600"} ${statusDisplay == "rejected" && "text-red-700"} pt-[0.5em] md:pt-[0.2em]`}>Status: {statusDisplay.charAt(0).toUpperCase() + statusDisplay.slice(1)}</p>
                     </div>
                 </div>
             </div>
