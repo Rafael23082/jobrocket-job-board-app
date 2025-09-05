@@ -7,7 +7,6 @@ A modern job board application for connecting job seekers with job opportunities
 - [Features](#features)
 - [Installation and configuration](#installation-and-configuration)
 - [API Endpoints](#api-endpoints)
-- [Security](#security)
 
 ## Features
 ### For candidates
@@ -26,7 +25,7 @@ A modern job board application for connecting job seekers with job opportunities
 - Recruiter dashboard with insights.
 
 ### System features
-- Secure authentication with access and refresh tokens.
+- Secure authentication with access and refresh tokens using JWT and cookies.
 - Auto login and logout handling.
 
 ## Installation and configuration
