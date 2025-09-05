@@ -52,9 +52,10 @@ function CandidateJobsPage(){
     }
 
     const {data: allJobs = [], refetch, isLoading} = useQuery({
-        queryKey: ["candidateJobsPage", category],
+        queryKey: ["candidateJobsPage", category, user?._id],
         queryFn: () => fetchJobs(),
-        keepPreviousData: true
+        keepPreviousData: true,
+        enabled: !!user?._id
     })
 
     return(
