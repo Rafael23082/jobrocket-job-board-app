@@ -10,7 +10,6 @@ A modern job board application for connecting job seekers with job opportunities
 - [Security](#security)
 
 ## Features
-
 ### For candidates
 
 ### For recruiters
