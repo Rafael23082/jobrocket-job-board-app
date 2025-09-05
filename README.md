@@ -5,7 +5,7 @@ A modern job board application for connecting job seekers with job opportunities
 ## Table of contents
 
 - [Features](#features)
-- [Installation](#installation)
+- [Installation and configuration](#installation-and-configuration)
 - [API Endpoints](#api-endpoints)
 - [Security](#security)
 
@@ -29,6 +29,9 @@ A modern job board application for connecting job seekers with job opportunities
 - Secure authentication with access and refresh tokens.
 - Auto login and logout handling.
 
-## Installation
-- Clone github repository.
-- 
+## Installation and configuration
+- git clone https://github.com/Rafael23082/jobrocket-job-board-app.git
+- cd client
+- npm install
+- cd ../server
+- npm install
