@@ -82,3 +82,8 @@ Create .env file in server root folder containing:
 | GET | `/api/applications/getJobApplicants/:jobID` | Get applicants for a job | ✅ |
 | PUT | `/api/applications/updateApplicationStatus/:userID/:jobID` | Update application status | ✅ |
 | GET | `/api/applications/getApplicationByUserIDAndJobID/:userID/:jobID` | Get specific application | ✅ |
+
+### Auth
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/api/auth/refresh` | Use refresh token to generate new access and refresh tokens | ✅ |
