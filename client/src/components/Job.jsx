@@ -65,20 +65,23 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
         }
     }
 
-    const getApplicationStatus = async() => {
-        if (applications){
+    const getApplicationStatus = async () => {
+        try {
             const res = await api.get(`/application/getApplicationByUserIDAndJobID/${user._id}/${job._id}`);
+            if (!res.data) return null;
             const application = res.data;
             return application.status.charAt(0).toUpperCase() + application.status.slice(1);
-        }else{
-            return "Undefined."
+        } catch (err) {
+            return null;
         }
-    }
+    };
 
-    const {data: status = "Loading..."} = useQuery({
-        queryKey: ["job", job],
+
+    const {data: status = "Loading...", refetch: refetchStatus} = useQuery({
+        queryKey: ["job", user?.id, job._id],
         queryFn: () => getApplicationStatus(),
-        keepPreviousData: true
+        keepPreviousData: true,
+        enabled: !!user?._id
     })
 
     return(
@@ -120,16 +123,26 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
                 </div>
                 <div className="flex pl-0 md:pl-[2em] mt-[1.2em] md:mt-0">
                     <button className="border border-[#3B82F6] text-[#3B82F6] px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold mr-[1em] cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition ease duration-[0.3s] whitespace-nowrap" onClick={() => {setJobOpened(job); setDetailsIsOpen(true)}}>Details</button>
-                    <button className={`text-white px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold ${status.toLowerCase() == "pending" && "bg-gray-600"} ${status.toLowerCase() == "rejected" && "bg-red-700"} ${status.toLowerCase() == "hired" && "bg-green-700"} ${status.toLowerCase() == "interview" && "bg-blue-500"} ${!applications && "bg-[#3B82F6] cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]"} whitespace-nowrap`} onClick={() => {
-                        if (listings){
-                            navigate(`/recruiter/edit-job/${job._id}`)
-                        }else if (!dashboard && !applications){
-                            setJobOpened(job); 
+                    <button
+                    className={`text-white px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold ${status?.toLowerCase() === "pending" && "bg-gray-600"} ${status?.toLowerCase() === "rejected" && "bg-red-700"}
+                        ${status?.toLowerCase() === "hired" && "bg-green-700"} ${status?.toLowerCase() === "interview" && "bg-blue-500"} ${!status && "bg-[#3B82F6] cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]"} whitespace-nowrap`}
+                    onClick={async() => {
+                        if (listings) {
+                        navigate(`/recruiter/edit-job/${job._id}`);
+                        } else if (!status) {
+                        if (!dashboard) {
+                            setJobOpened(job);
                             setApplyIsOpen(true);
-                        }else if (!applications && dashboard){
-                            handleApplyLoggedIn();
+                        } else {
+                            await handleApplyLoggedIn();
+                            refetchStatus();
                         }
-                    }}>{applications && `${status}`}{!applications && !listings && "Apply"}{listings && "Edit"}</button>
+                        }
+                    }}
+                    >
+                    {status ? status : (!listings ? "Apply" : "Edit")}
+                    </button>
+
                 </div>
                 {bookmarked && <FaBookmark size={18} className="hidden md:block cursor-pointer absolute top-0 right-0" color="#3B82F6" onClick={handleRemoveSavedJob} />} {!bookmarked && dashboard && <FaRegBookmark size={18} className="hidden md:block cursor-pointer absolute top-0 right-0" color="#3B82F6" onClick={handleSaveJob} />}
             </div>
