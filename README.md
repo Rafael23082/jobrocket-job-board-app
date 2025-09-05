@@ -8,3 +8,9 @@ A modern job board application for connecting job seekers with job opportunities
 - [Installation](#installation)
 - [API Endpoints](#api-endpoints)
 - [Security](#security)
+
+## Features
+
+### For candidates
+
+### For recruiters
