@@ -63,14 +63,14 @@ const signup = async(req, res) => {
 
         res.cookie("accessToken", accessToken, {
             httpOnly: true,
-            secure: false, /** secure: true if in production (false only for development only) */
+            secure: true, /** secure: true if in production (false only for development only) */
             sameSite: "none", /** sameSite: strict if in production (lax only for development only) (due to backend and frontend and backend running in different origin) */
             maxAge: 15 * 60 * 1000 /** 15 * 60 * 1000 */
         })
 
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
-            secure: false, /** secure: true if in production (false only for development only) */
+            secure: true, /** secure: true if in production (false only for development only) */
             sameSite: "none", /** sameSite: strict if in production (lax only for development only) (due to backend and frontend and backend running in different origin) */
             maxAge: 7 * 24 * 60 * 1000
         })
