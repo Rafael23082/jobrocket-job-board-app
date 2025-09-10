@@ -4,7 +4,7 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useEffect } from "react";
 
-function Pagination({data, field, isLoading, jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen, applyIsOpen, setApplyIsOpen, dashboard, refetch}){
+function Pagination({data, field, jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen, applyIsOpen, setApplyIsOpen, dashboard, refetch, isLoading}){
     const [page, setPage] = useState(1);
     const maxDisplayed = 5;
     const [maxPages, setMaxPages] = useState(0);
@@ -14,14 +14,15 @@ function Pagination({data, field, isLoading, jobOpened, setJobOpened, detailsIsO
     const endIndex = startIndex + maxDisplayed;
 
     useEffect(() => {
-        setMaxPages(Math.ceil(data.length / maxDisplayed));
-        setDisplayedJobs(data.slice(startIndex, endIndex));
-        if (data.length == 0){
-            setMaxPages(0);
-            setDisplayedJobs([]);
+        if (!isLoading){
+            setMaxPages(Math.ceil(data.length / maxDisplayed));
+            setDisplayedJobs(data.slice(startIndex, endIndex));
+            if (data.length == 0){
+                setMaxPages(0);
+                setDisplayedJobs([]);
+            }
         }
-        console.log(field)
-    }, [data, page]);
+    }, [data, page, isLoading]);
 
     const handleNext = () => {
         if (page < maxPages){
@@ -39,9 +40,15 @@ function Pagination({data, field, isLoading, jobOpened, setJobOpened, detailsIsO
             <div className={`items-center ${dashboard ? "hidden": "flex"}`}>
                 <p className="text-[1.4rem] sm:text-[1.5rem] lg:w-[60%] pt-[0.5em] py-[1em] font-bold grow">{field.charAt(0).toUpperCase() + field.slice(1)} Jobs</p>
             </div>
-            {displayedJobs.map((job, index) => (
+            {!isLoading && displayedJobs.map((job, index) => (
                 <div className="py-[1.5em] border-b border-gray-200" key={index}>
                     <Job data={data} job={job} seeMore={true} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} dashboard={dashboard} field={field} refetch={refetch} />
+                </div> 
+            ))}
+
+            {isLoading && [1, 2, 3].map((i, index) => (
+                <div className="py-[1.5em] border-b border-gray-200" key={index}>
+                    <Job seeMore={true} dashboard={dashboard} isLoading={true} />
                 </div> 
             ))}
             {data.length != 0 && (

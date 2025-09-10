@@ -49,11 +49,16 @@ function ApplicantsPage(){
                             <p className="text-sm">Back to jobs</p>
                         </span>
                         <div className={`${applicants.length == 0 ? "pt-0": "pt-5"}`}>
-                            {applicants?.map((applicant) => (
+                            {!isLoading && applicants?.map((applicant) => (
                                 <ApplicantCard applicant={applicant} jobID={jobID} refetch={refetch} />
+                            ))}
+
+                            {isLoading && [1, 2, 3].map((applicant) => (
+                                <ApplicantCard isLoading={true} />
                             ))}
                         </div>
                     </div>
+
                     {applicants.length == 0 && (
                         <div className="w-[100%] grow flex justify-center items-center flex-col gap-y-[1.5em] pb-[2em]">
                             <img className="w-[70px]" src="/magnifying-glass.png" />
@@ -62,19 +67,6 @@ function ApplicantsPage(){
                     )}
                 </div>
             </div>
-            {isLoading && (
-                <div className={`w-[100%] min-h-[100vh] flex absolute top-0 bg-white left-0 items-center z-0`}>
-                    <DashboardSideNavbar placeholder={true} />
-                    <div className="flex grow justify-center">
-                        <BarLoader
-                            color={"#3B82F6"}
-                            loading={isLoading}
-                            height={4}
-                            width={100}
-                        />
-                    </div>
-                </div>
-            )}
         </>
     )
 }

@@ -46,7 +46,7 @@ function JobsCategoryPage(){
         
         <section className="flex max-w-[1300px] mx-auto">
             <div className={`overflow-x-hidden w-[100%] padding-x px-10`}>
-                <Pagination data={allJobs} field={field} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} dashboard={false} />
+                <Pagination data={allJobs} field={field} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} dashboard={false} isLoading={isLoading} />
             </div>
         </section>
         {
@@ -59,19 +59,6 @@ function JobsCategoryPage(){
                 <ApplicationFormModal jobOpened={jobOpened} setJobOpened={setJobOpened} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} />
             )
         }
-        {isLoading && (
-            <div className={`w-[100%] min-h-[100vh] flex absolute top-0 bg-white left-0 items-center z-0`}>
-                <DashboardSideNavbar placeholder={true} />
-                <div className="flex grow justify-center">
-                    <BarLoader
-                        color={"#3B82F6"}
-                        loading={isLoading}
-                        height={4}
-                        width={100}
-                    />
-                </div>
-            </div>
-        )}
         </>
     )
 }

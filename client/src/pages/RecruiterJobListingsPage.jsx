@@ -64,26 +64,21 @@ function RecruiterJobListingsPage(){
                             </button>
                         </div>
                         <div className="my-[2em]">
-                            {allJobs.map((job, index) => (
+                            {!isLoading && allJobs.map((job, index) => (
                                 <div className="py-[1.5em] border-b border-gray-200" key={index}>
                                     <Job job={job} listings={true} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
                                 </div> 
+                            ))}
+
+                            {isLoading && [1, 2, 3].map((i, index) => (
+                                <div key={index} className="py-[1.5em] border-b border-gray-300">
+                                    <Job listings={true} isLoading={true} />
+                                </div>
                             ))}
                         </div>
                     </div>
                 </div>
             </div>
-            {isLoading && (
-                <div className={`w-[100%] h-[100vh] flex absolute top-0 bg-white left-0 justify-center items-center z-0`}>
-                    <DashboardSideNavbar placeholder={true} />
-                    <BarLoader
-                        color={"#3B82F6"}
-                        loading={isLoading}
-                        height={4}
-                        width={100}
-                    />
-                </div>
-            )}
             {
                 detailsIsOpen && (
                     <DescriptionSlideOverPanel jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />

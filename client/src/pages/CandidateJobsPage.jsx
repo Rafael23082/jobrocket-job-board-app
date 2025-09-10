@@ -72,13 +72,13 @@ function CandidateJobsPage(){
                             <p className="inline-block w-20 text-center cursor-pointer" onClick={() => setCategory("Applications")}>Applied</p>
                             <div className={`absolute top-5 h-[3px] w-20 bg-blue-500 mt-[0.7em] ${category == "All" && "translate-x-0"} ${category == "Saved" && "translate-x-full"} ${category == "Applications" && "translate-x-[200%]"} transition-all duration-300`}></div>
                         </div>
-                        <div className={`${allJobs.length == 0 ? "hidden": "flex"}`}>
+                        <div className={`${allJobs.length == 0 && !isLoading ? "hidden": "flex"}`}>
                             <div className={`border-box overflow-x-hidden w-[100%] padding-x px-10 pt-[0.5em]`}>
-                                <Pagination data={allJobs} field={category} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} dashboard={true} refetch={refetch} />
+                                <Pagination data={allJobs} field={category} jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} dashboard={true} refetch={refetch} isLoading={isLoading} />
                             </div>
                         </div>
                     </div>
-                    {allJobs.length == 0 && (
+                    {allJobs.length == 0 && !isLoading && (
                         <div className="w-[100%] grow flex justify-center items-center flex-col gap-y-[1.5em] pb-[2em]">
                             <img className="w-[70px]" src="/magnifying-glass.png" />
                             <p className="text-gray-500">No jobs to be displayed</p>
@@ -96,19 +96,6 @@ function CandidateJobsPage(){
                     <ApplicationFormModal jobOpened={jobOpened} setJobOpened={setJobOpened} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} />
                 )
             }
-            {isLoading && (
-                <div className={`w-[100%] min-h-[100vh] flex absolute top-0 bg-white left-0 items-center z-0`}>
-                    <DashboardSideNavbar placeholder={true} />
-                    <div className="flex grow justify-center">
-                        <BarLoader
-                            color={"#3B82F6"}
-                            loading={isLoading}
-                            height={4}
-                            width={100}
-                        />
-                    </div>
-                </div>
-            )}
         </>
     )
 }

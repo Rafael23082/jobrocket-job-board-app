@@ -8,11 +8,10 @@ import {toast} from "sonner";
 import { useQuery } from "@tanstack/react-query";
 import api from "../api/axios.js";
 
-function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen, applyIsOpen, setApplyIsOpen, dashboard, field, listings, refetch}){
-    const applications = field == "Applications";
+function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIsOpen, applyIsOpen, setApplyIsOpen, dashboard, field, listings, refetch, isLoading}){
     const saved = field == "Saved";
     const {user, setUser} = useContext(UserContext);
-    const bookmarked = dashboard && user?.savedJobs?.includes(job._id);
+    const bookmarked = dashboard && user?.savedJobs?.includes(job?._id);
     const navigate = useNavigate();
 
     const handleSaveJob = async() => {
@@ -77,14 +76,59 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
     };
 
 
-    const {data: status = "Loading...", refetch: refetchStatus} = useQuery({
-        queryKey: ["job", user?.id, job._id],
+    const {data: status, refetch: refetchStatus, isLoading: statusIsLoading} = useQuery({
+        queryKey: ["job", user?.id, job?._id],
         queryFn: () => getApplicationStatus(),
         keepPreviousData: true,
-        enabled: !!user?._id
+        enabled: !!user?._id && !!job?._id
     })
 
     return(
+        isLoading || statusIsLoading ? (
+            <div className="flex items-start md:items-center flex-col md:flex-row relative" style={{fontFamily: "'Roboto', sans-serif"}}>
+                <div className="grow">
+                    <div className="flex items-start md:items-center flex-col md:flex-row md:ml-0">
+                        <div className="w-[50px] h-[50px]  rounded-[10px] shrink-0 bg-gray-200 animate-pulse"></div>
+                        <div className="grow md:pl-[2em] pl-0">
+                            <div className="flex items-center md:mt-0 mt-[1em]">
+                                <span className="font-bold text-[1.1rem] flex items-center gap-x-[1em] bg-gray-200 text-gray-200 animate-pulse">placeholder</span>
+                            </div>
+                            {seeMore && <p className="text-[0.9rem] text-gray-200 mt-[0.5em] md:mt-[0.2em] bg-gray-200 text-gray-200 animate-pulse">placeholder</p>}
+                            <span className="text-[0.9rem] text-gray-200 mt-[0.5em] flex gap-x-[0.3em] flex-wrap">
+                                <p className="bg-gray-200 text-gray-200 animate-pulse">placeholder</p> 
+                                <p className="bg-gray-200 text-gray-200 animate-pulse">placeholder</p> 
+                                <p className="bg-gray-200 text-gray-200 animate-pulse">placeholder</p> 
+                                {seeMore || listings && <p className="bg-gray-200 text-gray-200 animate-pulse">placeholder</p>} 
+                                {seeMore || listings && <p className="bg-gray-200 text-gray-200 animate-pulse">placeholder</p>}
+                            </span>
+                            <div className="flex mt-[0.8em] md:mt-[0.6em] flex-wrap gap-x-[0.7em] gap-y-[0.5em]">
+                                {[1, 2, 3].map((i, index) => (
+                                    <div key={index} className={`bg-gray-200 text-gray-200 animate-pulse ${index != 0 && "ml-[1em]"} my-[0.3em] text-[0.7rem] rounded-[5px]`}>
+                                        <p>placeholder</p>
+                                    </div>
+                                ))}
+                                { seeMore || listings &&
+                                    <div className={`bg-gray-200 text-gray-200 animate-pulse mx-[0.5em] my-[0.3em] text-[0.7rem] rounded-[5px]`}>
+                                        <p>placeholder</p>
+                                    </div>
+                                }
+                            </div>
+                            {seeMore && <p className="bg-gray-200 text-gray-200 animate-pulse mt-[1em] text-[0.8rem]">placeholder</p>}
+                            {listings && (
+                                <div className="flex items-center flex-wrap gap-x-[1em] mt-[1em]">
+                                    <p className="text-[0.9rem] bg-gray-200 text-gray-200 animate-pulse">placeholder</p>
+                                    <p className="text-[0.9rem] bg-gray-200 text-gray-200 animate-pulse">placeholder</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+                <div className="flex pl-0 md:pl-[2em] mt-[1.2em] md:mt-0">
+                    <button className="bg-gray-200 text-gray-200 animate-pulse px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold mr-[1em] whitespace-nowrap">button</button>
+                    <button className="bg-gray-200 text-gray-200 animate-pulse px-[1.4em] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold whitespace-nowrap">button</button>
+                </div>
+            </div>
+        ): (
             <div className="flex items-start md:items-center flex-col md:flex-row relative" style={{fontFamily: "'Roboto', sans-serif"}}>
                 <div className="grow">
                     <div className="flex items-start md:items-center flex-col md:flex-row md:ml-0">
@@ -128,15 +172,15 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
                         ${status?.toLowerCase() === "hired" && "bg-green-700"} ${status?.toLowerCase() === "interview" && "bg-blue-500"} ${!status && "bg-[#3B82F6] cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]"} whitespace-nowrap`}
                     onClick={async() => {
                         if (listings) {
-                        navigate(`/recruiter/edit-job/${job._id}`);
+                            navigate(`/recruiter/edit-job/${job._id}`);
                         } else if (!status) {
-                        if (!dashboard) {
-                            setJobOpened(job);
-                            setApplyIsOpen(true);
-                        } else {
-                            await handleApplyLoggedIn();
-                            refetchStatus();
-                        }
+                            if (!dashboard) {
+                                setJobOpened(job);
+                                setApplyIsOpen(true);
+                            } else {
+                                await handleApplyLoggedIn();
+                                refetchStatus();
+                            }
                         }
                     }}
                     >
@@ -146,6 +190,7 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
                 </div>
                 {bookmarked && <FaBookmark size={18} className="hidden md:block cursor-pointer absolute top-0 right-0" color="#3B82F6" onClick={handleRemoveSavedJob} />} {!bookmarked && dashboard && <FaRegBookmark size={18} className="hidden md:block cursor-pointer absolute top-0 right-0" color="#3B82F6" onClick={handleSaveJob} />}
             </div>
+        )
     )
 }
 
