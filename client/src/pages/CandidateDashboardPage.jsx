@@ -28,19 +28,6 @@ function CandidateDashboardPage(){
 
     return(
         <> 
-            {isLoading && (
-                <div className={`w-[100%] min-h-[100vh] flex absolute top-0 bg-white left-0 items-center z-[9998]`}>
-                    <DashboardSideNavbar placeholder={true} />
-                    <div className="flex grow justify-center">
-                        <BarLoader
-                            color={"#3B82F6"}
-                            loading={isLoading}
-                            height={4}
-                            width={100}
-                        />
-                    </div>
-                </div>
-            )}
             <DashboardPageTemplate 
                 box1={"JOBS APPLIED"} Box1Icon={FaPaperPlane} box1Value={data?.applicationCount} box2={"JOBS SAVED"} Box2Icon={FaHeart} box2Value={data?.savedJobsCount} box3={"PROFILE PROGRESS"} Box3Icon={FaClock} 
                 box3Value={data?.profileProgress}
@@ -60,7 +47,7 @@ function CandidateDashboardPage(){
                     dataKey: "value",
                     nameKey: "name"
                 }}
-            /> 
+            isLoading={isLoading} /> 
         </>
     )   
 }
