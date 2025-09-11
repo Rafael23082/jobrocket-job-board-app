@@ -81,7 +81,9 @@ function RecruiterJobListingsPage(){
             </div>
             {
                 detailsIsOpen && (
-                    <DescriptionSlideOverPanel jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
+                    <>
+                        <DescriptionSlideOverPanel jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
+                    </>
                 )
             }
         </>

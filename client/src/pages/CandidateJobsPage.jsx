@@ -91,11 +91,6 @@ function CandidateJobsPage(){
                     <DescriptionSlideOverPanel jobOpened={jobOpened} setJobOpened={setJobOpened} detailsIsOpen={detailsIsOpen} setDetailsIsOpen={setDetailsIsOpen} />
                 )
             }
-            {
-                applyIsOpen && (
-                    <ApplicationFormModal jobOpened={jobOpened} setJobOpened={setJobOpened} applyIsOpen={applyIsOpen} setApplyIsOpen={setApplyIsOpen} />
-                )
-            }
         </>
     )
 }
