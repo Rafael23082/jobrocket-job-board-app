@@ -31,6 +31,7 @@ A modern job board application for connecting job seekers with job opportunities
 ## Installation and configuration
 ### Installation
 - git clone https://github.com/Rafael23082/jobrocket-job-board-app.git
+- cd jobrocket-job-board-app
 - cd client
 - npm install
 - cd ../server
