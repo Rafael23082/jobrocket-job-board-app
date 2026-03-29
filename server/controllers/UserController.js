@@ -77,6 +77,7 @@ const signup = async(req, res) => {
 
         return res.status(200).json({ user: userCreated });
     }catch(err){ 
+        console.log("SIGNUP ERROR:", err);
         return res.status(500).json({message: err.message});
     }
 }

@@ -28,7 +28,7 @@ function RecruiterDashboardPage(){
     return(
         <> 
             <DashboardPageTemplate 
-                box1={"JOBS POSTED"} Box1Icon={FaPaperPlane} box1Value={data?.jobPostedCount} box2={"TOTAL APPLICANTS"} Box2Icon={FaHeart} box2Value={data?.totalApplicants} box3={"APPLICATIONS PER JOB (AVG)"} Box3Icon={FaClock} box3Value={data?.applicantsPerJob}
+                box1={"JOBS POSTED"} Box1Icon={FaPaperPlane} box1Value={data?.jobPostedCount} box2={"TOTAL APPLICANTS"} Box2Icon={FaHeart} box2Value={data?.totalApplicants} box3={"APPLICATIONS PER JOB (AVG)"} Box3Icon={FaClock} box3Value={isNaN(data?.applicantsPerJob) ? 0: data?.applicantsPerJob}
                 lineChartInfo={{
                     title: "Applicants overtime",
                     dataset: data?.applicationOvertimeData,
