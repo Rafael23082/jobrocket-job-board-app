@@ -6,6 +6,8 @@ import api from "../api/axios.js";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext.jsx";
 import DropdownBox from "./DropdownBox.jsx";
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 
 function SignupLogin({heading, subheading, fields, button, alternative, alternative2, text, minheight, signup}){
     const [dropdownIndex, setDropdownIndex] = useState(null);
@@ -55,7 +57,14 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                         password: formValues["password"],
                         role: formValues["role"]
                     })
-                    setUser(res.data.user);
+                    const userObject = {
+                        name: res.data.user.name,
+                        email: res.data.user.email,
+                        _id: res.data.user._id,
+                        role: res.data.user.role
+                    }
+                    console.log("Object ", userObject);
+                    setUser(userObject);
                     navigate(`/${formValues["role"].toLowerCase()}/dashboard`)
                 }catch(err){
                     console.log(err);
@@ -67,13 +76,46 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                         email: formValues["email"],
                         password: formValues["password"]
                     })
-                    setUser(res.data.user);
+                    const userObject = {
+                        name: res.data.user.name,
+                        email: res.data.user.email,
+                        _id: res.data.user._id,
+                        role: res.data.user.role
+                    }
+                    console.log("Object ", userObject);
+                    setUser(userObject);
                     navigate(`/${res.data.user.role.toLowerCase()}/dashboard`)
                 }catch(err){
                     console.log(err.message);
                 }
             }
         }
+    }
+
+    const handleGoogleLogin = async(credentialResponse) => {
+        const decodedResponse = jwtDecode(credentialResponse);
+        const userDetails = {
+            name: decodedResponse.name,
+            email: decodedResponse.email
+        }
+        try{
+            const res = await api.post("/user/googleLogin", userDetails);
+            console.log(res?.data?.signup);
+            if (!res?.data?.signup){
+                const userObject = {
+                    name: res.data.user.name,
+                    email: res.data.user.email,
+                    _id: res.data.user._id,
+                    role: res.data.user.role
+                }
+                setUser(userObject);
+                navigate(`/${res.data.user.role.toLowerCase()}/dashboard`)
+            }
+            else navigate("/role-selection", {state: {userDetails: userDetails}});
+        }catch(err){
+            console.log(err);
+        }
+        console.log(decodedResponse);
     }
 
     return(
@@ -84,7 +126,14 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                 <div>
                     <p className="text-[1.5rem] font-bold text-blue-500">{heading}</p>
                     <p className="text-gray-600 text-[0.9rem]">{subheading}</p>
-                    <button className="w-[100%] border rounded-[5px] py-[0.6em] text-[0.9rem] mt-[1.5em] cursor-pointer bg-white hover:brightness-95 transition duration-[0.3s] ease"><span className="flex items-center justify-center"><img src="/google.png" className="w-[16px] mr-[0.7em]" />Continue with Google</span></button>
+                    <div className="mt-[1em] flex w-[100%] justify-center">
+                        <GoogleLogin
+                            onSuccess={credentialResponse => {handleGoogleLogin(credentialResponse.credential)}}
+                            onError={() => {
+                                console.log('Login Failed');
+                            }}
+                        />
+                    </div>
                     <span className="flex items-center justify-center my-[1em]"><div className="bg-gray-300 h-[1.4px] w-[140px]"></div><p className="px-[1em] text-gray-600">or</p><div className="bg-gray-300 h-[1.4px] w-[140px]"></div></span>
                     {fields.map((field, index) => (
                         field.type == "select" ? (

@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
 import Modal from "react-modal";
 import ScrollToTop from "./components/ScrollToTop.jsx";
-
 import Layout from "./components/Layout.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
 import CandidateOverviewPage from "./pages/CandidateOverviewPage.jsx";
@@ -26,6 +25,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "./context/UserContext.jsx";
 import { BarLoader } from "react-spinners";
+import RoleSelectionPage from "./pages/RoleSelectionPage.jsx";
 
 Modal.setAppElement("#root");
 
@@ -38,7 +38,13 @@ export default function App() {
         const handleAutoLogin = async() => {
             try{
                 let res = await api.post(`/user/autoLogin`);
-                setUser(res.data);
+                const userObject = {
+                    name: res.data.name,
+                    email: res.data.email,
+                    _id: res.data._id,
+                    role: res.data.role
+                }
+                setUser(userObject);
                 navigate(`/${res.data.role}/dashboard`);
             }catch(err){
                 console.log(err.response);
@@ -77,6 +83,7 @@ export default function App() {
             <Route path="/jobs/:field" element={<JobsCategoryPage />} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/role-selection" element={<RoleSelectionPage />} />
             <Route path="/candidate/jobs" element={<CandidateJobsPage />} />
             <Route path="/candidate/dashboard" element={<CandidateDashboardPage />} />
             <Route path="/recruiter/dashboard" element={<RecruiterDashboardPage />} />

@@ -11,5 +11,6 @@ userRoutes.post("/logout", verify, UserController.logout);
 userRoutes.post("/autoLogin", UserController.autoLogin);
 userRoutes.get("/fetchCandidateDashboardData/:userID", verify, UserController.fetchCandidateDashboardData)
 userRoutes.get("/fetchRecruiterDashboardData/:userID", verify, UserController.fetchRecruiterDashboardData)
+userRoutes.post("/googleLogin", UserController.googleLogin);
 
 export default userRoutes;

@@ -8,8 +8,7 @@ const schemaOptions = {
 const userSchema = new mongoose.Schema({
     role: {
         type: String,
-        enum: ["Candidate", "Recruiter", "Admin"],
-        required: true
+        enum: ["Candidate", "Recruiter", "Admin"]
     },
     name: {
         type: String,
@@ -21,8 +20,7 @@ const userSchema = new mongoose.Schema({
         unique: true
     },
     password: {
-        type: String,
-        required: true
+        type: String
     }
 }, schemaOptions)
 

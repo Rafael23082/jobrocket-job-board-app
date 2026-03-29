@@ -129,14 +129,14 @@ const autoLogin = async(req, res) => {
         const refreshToken = req.cookies.refreshToken;
 
         if (accessToken && refreshToken){
-            const payload = jwt.verify(accessToken, "mySecretKey");
-            jwt.verify(refreshToken, "myRefreshSecretKey");
+            const payload = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
             const user = await User.findById(payload.id);
             return res.status(200).json(user);
         }
 
         if (!accessToken && refreshToken){
-            const payload = jwt.verify(refreshToken, "myRefreshSecretKey");
+            const payload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
             const user = await User.findById(payload.id);
             
             const newPayload = {
@@ -405,4 +405,49 @@ const fetchRecruiterDashboardData = async(req, res) => {
     }
 }
 
-export default {getAllUsers, deleteAllUsers, signup, login, updateUserDetails, logout, autoLogin, deleteUserByID, fetchCandidateDashboardData, fetchRecruiterDashboardData};
+const googleLogin = async(req, res) => {
+    try{
+        const {name, email, role} = req.body;
+        let signup = true;
+        let user = await User.findOne({email: email});
+        
+        if (user) signup = false;
+        if (!user && !role) return res.status(200).json({message: "To be continued later.", signup: true});
+
+        if (!user){
+            user = await User.create({
+                name: name,
+                email: email,
+                role: role
+            })
+        }
+
+        const payload = {
+            id: user._id,
+            role: user.role
+        }
+
+        const accessToken = generateAccessToken(payload);
+        const refreshToken = generateRefreshToken(payload);
+
+        res.cookie("accessToken", accessToken, {
+            httpOnly: true,
+            secure: true, /** secure: true if in production (false only for development only) */
+            sameSite: "none", /** sameSite: lax if in production (none only for development only) (due to backend and frontend and backend running in different origin) */
+            maxAge: 15 * 60 * 1000 /** 15 * 60 * 1000 */
+        })
+
+        res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            secure: true, /** secure: true if in production (false only for development only) */
+            sameSite: "none", /** sameSite: lax if in production (none only for development only) (due to backend and frontend and backend running in different origin) */
+            maxAge: 7 * 24 * 60 * 60 * 1000
+        })
+
+        return res.status(200).json({user: user, signup: signup});
+    }catch(err){
+        return res.status(500).json(err.message);
+    }
+}
+
+export default {getAllUsers, deleteAllUsers, signup, login, updateUserDetails, logout, autoLogin, deleteUserByID, fetchCandidateDashboardData, fetchRecruiterDashboardData, googleLogin};
