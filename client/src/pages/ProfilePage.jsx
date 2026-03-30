@@ -11,11 +11,9 @@ import DashboardNavbar from "../components/DashboardNavbar.jsx";
 function ProfilePage(){
     const {user, setUser} = useContext(UserContext);
     const navigate = useNavigate();
-
     const [formValues, setFormValues] = useState({});
     const [initialValues, setInitialValues] = useState({});
     const [errors, setErrors] = useState({}); 
-
     const {role} = useParams();
     const candidate = role.toLowerCase() == "candidate";
     const [menuOpen, setMenuOpen] = useState(false);
@@ -133,7 +131,7 @@ function ProfilePage(){
 
     return(
         <>
-        <DashboardSideNavbar current={"Settings"} />
+        <DashboardSideNavbar current={"Settings"} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         <div className="flex bg-[#fffcfc] overflow-hidden" style={{fontFamily: "'Roboto', sans-serif"}}>
             <DashboardSideNavbar placeholder={true} />
             <div className="flex-1 h-fit flex flex-col">

@@ -53,7 +53,7 @@ function RecruiterJobListingsPage(){
             <DashboardSideNavbar current={"Job Listings"} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
             <div className="flex bg-[#fffcfc] overflow-hidden" style={{fontFamily: "'Roboto', sans-serif"}}>
                 <DashboardSideNavbar placeholder={true} />
-                <div className="flex-1 h-fit flex flex-col">
+                <div className={`flex-1 ${allJobs.length == 0 ? "min-h-screen": "h-fit"} flex flex-col`}>
                     <DashboardNavbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
                     <div className="padding-x px-10 my-[2em]">
                         <div className="flex flex-wrap justify-between items-center mt-5 gap-y-[1em]">
@@ -77,6 +77,12 @@ function RecruiterJobListingsPage(){
                             ))}
                         </div>
                     </div>
+                    {allJobs.length == 0 && !isLoading && (
+                        <div className="w-[100%] grow flex justify-center items-center flex-col gap-y-[1.5em] pb-[2em]">
+                            <img className="w-[70px]" src="/magnifying-glass.png" />
+                            <p className="text-gray-500">No jobs to be displayed</p>
+                        </div>
+                    )}
                 </div>
             </div>
             {

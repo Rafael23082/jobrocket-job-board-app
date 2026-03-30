@@ -25,7 +25,7 @@ function DashboardPageTemplate({box1, Box1Icon, box1Value, box2, Box2Icon, box2V
         <div className="flex bg-[#fffcfc]" style={{fontFamily: "'Roboto', sans-serif"}}>
             <DashboardSideNavbar placeholder={true} />
             <div className="flex-1 h-fit flex flex-col pb-[3em]">
-                <DashboardNavbar />
+                <DashboardNavbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
                 <div className="pt-[2em] bg-blue-500 border-t border-white border-t-[0.1px]">
                     <p className="text-white pl-5 text-[1.25rem] font-medium">Dashboard</p>
                     <div className="flex px-5 gap-4 flex-col md:flex-row mt-5">
