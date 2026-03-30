@@ -35,7 +35,7 @@ function DashboardPageTemplate({box1, Box1Icon, box1Value, box2, Box2Icon, box2V
                     </div>
                 </div>
 
-                <div className="px-5 pt-[3em] flex gap-[2em] relative flex-col">
+                <div className="px-5 flex gap-[2em] relative flex-col">
                     <div className="absolute top-0 left-0 h-[130px] bg-blue-500 w-[100%] z-0"></div>
                     <div className="flex pt-[2em] gap-[2em] flex-col lg:flex-row w-[100%]">
                         {isLoading ? (
