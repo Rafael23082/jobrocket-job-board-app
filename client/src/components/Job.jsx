@@ -159,7 +159,7 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
                             {listings && (
                                 <div className="flex items-center flex-wrap gap-x-[1em] pt-[1em]">
                                     <p className="text-[0.9rem]">👥 {job.applications} Applicants</p>
-                                    <p className="text-[0.9rem] cursor-pointer text-blue-500 hover:underline" onClick={() => navigate(`/recruiter/applicants/${job?._id}`)}>[👁 View Applicants]</p>
+                                    <p className="text-[0.9rem] cursor-pointer text-blue-500 hover:underline" onClick={() => navigate(`/dashboard/applicants/${job?._id}`)}>[👁 View Applicants]</p>
                                 </div>
                             )}
                         </div>
@@ -172,7 +172,7 @@ function Job({job, seeMore, jobOpened, setJobOpened, detailsIsOpen, setDetailsIs
                         ${status?.toLowerCase() === "hired" && "bg-green-700"} ${status?.toLowerCase() === "interview" && "bg-blue-500"} ${!status && "bg-[#3B82F6] cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]"} whitespace-nowrap`}
                     onClick={async() => {
                         if (listings) {
-                            navigate(`/recruiter/edit-job/${job._id}`);
+                            navigate(`/dashboard/edit-job/${job._id}`);
                         } else if (!status) {
                             if (!dashboard) {
                                 setJobOpened(job);

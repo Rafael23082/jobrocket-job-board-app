@@ -63,9 +63,16 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                         _id: res.data.user._id,
                         role: res.data.user.role
                     }
+                    if (res.data.user.role.toLowerCase() == "candidate"){
+                        userObject.savedJobs = res?.data?.user?.savedJobs ?? [];
+                        userObject.location = res?.data?.user?.location ?? "";
+                        userObject.additionalInformation = res?.data?.user?.additionalInformation ?? "";
+                        userObject.resume = res?.data?.user?.resume ?? "";
+                        userObject.resumeName = res?.data?.user?.resumeName ?? "";
+                    }
                     console.log("Object ", userObject);
                     setUser(userObject);
-                    navigate(`/${formValues["role"].toLowerCase()}/dashboard`)
+                    navigate(`/dashboard`)
                 }catch(err){
                     console.log(err);
                 }
@@ -82,9 +89,16 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                         _id: res.data.user._id,
                         role: res.data.user.role
                     }
+                    if (res.data.user.role.toLowerCase() == "candidate"){
+                        userObject.savedJobs = res?.data?.user?.savedJobs ?? [];
+                        userObject.location = res?.data?.user?.location ?? "";
+                        userObject.additionalInformation = res?.data?.user?.additionalInformation ?? "";
+                        userObject.resume = res?.data?.user?.resume ?? "";
+                        userObject.resumeName = res?.data?.user?.resumeName ?? "";
+                    }
                     console.log("Object ", userObject);
                     setUser(userObject);
-                    navigate(`/${res.data.user.role.toLowerCase()}/dashboard`)
+                    navigate(`/dashboard`)
                 }catch(err){
                     console.log(err.message);
                 }
@@ -108,8 +122,15 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                     _id: res.data.user._id,
                     role: res.data.user.role
                 }
+                if (res.data.user.role.toLowerCase() == "candidate"){
+                    userObject.savedJobs = res?.data?.user?.savedJobs ?? [];
+                    userObject.location = res?.data?.user?.location ?? "";
+                    userObject.additionalInformation = res?.data?.user?.additionalInformation ?? "";
+                    userObject.resume = res?.data?.user?.resume ?? "";
+                    userObject.resumeName = res?.data?.user?.resumeName ?? "";
+                }
                 setUser(userObject);
-                navigate(`/${res.data.user.role.toLowerCase()}/dashboard`)
+                navigate(`/dashboard`)
             }
             else navigate("/role-selection", {state: {userDetails: userDetails}});
         }catch(err){

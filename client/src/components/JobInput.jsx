@@ -170,7 +170,7 @@ function JobInput({formValues, setFormValues, initialValues, setInitialValues, b
                 <div className={`h-fit flex-1 flex flex-col`}>
                     <DashboardNavbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
                     <div className="px-10 padding-x my-[2em]">
-                        <span className="flex cursor-pointer hover:underline items-center gap-x-[0.4em] text-blue-500" onClick={() => navigate("/recruiter/job-listings")}>
+                        <span className="flex cursor-pointer hover:underline items-center gap-x-[0.4em] text-blue-500" onClick={() => navigate("/dashboard/job-listings")}>
                             <HiArrowLongLeft color="#3B82F6" />
                             <p className="text-sm">Back to jobs</p>
                         </span>

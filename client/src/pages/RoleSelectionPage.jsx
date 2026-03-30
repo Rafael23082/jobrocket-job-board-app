@@ -20,7 +20,7 @@ function RoleSelectionPage(){
                 role: res.data.user.role
             }
             setUser(userObject);
-            navigate(`/${res.data.user.role.toLowerCase()}/dashboard`)
+            navigate(`/dashboard`)
         }catch(err){
             console.log(err);
         }

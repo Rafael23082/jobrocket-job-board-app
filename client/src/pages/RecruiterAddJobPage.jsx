@@ -37,7 +37,7 @@ function RecruiterAddJobPage(){
         toast.success("Job successfully added.", {
             description: `${formValues["role"]} job added.`
         })
-        navigate("/recruiter/job-listings")
+        navigate("/dashboard/job-listings")
     }
 
     useEffect(() => {

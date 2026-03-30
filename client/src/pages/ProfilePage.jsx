@@ -15,7 +15,6 @@ function ProfilePage(){
     const [initialValues, setInitialValues] = useState({});
     const [errors, setErrors] = useState({}); 
     const {role} = useParams();
-    const candidate = role.toLowerCase() == "candidate";
     const [menuOpen, setMenuOpen] = useState(false);
 
     const convertToBase64 = (file) => {
@@ -33,7 +32,7 @@ function ProfilePage(){
         const resumeLink = await convertToBase64(file);
         console.log(resumeLink);
         setFormValues((prev) => ({
-            ...prev, ["resume"]: resumeLink, ["resumeName"]: file.name
+            ...prev, resume: resumeLink, resumeName: file.name
         }))
     }
 
@@ -49,7 +48,7 @@ function ProfilePage(){
             role: user?.role ?? ""
         }
 
-        if (role.toLowerCase() == "candidate"){
+        if (user?.role?.toLowerCase() == "candidate"){
             values.location = user?.location ?? "";
             values.additionalInformation = user?.additionalInformation ?? "";
             values.resume = user?.resume ?? "";
@@ -70,8 +69,9 @@ function ProfilePage(){
         }
 
         if (Object.keys(errors).length == 0){
-            if (role?.toLowerCase() == "candidate"){
-                const res = await api.put(`/user/updateUserDetails/${user._id}`, {
+            let res;
+            if (user?.role?.toLowerCase() == "candidate"){
+                res = await api.put(`/user/updateUserDetails/${user._id}`, {
                     name: formValues["name"],
                     email: formValues["email"],
                     location: formValues["location"],
@@ -79,16 +79,27 @@ function ProfilePage(){
                     resume: formValues["resume"],
                     resumeName: formValues["resumeName"]
                 })
-                setInitialValues(formValues);
-                setUser(res.data);
             }else{
-                const res = await api.put(`/user/updateUserDetails/${user._id}`, {
+                res = await api.put(`/user/updateUserDetails/${user._id}`, {
                     name: formValues["name"],
                     email: formValues["email"]
                 })
-                setInitialValues(formValues);
-                setUser(res.data);
             }
+            setInitialValues(formValues);
+            const userObject = {
+                name: res.data.user.name,
+                email: res.data.user.email,
+                _id: res.data.user._id,
+                role: res.data.user.role
+            }
+            if (res.data.user.role.toLowerCase() == "candidate"){
+                userObject.savedJobs = res?.data?.user?.savedJobs ?? [];
+                userObject.location = res?.data?.user?.location ?? "";
+                userObject.additionalInformation = res?.data?.user?.additionalInformation ?? "";
+                userObject.resume = res?.data?.user?.resume ?? "";
+                userObject.resumeName = res?.data?.user?.resumeName ?? "";
+            }
+            setUser(userObject);
         }
         setErrors(errors);
     }
@@ -110,7 +121,7 @@ function ProfilePage(){
         placeholder: "Role"
     }];
     
-    if (candidate){
+    if (user?.role?.toLowerCase() == "candidate"){
         fields.push({
             key: "location",
             name: "Location",
@@ -185,7 +196,7 @@ function ProfilePage(){
                                         )}
                                     </label>
                                     <input type="file" id="resume" accept=".doc,.docx,.txt" className="hidden"
-                                    onChange={(e) => {handleFileUpload(e)}}
+                                        onChange={(e) => {handleFileUpload(e)}}
                                     />
                                 </div>
                             );

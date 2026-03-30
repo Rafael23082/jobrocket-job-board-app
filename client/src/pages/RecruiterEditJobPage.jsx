@@ -30,7 +30,7 @@ function RecruiterEditJobPage(){
         toast.success("Job successfully updated.", {
             description: `${formValues["role"]} job details updated.`
         })
-        navigate("/recruiter/job-listings")
+        navigate("/dashboard/job-listings")
     }
 
     const fetchJob = async() => {

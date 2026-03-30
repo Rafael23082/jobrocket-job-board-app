@@ -178,12 +178,12 @@ const updateUserDetails = async(req, res) => {
         let result;
 
         const user = await User.findById(userID);
-        if (user.role == "Candidate"){
+        if (user.role.toLowerCase() == "candidate"){
             result = await Candidate.findByIdAndUpdate(userID, req.body, {new: true});
         }else{
             result = await Recruiter.findByIdAndUpdate(userID, req.body, {new: true});
         }
-        return res.status(200).json(result);
+        return res.status(200).json({user: result});
     }catch(err){
         return res.status(500).json({message: err.message});
     }
