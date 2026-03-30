@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { IoMdMenu } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -8,9 +8,18 @@ function Navbar(){
     const navigate = useNavigate();
     const location = useLocation();
     const current = location.pathname;
+    const navbarRef = useRef(null);
+    const [navbarHeight, setNavbarHeight] = useState(0);
+
+    useEffect(() => {
+        if (navbarRef?.current){
+            setNavbarHeight(navbarRef.current.offsetHeight);
+        }
+    }, [])
+
     return(
         <>
-            <div className="flex w-[100%] bg-white font-medium justify-between items-center py-[1em] relative z-10" style={{fontFamily: "'Roboto', sans-serif"}}>
+            <div className="flex w-[100%] bg-white font-medium justify-between items-center py-[1em] relative z-10" style={{fontFamily: "'Roboto', sans-serif"}} ref={navbarRef}>
                 <p className="text-[2rem] font-bold text-[#3B82F6] pl-10 select-none padding-left" style={{fontFamily: "'Raleway', sans-serif"}}>JobRocket</p>
                 <div className="text-[0.9rem] hidden lg:flex text-[#1F2937]">
                     <p className={`cursor-pointer ${current == "/" ? "text-[#3B82F6]": "text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease"}`} onClick={() => {navigate("/")}}>Home</p>
@@ -40,14 +49,16 @@ function Navbar(){
                 ): (
                     <IoMdMenu size={30} className="block lg:hidden cursor-pointer mr-10 margin-right" color="#3B82F6" onClick={() => {setMenuOpen(!menuOpen)}} />
                 )}
-                <div className={`${menuOpen ? "max-h-[500px]": "max-h-0"} transition-height duration-300 ease absolute w-[100%] bg-white top-[100%] z-20 lg:hidden select-none overflow-hidden`}>
-                    <div className="py-[0.5em] pt-[1em] pl-10 padding-left cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease" onClick={() => {navigate("/")}}>Home</div>
-                    <div className="py-[0.5em] pl-10 padding-left cursor-pointer text-[1.2rem]">For Candidates</div>
-                    <div className="py-[0.5em] pl-20 padding-left-v2 cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease" onClick={() => {navigate("/candidate-overview")}}>Overview</div>
-                    <div className="py-[0.5em] pl-20 padding-left-v2 cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease" onClick={() => {navigate("/jobs")}}>Jobs</div>
-                    <div className="py-[0.5em] pl-10 padding-left cursor-pointer text-[1.2rem]">For Recruiters</div>
-                    <div className="py-[0.5em] pl-20 padding-left-v2 cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease" onClick={() => {navigate("/recruiter-overview")}}>Overview</div>
-                    <div className="py-[0.5em] pl-20 padding-left-v2 cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease" onClick={() => {navigate("/pricing")}}>Pricing</div>
+                <div className={`${menuOpen ? `h-[calc(100vh-${navbarHeight}px)]`: "h-0"} transition-height duration-300 ease absolute w-[100%] bg-white top-[100%] z-20 lg:hidden select-none overflow-hidden flex flex-col justify-between`}>
+                    <div>
+                        <div className="py-[0.5em] pt-[1em] pl-10 padding-left cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease" onClick={() => {navigate("/")}}>Home</div>
+                        <div className="py-[0.5em] pl-10 padding-left cursor-pointer text-[1.2rem]">For Candidates</div>
+                        <div className="py-[0.5em] pl-20 padding-left-v2 cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease" onClick={() => {navigate("/candidate-overview")}}>Overview</div>
+                        <div className="py-[0.5em] pl-20 padding-left-v2 cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease" onClick={() => {navigate("/jobs")}}>Jobs</div>
+                        <div className="py-[0.5em] pl-10 padding-left cursor-pointer text-[1.2rem]">For Recruiters</div>
+                        <div className="py-[0.5em] pl-20 padding-left-v2 cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease" onClick={() => {navigate("/recruiter-overview")}}>Overview</div>
+                        <div className="py-[0.5em] pl-20 padding-left-v2 cursor-pointer text-[#1F2937] hover:text-[#3B82F6] transition duration-[0.3s] ease" onClick={() => {navigate("/pricing")}}>Pricing</div>
+                    </div>
                     <div className="flex px-10 padding-x py-[0.5em] pb-[2em]">
                         <button className="border border-[#3B82F6] text-[#3B82F6] w-[50%] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-50 hover:text-blue-600 transition ease duration-[0.3s]">Log In</button>
                         <button className="ml-[1em] bg-[#3B82F6] text-white w-[50%] py-[0.6em] rounded-[10px] text-[0.88rem] font-semibold cursor-pointer hover:bg-blue-600 transition ease duration-[0.3s]">Sign Up</button>
