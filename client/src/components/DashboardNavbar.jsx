@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext.jsx";
 import { IoMdMenu } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
@@ -18,6 +18,28 @@ function DashboardNavbar({menuOpen, setMenuOpen}){
         navigate("/");
         await api.post(`/user/logout`, {})
     }
+
+    useEffect(() => {
+        if (menuOpen){
+            document.body.style.overflow = "hidden";
+        } else document.body.style.overflow = "auto";
+
+        return () => {
+            document.body.style.overflow = "auto";
+        }
+    }, [menuOpen])
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 1024) {
+                setMenuOpen(false);
+            }
+        };
+        window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
 
     return(
         <div className="bg-blue-500 py-[1.2em] flex items-center justify-between px-5 w-[100%] z-10">

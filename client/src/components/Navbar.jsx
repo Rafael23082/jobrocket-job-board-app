@@ -17,6 +17,28 @@ function Navbar(){
         }
     }, [])
 
+    useEffect(() => {
+        if (menuOpen){
+            document.body.style.overflow = "hidden";
+        } else document.body.style.overflow = "auto";
+
+        return () => {
+            document.body.style.overflow = "auto";
+        }
+    }, [menuOpen])
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 1024) {
+                setMenuOpen(false);
+            }
+        };
+        window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
     return(
         <>
             <div className="flex w-[100%] bg-white font-medium justify-between items-center py-[1em] relative z-10" style={{fontFamily: "'Roboto', sans-serif"}} ref={navbarRef}>
