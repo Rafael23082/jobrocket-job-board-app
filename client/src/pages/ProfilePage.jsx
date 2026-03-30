@@ -43,27 +43,23 @@ function ProfilePage(){
         if (!user){
             navigate("/login");
         }
+        console.log("User: ", user);
+
+        let values = {
+            name: user?.name ?? "",
+            email: user?.email ?? "",
+            role: user?.role ?? ""
+        }
 
         if (role.toLowerCase() == "candidate"){
-            let values = {
-                ["name"]: user?.name ?? "",
-                ["email"]: user?.email ?? "",
-                ["location"]: user?.location ?? "",
-                ["additionalInformation"]: user?.additionalInformation ?? "",
-                ["resume"]: user?.resume ?? "",
-                ["resumeName"]: user?.resumeName ?? ""  
-            }
-
-            setFormValues(values);
-            setInitialValues(values);
-        }else{
-            let values = {
-                ["name"]: user?.name ?? "",
-                ["email"]: user?.email ?? ""        
-            }
-            setFormValues(values);
-            setInitialValues(values);
+            values.location = user?.location ?? "";
+            values.additionalInformation = user?.additionalInformation ?? "";
+            values.resume = user?.resume ?? "";
+            values.resumeName = user?.resumeName ?? "";
         }
+
+        setInitialValues(values);
+        setFormValues(values);
     }, [user])
 
     const buttonsDisplayed = JSON.stringify(formValues) != JSON.stringify(initialValues);
@@ -99,47 +95,40 @@ function ProfilePage(){
         setErrors(errors);
     }
 
-    let fields;
+    let fields = [{
+        key: "name",
+        name: "Full Name",
+        type: "text",
+        placeholder: "Your full name"
+    }, {
+        key: "email",
+        name: "Email",
+        type: "text",
+        placeholder: "Email"
+    }, {
+        key: "role",
+        name: "Role",
+        type: "text",
+        placeholder: "Role"
+    }];
     
     if (candidate){
-        fields = [{
-                key: "name",
-                name: "Full Name",
-                type: "text",
-                placeholder: "Your full name"
-            }, {
-                key: "email",
-                name: "Email",
-                type: "text",
-                placeholder: "Email"
-            }, {
-                key: "location",
-                name: "Location",
-                type: "text",
-                placeholder: "Location"
-            }, {
-                key: "additionalInformation",
-                name: "Additional Information",
-                type: "textarea",
-                placeholder: "Summary"
-            }, {
-                key: "resume",
-                name: "Upload your resume",
-                type: "file",
-                placeholder: ""
-            }]
-    }else{
-        fields = [{
-                key: "name",
-                name: "Full Name",
-                type: "text",
-                placeholder: "Your full name"
-            }, {
-                key: "email",
-                name: "Email",
-                type: "text",
-                placeholder: "Email"
-            }]   
+        fields.push({
+            key: "location",
+            name: "Location",
+            type: "text",
+            placeholder: "Location"            
+        }, {
+            key: "additionalInformation",
+            name: "Additional Information",
+            type: "textarea",
+            placeholder: "Summary"            
+        }, {
+            key: "resume",
+            name: "Upload your resume",
+            type: "file",
+            placeholder: ""            
+        })
     }
 
     return(
@@ -160,12 +149,13 @@ function ProfilePage(){
                             return(
                                 <div className="pt-[1em]" key={index}>
                                     <p className="text-gray-500 font-medium text-[0.875rem]">{field.name}</p>
-                                    <input type={field.type} className="px-[1em] mt-[0.4em] border py-[0.3em] w-[100%] rounded-[5px]" placeholder={field.placeholder} value={formValues[field.key] ?? ""}
+                                    <input type={field.type} className={`px-[1em] mt-[0.4em] border py-[0.3em] w-[100%] rounded-[5px] ${(field.key == "email" || field.key == "role") && "bg-gray-100 text-gray-500"}`} placeholder={field.placeholder} value={formValues[field.key] ?? ""}
                                     onChange={(e) => {
                                         setFormValues((prev) => ({
                                             ...prev, [field.key]: e.target.value
                                         }))
                                     }}
+                                    disabled={field.key == "email" || field.key == "role"}
                                     />
                                     {errors[field.key] && (
                                         <span className="text-red-500 text-[0.75rem] pt-[0.5em] flex items-center gap-x-[5px]"><IoIosWarning />{errors[field.name]}</span>
