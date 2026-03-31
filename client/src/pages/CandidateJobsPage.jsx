@@ -24,16 +24,12 @@ function CandidateJobsPage(){
 
     const navigate = useNavigate();
     useEffect(() => {
-        if (!user){
-            navigate("/login");
-        }
-
         if (detailsIsOpen || applyIsOpen){
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "auto";
         }
-    }, [user, detailsIsOpen, applyIsOpen])
+    }, [detailsIsOpen, applyIsOpen])
     
     const fetchJobs = async() => {
         let res;

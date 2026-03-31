@@ -37,11 +37,6 @@ function ProfilePage(){
     }
 
     useEffect(() => {
-        if (!user){
-            navigate("/login");
-        }
-        console.log("User: ", user);
-
         let values = {
             name: user?.name ?? "",
             email: user?.email ?? "",

@@ -18,12 +18,6 @@ function ApplicantsPage(){
     const {user} = useContext(UserContext);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!user){
-            navigate("/login");
-        }
-    }, [user])
-
     const fetchApplicants = async() => {
         let res = await api.get(`/application/getJobApplicants/${jobID}`);
         return res.data;

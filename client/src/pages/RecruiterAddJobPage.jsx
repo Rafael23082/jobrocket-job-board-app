@@ -12,12 +12,6 @@ function RecruiterAddJobPage(){
     const {user} = useContext(UserContext);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!user){
-            navigate("/login");
-        }
-    }, [user])
-
     const backendAction = async() => {
         await api.post(`/job/addJob`, {
             role: formValues["role"],

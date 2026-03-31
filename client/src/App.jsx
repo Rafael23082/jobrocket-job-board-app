@@ -11,8 +11,6 @@ import JobsPage from "./pages/JobsPage.jsx";
 import JobsCategoryPage from "./pages/JobsCategoryPage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
-import RecruiterDashboardPage from "./pages/RecruiterDashboardPage.jsx";
-import CandidateDashboardPage from "./pages/CandidateDashboardPage.jsx";
 import CandidateJobsPage from "./pages/CandidateJobsPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import RecruiterJobListingsPage from "./pages/RecruiterJobListingsPage.jsx";
@@ -27,12 +25,13 @@ import { UserContext } from "./context/UserContext.jsx";
 import { BarLoader } from "react-spinners";
 import RoleSelectionPage from "./pages/RoleSelectionPage.jsx";
 import DashboardRouter from "./routes/DashboardRouter.jsx";
+import PrivateRoutes from "./routes/PrivateRoutes.jsx";
 
 Modal.setAppElement("#root");
 
 export default function App() {
     const navigate = useNavigate();
-    const {user, setUser} = useContext(UserContext);
+    const {user, setUser, isLoading, setIsLoading} = useContext(UserContext);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -53,10 +52,10 @@ export default function App() {
                     userObject.resumeName = res?.data?.resumeName ?? "";
                 }
                 setUser(userObject);
-                navigate(`/dashboard`);
             }catch(err){
                 console.log(err.response);
             }finally{
+                setIsLoading(false);
                 setLoading(false);
             }
         }
@@ -92,13 +91,15 @@ export default function App() {
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/role-selection" element={<RoleSelectionPage />} />
-            <Route path="/dashboard/jobs" element={<CandidateJobsPage />} />
-            <Route path="/dashboard" element={<DashboardRouter />} />
-            <Route path="/dashboard/profile" element={<ProfilePage />} />
-            <Route path="/dashboard/job-listings" element={<RecruiterJobListingsPage />} />
-            <Route path="/dashboard/edit-job/:jobID" element={<RecruiterEditJobPage />} />
-            <Route path="/dashboard/applicants/:jobID" element={<ApplicantsPage />} />
-            <Route path="/dashboard/add-job" element={<RecruiterAddJobPage />} />
+            <Route element={<PrivateRoutes />}>
+                <Route path="/dashboard/jobs" element={<CandidateJobsPage />} />
+                <Route path="/dashboard" element={<DashboardRouter />} />
+                <Route path="/dashboard/profile" element={<ProfilePage />} />
+                <Route path="/dashboard/job-listings" element={<RecruiterJobListingsPage />} />
+                <Route path="/dashboard/edit-job/:jobID" element={<RecruiterEditJobPage />} />
+                <Route path="/dashboard/applicants/:jobID" element={<ApplicantsPage />} />
+                <Route path="/dashboard/add-job" element={<RecruiterAddJobPage />} />
+            </Route>
         </Routes>
     </>
   );

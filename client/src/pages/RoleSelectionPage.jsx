@@ -5,7 +5,7 @@ import api from "../api/axios";
 
 function RoleSelectionPage(){
     const navigate = useNavigate();
-    const {user, setUser} = useContext(UserContext);
+    const {user, setUser, setIsLoading} = useContext(UserContext);
     const location = useLocation();
     const {userDetails} = location.state || {};
 
@@ -23,6 +23,8 @@ function RoleSelectionPage(){
             navigate(`/dashboard`)
         }catch(err){
             console.log(err);
+        }finally{
+            setIsLoading(false);
         }
     }
 

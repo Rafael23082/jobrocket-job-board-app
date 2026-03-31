@@ -10,13 +10,7 @@ import DashboardNavbar from "./DashboardNavbar.jsx";
 function DashboardPageTemplate({box1, Box1Icon, box1Value, box2, Box2Icon, box2Value, box3, Box3Icon, box3Value, lineChartInfo, barChartInfo, pieChartInfo, isLoading}){
     const [menuOpen, setMenuOpen] = useState(false);
     const {user} = useContext(UserContext);
-    const navigate = useNavigate();
-    useEffect(() => {
-        if (!user){
-            navigate("/login");
-        }
-    }, [user])
-
+    
     const COLORS = ["#8884d8", "#82ca9d", "#ffc658"];
 
     return(

@@ -21,12 +21,6 @@ function JobInput({formValues, setFormValues, initialValues, setInitialValues, b
     const [dropdownIndex, setDropdownIndex] = useState(null);
     const [errors, setErrors] = useState({});
 
-    useEffect(() => {
-        if (!user){
-            navigate("/login");
-        }
-    }, [user])
-
     const handleSave = async() => {
         let newErrors = {};
 

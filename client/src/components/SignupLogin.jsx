@@ -21,7 +21,7 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
     }, {}))
     const navigate = useNavigate();
     const [errors, setErrors] = useState({}); 
-    const {user, setUser} = useContext(UserContext);
+    const {user, setUser, setIsLoading} = useContext(UserContext);
 
     const handleSubmit = async() => {
         let newErrors = {}
@@ -75,6 +75,8 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                     navigate(`/dashboard`)
                 }catch(err){
                     console.log(err);
+                }finally{
+                    setIsLoading(false);
                 }
             }
             else if(!signup){
@@ -101,6 +103,8 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                     navigate(`/dashboard`)
                 }catch(err){
                     console.log(err.message);
+                }finally{
+                    setIsLoading(false);
                 }
             }
         }
@@ -130,7 +134,8 @@ function SignupLogin({heading, subheading, fields, button, alternative, alternat
                     userObject.resumeName = res?.data?.user?.resumeName ?? "";
                 }
                 setUser(userObject);
-                navigate(`/dashboard`)
+                setIsLoading(false);
+                navigate(`/dashboard`);
             }
             else navigate("/role-selection", {state: {userDetails: userDetails}});
         }catch(err){

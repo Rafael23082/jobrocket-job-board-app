@@ -21,16 +21,13 @@ function RecruiterJobListingsPage(){
 
     const {user} = useContext(UserContext);
     useEffect(() => {
-        if (!user){ 
-            navigate("/login");
-        }
         if (detailsIsOpen){
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "auto";
         }
         console.log(user);
-    }, [user, detailsIsOpen])
+    }, [detailsIsOpen])
     
     const fetchJobs = async() => {
         try{
